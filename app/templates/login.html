@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Logga in{% endblock %}
+{% block head %}
+<link href="/static/css/login.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<section class="container">
+<form class="form-signin" method='POST' action='/login'>
+  {{ form.csrf_token }}
+  <h2>Sign in</h2>
+  {{ form.email(placeholder='Email address') }}
+  {{ form.password(placeholder='Password') }}
+  {% if form.errors %}
+  <span style="color: red">Invalid email or password</span>
+  {% endif %}
+  <div class="checkbox">
+    <label>
+    {{ form.remember }} Remember me
+    </label>
+  </div>
+  {{ form.submit() }}
+</form>
+</section>
+{% endblock %}
+{#-
+  vim: ft=htmldjango
+#}

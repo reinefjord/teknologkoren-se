@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% set active_page = "intranet" %}
+{% set title = "Intranät" %}
+{% block body %}
+  <div class="container">
+  <p>Intranät - {{ current_user.email }}</p>
+  <p><a href="/logout">Logout</a></p>
+  {%- endblock %}
+</div>
+
+{#-
+  vim ft=htmldjango
+#}

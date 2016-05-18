@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% set title = "New post" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.6/trix.min.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.6/trix.js"></script>
+{% endblock %}
+{% block body %}
+<section class="container">
+  <h2>Create new post for {{ page.name }}</h2>
+  <form method="POST" action="/{{ page.name }}/new-post">
+    {{ form.csrf_token }}
+    Title: {{ form.title() }}
+    {{ form.content() }}
+    <trix-editor input="trix"></trix-editor>
+    <label>
+    {{ form.published() }} Publish
+    </label>
+    {{ form.submit() }}
+  </form>
+</section>
+
+{% endblock %}
+{#
+  vim ft:htmldjango
+#}
