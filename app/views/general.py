@@ -1,22 +1,13 @@
 #!/usr/bin/env python3
 import datetime
-from flask import request, redirect, render_template, url_for
+from flask import Blueprint, request, redirect, render_template, url_for
 from flask.ext.login import (current_user, login_user, logout_user,
                              login_required)
-from app import app, login_manager, db
+from app import app, login_manager
 from .forms import LoginForm, RegisterForm, CreatePostForm
 from .models import User, Page, Post
 
-
-@app.before_request
-def _db_connect():
-    db.connect()
-
-
-@app.teardown_request
-def _db_close(exc):
-    if not db.is_closed():
-        db.close()
+mod = Blueprint('general', __name__)
 
 
 @login_manager.user_loader
@@ -29,21 +20,6 @@ def url_for_other_page(page):
     args['page'] = page
     return url_for(request.endpoint, **args)
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
-
-
-@app.route('/', defaults={'page': 1})
-@app.route('/page/<int:page>')
-def index(page):
-    index = Page.get(Page.name == 'index')
-    posts = Post.select().where(
-            Post.page == index).order_by(Post.timestamp.desc())
-    pagination = posts.paginate(page, 5)
-    has_next = True if posts.paginate(page+1, 5) else False
-
-    return render_template('index.html',
-                           pagination=pagination,
-                           page=page,
-                           has_next=has_next)
 
 
 @app.route('/<page>/new-post', methods=['GET', 'POST'])
@@ -70,12 +46,6 @@ def edit_post(slug):
     return render_template('new-post.html',
                            page=None,
                            form=form)
-
-
-@app.route('/intranet')
-@login_required
-def intranet():
-    return render_template('intranet.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
