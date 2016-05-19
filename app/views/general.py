@@ -4,8 +4,8 @@ from flask import Blueprint, request, redirect, render_template, url_for
 from flask.ext.login import (current_user, login_user, logout_user,
                              login_required)
 from app import app, login_manager
-from .forms import LoginForm, RegisterForm, CreatePostForm
-from .models import User, Page, Post
+from app.forms import LoginForm, RegisterForm, CreatePostForm
+from app.models import User, Page, Post
 
 mod = Blueprint('general', __name__)
 

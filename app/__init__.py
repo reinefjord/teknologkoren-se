@@ -32,8 +32,10 @@ bcrypt = Bcrypt(app)
 from app import models
 from app.views import (general,
                        index,
+                       about,
                        intranet)
 
 app.register_blueprint(general.mod)
 app.register_blueprint(index.mod)
+app.register_blueprint(about.mod)
 app.register_blueprint(intranet.mod)
