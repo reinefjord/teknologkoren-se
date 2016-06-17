@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
-from flask.ext.login import login_required
+from flask_login import login_required
 
-mod = Blueprint('intranet', __name__, url_prefix='/intranet')
+mod = Blueprint('intranet', __name__, url_prefix='/intranet/')
 
 
 @mod.route('/')

@@ -7,7 +7,7 @@
 
 <section class="container">
   {% if current_user.is_authenticated %}
-  <p><a href="/index/new-post">Create new post</a></p>
+  <p><a href="/index/new-post/">Create new post</a></p>
   {% endif %}
   {%- for post in pagination %}
   <article>

@@ -5,7 +5,7 @@ mod = Blueprint('index', __name__)
 
 
 @mod.route('/', defaults={'page': 1})
-@mod.route('/page/<int:page>')
+@mod.route('/page/<int:page>/')
 def index(page):
     index = Page.get(Page.name == 'index')
     posts = Post.select().where(

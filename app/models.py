@@ -1,6 +1,6 @@
 import re
-from flask.ext.login import UserMixin
-from app import db, flask_db, bcrypt
+from flask_login import UserMixin
+from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
                     ForeignKeyField)
 from playhouse.hybrid import hybrid_property

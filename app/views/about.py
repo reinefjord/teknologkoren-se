@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template
 from app.models import Page, Post
 
-mod = Blueprint('about', __name__, url_prefix='/om-oss')
+
+mod = Blueprint('about', __name__, url_prefix='/om-oss/')
 
 
 @mod.route('/')

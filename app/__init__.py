@@ -1,9 +1,7 @@
 from flask import Flask
-from flask.ext.login import LoginManager
-from flask.ext.bcrypt import Bcrypt
-from peewee import *
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 from playhouse.flask_utils import FlaskDB
-from playhouse.sqlite_ext import *
 
 app = Flask(__name__)
 app.config.from_object('config')
@@ -22,20 +20,21 @@ def _db_close(exc):
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager.login_view = 'users.login'
 
 flask_db = FlaskDB(app)
 db = flask_db.database
 
 bcrypt = Bcrypt(app)
 
-from app import models
 from app.views import (general,
+                       users,
                        index,
                        about,
                        intranet)
 
 app.register_blueprint(general.mod)
+app.register_blueprint(users.mod)
 app.register_blueprint(index.mod)
 app.register_blueprint(about.mod)
 app.register_blueprint(intranet.mod)
