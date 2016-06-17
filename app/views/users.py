@@ -18,8 +18,7 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         login_user(form.user, remember=form.remember.data)
-        next = request.args.get('next')
-        return redirect(next or url_for('index.index'))
+        return form.redirect(url_for('index.index'))
 
     return render_template('login.html', form=form)
 
@@ -36,6 +35,6 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         User.create(email=form.email.data, password=form.password.data)
-        return redirect(request.args.get('next') or url_for('index.index'))
+        return form.redirect(url_for('index.index'))
 
     return render_template('register.html', form=form)

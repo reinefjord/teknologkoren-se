@@ -38,7 +38,7 @@ class RedirectForm(Form):
         return redirect(target or url_for(endpoint, **values))
 
 
-class LoginForm(Form):
+class LoginForm(RedirectForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember = BooleanField('Remember me')
