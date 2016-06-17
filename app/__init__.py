@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
+from flask_admin import Admin
+from flask_admin.contrib.peewee import ModelView
 from playhouse.flask_utils import FlaskDB
 
 app = Flask(__name__)
@@ -26,6 +28,13 @@ flask_db = FlaskDB(app)
 db = flask_db.database
 
 bcrypt = Bcrypt(app)
+
+from app.models import User, Page, Post, Event
+admin = Admin(app, name='teknologkoren.se')
+admin.add_view(ModelView(User, db))
+admin.add_view(ModelView(Page, db))
+admin.add_view(ModelView(Post, db))
+admin.add_view(ModelView(Event, db))
 
 from app.views import (general,
                        users,

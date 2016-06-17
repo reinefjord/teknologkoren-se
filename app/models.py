@@ -21,11 +21,17 @@ class User(UserMixin, flask_db.Model):
     def verify_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)
 
+    def __str__(self):
+        return self.email
+
 
 class Page(flask_db.Model):
     name = CharField()
     is_blog = BooleanField()
     published = BooleanField()
+
+    def __str__(self):
+        return self.name
 
 
 class Post(flask_db.Model):
@@ -42,8 +48,14 @@ class Post(flask_db.Model):
             self.slug = re.sub('[^\w]+', '-', self.title.lower())
         ret = super(Post, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.slug
+
 
 class Event(Post):
     start_time = DateTimeField()
     duration = DateTimeField()
     location = CharField()
+
+    def __str__(self):
+        return self.slug

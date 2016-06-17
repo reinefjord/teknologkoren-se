@@ -8,5 +8,5 @@ mod = Blueprint('about', __name__, url_prefix='/om-oss/')
 @mod.route('/')
 def index():
     page = Page.get(Page.name == 'about')
-    post = Post.get().where(Post.page == page)
+    post = Post.get(Post.page == page)
     return render_template('about.html', post=post)
