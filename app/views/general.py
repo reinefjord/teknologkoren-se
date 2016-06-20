@@ -29,7 +29,7 @@ def new_post(page):
                     author=current_user.id,
                     page=page_obj.id)
 
-    return render_template('new-post.html', page=page_obj, form=form)
+    return render_template('edit-post.html', page=page_obj, form=form)
 
 
 @mod.route('/<slug>/')
@@ -44,6 +44,6 @@ def view_post(slug):
 def edit_post(slug):
     post = Post.get(Post.slug == slug)
     form = CreatePostForm(request.form, post)
-    return render_template('new-post.html',
+    return render_template('edit-post.html',
                            page=None,
                            form=form)
