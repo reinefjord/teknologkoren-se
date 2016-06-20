@@ -1,5 +1,5 @@
 import datetime
-from flask import Blueprint, request, render_template, url_for
+from flask import Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
 from app import app
 from app.forms import CreatePostForm
@@ -22,12 +22,13 @@ def new_post(page):
     page_obj = Page.get(Page.name == page)
     form = CreatePostForm(request.form)
     if form.validate_on_submit():
-        Post.create(title=form.title.data,
-                    content=form.trix.data,
-                    published=form.published.data,
-                    timestamp=datetime.datetime.now(),
-                    author=current_user.id,
-                    page=page_obj.id)
+        post = Post.create(title=form.title.data,
+                           content=form.content.data,
+                           published=form.published.data,
+                           timestamp=datetime.datetime.now(),
+                           author=current_user.id,
+                           page=page_obj.id)
+        return redirect(post.slug)
 
     return render_template('edit-post.html', page=page_obj, form=form)
 
@@ -44,6 +45,14 @@ def view_post(slug):
 def edit_post(slug):
     post = Post.get(Post.slug == slug)
     form = CreatePostForm(request.form, post)
+
+    if form.validate_on_submit():
+        post.title = form.title.data
+        post.content = form.content.data
+        post.published = form.published.data
+        post.save()
+        return redirect(post.slug)
+
     return render_template('edit-post.html',
                            page=None,
                            form=form)
