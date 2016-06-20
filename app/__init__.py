@@ -31,10 +31,10 @@ bcrypt = Bcrypt(app)
 
 from app.models import User, Page, Post, Event
 admin = Admin(app, name='teknologkoren.se')
-admin.add_view(ModelView(User, db))
-admin.add_view(ModelView(Page, db))
-admin.add_view(ModelView(Post, db))
-admin.add_view(ModelView(Event, db))
+admin.add_view(ModelView(User, name='User'))
+admin.add_view(ModelView(Page, name='Page'))
+admin.add_view(ModelView(Post, name='Post'))
+admin.add_view(ModelView(Event, name='Event'))
 
 from app.views import (general,
                        users,
