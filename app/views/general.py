@@ -1,6 +1,7 @@
 import datetime
 from flask import Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
+from playhouse.flask_utils import get_object_or_404
 from app import app
 from app.forms import CreatePostForm
 from app.models import Page, Post
@@ -35,7 +36,7 @@ def new_post(page):
 
 @mod.route('/<slug>/')
 def view_post(slug):
-    post = Post.get(Post.slug == slug)
+    post = get_object_or_404(Post, Post.slug == slug)
     return render_template('view-post.html',
                            post=post)
 
@@ -43,7 +44,7 @@ def view_post(slug):
 @mod.route('/<slug>/edit/', methods=['GET', 'POST'])
 @login_required
 def edit_post(slug):
-    post = Post.get(Post.slug == slug)
+    post = get_object_or_404(Post, Post.slug == slug)
     form = CreatePostForm(request.form, post)
 
     if form.validate_on_submit():
