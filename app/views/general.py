@@ -5,6 +5,7 @@ from app import app
 from app.forms import CreatePostForm
 from app.models import Page, Post
 
+
 mod = Blueprint('general', __name__)
 
 
@@ -31,7 +32,14 @@ def new_post(page):
     return render_template('new-post.html', page=page_obj, form=form)
 
 
-@mod.route('/edit-post/<slug>/', methods=['GET', 'POST'])
+@mod.route('/<slug>/')
+def view_post(slug):
+    post = Post.get(Post.slug == slug)
+    return render_template('view-post.html',
+                           post=post)
+
+
+@mod.route('/<slug>/edit/', methods=['GET', 'POST'])
 @login_required
 def edit_post(slug):
     post = Post.get(Post.slug == slug)

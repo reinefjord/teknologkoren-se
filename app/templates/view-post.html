@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% set title = post.title %}
+
+{% block body %}
+
+<section class="container">
+  <article>
+    <h2>{{ post.title }}</h2><small>{{ post.timestamp }}</small>
+    {{ post.content|safe }}
+  </article>
+  {% if current_user.is_authenticated %}
+  <p><a href="/{{ post.slug }}/edit/">Edit</a></p>
+  {% endif %}
+</section>
+
+{% endblock %}
+{#-
+vim: ft=htmldjango
+#}
