@@ -1,9 +1,9 @@
-import re
 from flask_login import UserMixin
 from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
                     ForeignKeyField)
 from playhouse.hybrid import hybrid_property
+from slugify import slugify
 
 
 class User(UserMixin, flask_db.Model):
@@ -45,8 +45,19 @@ class Post(flask_db.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = re.sub('[^\w]+', '-', self.title.lower())
-        ret = super(Post, self).save(*args, **kwargs)
+            slug = slugify(self.title)
+            self.slug = slug
+            uid = 2
+            while True:
+                try:
+                    Post.get(Post.slug == self.slug)
+                except Post.DoesNotExist:
+                    break
+                else:
+                    self.slug = slug + '-' + str(uid)
+                    uid += 1
+
+        super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.slug
