@@ -69,10 +69,6 @@ header h1 {
     float: right;
 }
 
-.pager .disabled {
-    color: #bbb;
-}
-
 label {
     display: block;
     margin: 20px auto;

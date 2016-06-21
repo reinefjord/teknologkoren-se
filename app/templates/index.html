@@ -21,10 +21,8 @@
   <nav class="pager">
     {%- if has_next %}
     <a class="older" href="{{ url_for_other_page(page + 1) }}">
-    {%- else %}
-    <a class="older disabled" href="#">
-    {%- endif %}
       &larr; Older</a>
+    {%- endif %}
     {%- if page > 1 %}
     <a class="newer" href="{{ url_for_other_page(page - 1) }}">
       Newer &rarr;</a>
