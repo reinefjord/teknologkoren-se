@@ -8,17 +8,21 @@
 {% endblock %}
 {% block body %}
 <section class="container">
-  <h2>Create new post for {{ page.name }}</h2>
-  <form method="POST">
-    {{ form.csrf_token }}
-    Title: {{ form.title() }}
-    {{ form.content(id="trix") }}
-    <trix-editor input="trix"></trix-editor>
-    <label>
-    {{ form.published() }} Publish
-    </label>
-    {{ form.submit() }}
-  </form>
+  <div class='edit-post'>
+    <h2>Create new post for {{ page.name }}</h2>
+    <form method="POST">
+      {{ form.csrf_token }}
+      <label class='title'>
+        Title: {{ form.title() }}
+      </label>
+      {{ form.content(id="trix") }}
+      <trix-editor input="trix"></trix-editor>
+      <label>
+        {{ form.published() }} Publish
+      </label>
+      {{ form.submit() }}
+    </form>
+  </div>
 </section>
 
 {% endblock %}
