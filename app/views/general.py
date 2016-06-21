@@ -54,6 +54,4 @@ def edit_post(slug):
         post.save()
         return redirect(post.slug)
 
-    return render_template('edit-post.html',
-                           page=None,
-                           form=form)
+    return render_template('edit-post.html', page=None, form=form)
