@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% set title = "New post" %}
+{% set title = "Edit post" %}
 
 {% block head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.6/trix.min.css">
@@ -9,7 +9,11 @@
 {% block body %}
 <section class="container">
   <div class='edit-post'>
-    <h2>Create new post for {{ page.name }}</h2>
+    {% if page %}
+    <h2>Create new post at {{ page.name }}</h2>
+    {% else %}
+    <h2>Edit post</h2>
+    {% endif %}
     <form method="POST">
       {{ form.csrf_token }}
       <label class='title'>
