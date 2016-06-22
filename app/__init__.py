@@ -29,21 +29,18 @@ db = flask_db.database
 
 bcrypt = Bcrypt(app)
 
-from app.models import User, Page, Post, Event
+from app.models import User, Post, Event
 admin = Admin(app, name='teknologkoren.se')
 admin.add_view(ModelView(User, name='User'))
-admin.add_view(ModelView(Page, name='Page'))
 admin.add_view(ModelView(Post, name='Post'))
 admin.add_view(ModelView(Event, name='Event'))
 
 from app.views import (general,
                        users,
                        index,
-                       about,
                        intranet)
 
 app.register_blueprint(general.mod)
 app.register_blueprint(users.mod)
 app.register_blueprint(index.mod)
-app.register_blueprint(about.mod)
 app.register_blueprint(intranet.mod)

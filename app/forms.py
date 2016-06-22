@@ -83,11 +83,5 @@ class CreatePostForm(Form):
     content = HiddenField(validators=[InputRequired()])
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
+    is_page = BooleanField('Page')
     published = BooleanField('Publish')
-
-
-class CreatePageForm(Form):
-    name = StringField('Page name', validators=[InputRequired()])
-    is_blog = BooleanField('Blog page')
-    published = BooleanField('Publish')
-    submit = SubmitField('Create')

@@ -25,15 +25,6 @@ class User(UserMixin, flask_db.Model):
         return self.email
 
 
-class Page(flask_db.Model):
-    name = CharField()
-    is_blog = BooleanField()
-    published = BooleanField()
-
-    def __str__(self):
-        return self.name
-
-
 class Post(flask_db.Model):
     title = CharField()
     slug = CharField(unique=True)
@@ -41,7 +32,7 @@ class Post(flask_db.Model):
     published = BooleanField()
     timestamp = DateTimeField()
     author = ForeignKeyField(User)
-    page = ForeignKeyField(Page)
+    is_page = BooleanField()
 
     def save(self, *args, **kwargs):
         if not self.slug:

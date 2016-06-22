@@ -1,5 +1,5 @@
 from flask import Blueprint, redirect, render_template, url_for
-from app.models import Page, Post
+from app.models import Post
 
 
 mod = Blueprint('index', __name__)
@@ -8,15 +8,14 @@ mod = Blueprint('index', __name__)
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def index(page):
-    index = Page.get(Page.name == 'index')
-    posts = Post.select().where(
-            Post.page == index).order_by(Post.timestamp.desc())
+    posts = Post.select().where(Post.is_page == False).order_by(Post.timestamp.desc())
 
     pagination = posts.paginate(page, 5)
 
     if not pagination:
-        last_page = (len(posts) // 5) + 1
-        return redirect(url_for('.index', page=last_page))
+        if posts:
+            last_page = (len(posts) // 5) + 1
+            return redirect(url_for('.index', page=last_page))
 
     has_next = True if posts.paginate(page+1, 5) else False
 

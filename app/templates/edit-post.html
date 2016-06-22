@@ -9,11 +9,7 @@
 {% block body %}
 <section class="container">
   <div class='edit-post'>
-    {% if page %}
-    <h2>Create new post at {{ page.name }}</h2>
-    {% else %}
     <h2>Edit post</h2>
-    {% endif %}
     <form method="POST">
       {{ form.csrf_token }}
       <label class='title'>
@@ -21,6 +17,9 @@
       </label>
       {{ form.content(id="trix") }}
       <trix-editor input="trix"></trix-editor>
+      <label>
+        {{ form.is_page() }} Page
+      </label>
       <label>
         {{ form.published() }} Publish
       </label>
