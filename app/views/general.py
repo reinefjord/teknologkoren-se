@@ -3,6 +3,7 @@ from flask import Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from app import app
+from app import login_manager
 from app.forms import CreatePostForm
 from app.models import Post
 
@@ -36,6 +37,9 @@ def new_post():
 @mod.route('/<slug>/')
 def view_post(slug):
     post = get_object_or_404(Post, Post.slug == slug)
+
+    if not post.published and not current_user.is_authenticated:
+        return login_manager.unauthorized()
 
     if post.is_page:
         return render_template('view-page.html', post=post)
