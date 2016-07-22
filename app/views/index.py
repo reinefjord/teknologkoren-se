@@ -18,10 +18,9 @@ def index(page):
 
     pagination = posts.paginate(page, 5)
 
-    if not pagination:
-        if posts:
-            last_page = (len(posts) // 5) + 1
-            return redirect(url_for('.index', page=last_page))
+    if not pagination and posts:
+        last_page = (len(posts) // 5) + 1
+        return redirect(url_for('.index', page=last_page))
 
     has_next = True if posts.paginate(page+1, 5) else False
 
