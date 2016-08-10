@@ -62,3 +62,11 @@ def edit_post(slug):
         return redirect(post.slug)
 
     return render_template('edit-post.html', form=form)
+
+
+@mod.route('/<slug>/remove/', methods=['GET'])
+@login_required
+def remove_post(slug):
+    post = get_object_or_404(Post, Post.slug == slug)
+    post.delete_instance()
+    return redirect(url_for('index.index'))

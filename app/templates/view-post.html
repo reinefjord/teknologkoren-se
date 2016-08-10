@@ -10,7 +10,10 @@
     {{ post.content|safe }}
   </article>
   {% if current_user.is_authenticated %}
-  <p><a href="/{{ post.slug }}/edit/">Edit</a></p>
+  <p>
+    <a href="/{{ post.slug }}/edit/">Edit</a>
+    | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
+  </p>
   {% endif %}
 </section>
 
