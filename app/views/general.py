@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from app import app
 from app import login_manager
-from app.forms import CreatePostForm
+from app.forms import EditPostForm
 from app.models import Post
 
 
@@ -21,7 +21,7 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 @mod.route('/new-post/', methods=['GET', 'POST'])
 @login_required
 def new_post():
-    form = CreatePostForm(request.form)
+    form = EditPostForm(request.form)
     if form.validate_on_submit():
         post = Post.create(title=form.title.data,
                            content=form.content.data,
@@ -51,7 +51,7 @@ def view_post(slug):
 @login_required
 def edit_post(slug):
     post = get_object_or_404(Post, Post.slug == slug)
-    form = CreatePostForm(request.form, post)
+    form = EditPostForm(request.form, post)
 
     if form.validate_on_submit():
         post.title = form.title.data

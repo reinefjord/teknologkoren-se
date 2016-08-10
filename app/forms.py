@@ -79,7 +79,7 @@ class RegisterForm(RedirectForm):
         return False
 
 
-class CreatePostForm(Form):
+class EditPostForm(Form):
     content = HiddenField(validators=[InputRequired()])
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
