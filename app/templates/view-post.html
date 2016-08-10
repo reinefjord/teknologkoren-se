@@ -6,7 +6,7 @@
 
 <section class="container">
   <article>
-    <h2>{{ post.title }} <small>{{ post.timestamp }}</small></h2>
+    <h2>{{ post.title }} <small>{{ (post.timestamp|string)[:16] }}</small></h2>
     {{ post.content|safe }}
   </article>
   {% if current_user.is_authenticated %}
