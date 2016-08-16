@@ -32,7 +32,6 @@ class Post(flask_db.Model):
     published = BooleanField()
     timestamp = DateTimeField()
     author = ForeignKeyField(User)
-    is_page = BooleanField()
 
     def save(self, *args, **kwargs):
         if not self.slug:
