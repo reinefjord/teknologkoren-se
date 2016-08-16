@@ -53,7 +53,7 @@ def new_post():
                            author=current_user.id)
         return redirect(post.slug)
 
-    return render_template('edit-post.html', form=form)
+    return render_template('blog/edit-post.html', form=form)
 
 
 @mod.route('/<slug>/')
