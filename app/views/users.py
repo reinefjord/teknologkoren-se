@@ -18,16 +18,16 @@ def login():
     form = LoginForm(request.form)
     if form.validate_on_submit():
         login_user(form.user, remember=form.remember.data)
-        return form.redirect(url_for('index.index'))
+        return form.redirect(url_for('blog.overview'))
 
-    return render_template('login.html', form=form)
+    return render_template('users/login.html', form=form)
 
 
 @mod.route('/logout/')
 def logout():
     if current_user.is_authenticated:
         logout_user()
-    return redirect(url_for('index.index'))
+    return redirect(url_for('blog.overview'))
 
 
 @mod.route('/register/', methods=['GET', 'POST'])
@@ -35,6 +35,6 @@ def register():
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         User.create(email=form.email.data, password=form.password.data)
-        return form.redirect(url_for('index.index'))
+        return form.redirect(url_for('blog.overview'))
 
-    return render_template('register.html', form=form)
+    return render_template('users/register.html', form=form)

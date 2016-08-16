@@ -83,5 +83,4 @@ class EditPostForm(Form):
     content = HiddenField(validators=[InputRequired()])
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
-    is_page = BooleanField('Page')
     published = BooleanField('Publish')
