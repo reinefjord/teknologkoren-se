@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% set title = "Konserter" %}
+{% set active_page = "konserter" %}
+
+{% block body %}
+
+<section class="container overview">
+  {% if current_user.is_authenticated %}
+  <p><a href="/konserter/new-event/">Create new event</a></p>
+  {% endif %}
+  {%- for event in pagination %}
+  <article>
+    <h2><a href="/{{ event.slug }}/">{{ event.title }}</a></h2>
+    {{ post.content|safe }}
+  </article>
+  {%- endfor %}
+</section>
+
+<div class="container">
+  <nav class="pager">
+    {%- if has_next %}
+    <a class="older" href="{{ url_for_other_page(page + 1) }}">
+      &larr; Older</a>
+    {%- endif %}
+    {%- if page > 1 %}
+    <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+      Newer &rarr;</a>
+    {%- endif %}
+  </nav>
+</div>
+
+{% endblock %}

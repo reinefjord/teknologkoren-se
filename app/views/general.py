@@ -9,11 +9,6 @@ def om_oss():
     return render_template('general/om-oss.html')
 
 
-@mod.route('/konserter/')
-def konserter():
-    return render_template('general/konserter.html')
-
-
 @mod.route('/boka/')
 def boka():
     return render_template('general/boka.html')

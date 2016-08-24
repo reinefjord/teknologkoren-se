@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% set title = "Edit event" %}
+
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+{% endblock %}
+{% block body %}
+<section class="container">
+  <div class='edit-post'>
+    <h2>Edit post</h2>
+    <form method="POST">
+      {{ form.csrf_token }}
+      <label class='title'>
+        Title: {{ form.title() }}
+      </label>
+      {{ form.content(id="trix") }}
+      <trix-editor input="trix"></trix-editor>
+      <label>
+        Date:<br><input type="text" id="datepicker">
+      </label>
+      <label>
+        {{ form.published() }} Publish
+      </label>
+      {{ form.submit() }}
+    </form>
+  </div>
+</section>
+
+{% endblock %}

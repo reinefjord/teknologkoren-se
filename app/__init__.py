@@ -38,9 +38,11 @@ admin.add_view(ModelView(Event, name='Event'))
 from app.views import (general,
                        users,
                        blog,
+                       events,
                        intranet)
 
 app.register_blueprint(general.mod)
 app.register_blueprint(users.mod)
 app.register_blueprint(blog.mod)
+app.register_blueprint(events.mod)
 app.register_blueprint(intranet.mod)

@@ -84,3 +84,6 @@ class EditPostForm(Form):
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
     published = BooleanField('Publish')
+
+class EditEventForm(EditPostForm):
+    pass
