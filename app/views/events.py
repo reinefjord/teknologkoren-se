@@ -46,7 +46,7 @@ def new_event():
                              location=form.location.data,
                              timestamp=datetime.datetime.now(),
                              author=current_user.id)
-        return redirect(event.slug)
+        return redirect(url_for('.view_event', slug=event.slug))
 
     return render_template('events/edit-event.html', form=form)
 
@@ -74,7 +74,7 @@ def edit_event(slug):
         event.start_time = form.start_time.data
         event.location = form.location.data
         event.save()
-        return redirect(event.slug)
+        return redirect(url_for('.view_event', slug=event.slug))
 
     return render_template('events/edit-event.html', form=form)
 
