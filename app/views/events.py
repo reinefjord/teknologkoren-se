@@ -42,7 +42,7 @@ def new_event():
         event = Event.create(title=form.title.data,
                              content=form.content.data,
                              published=form.published.data,
-                             start_time=form.datetime.data,
+                             start_time=form.start_time.data,
                              location=form.location.data,
                              timestamp=datetime.datetime.now(),
                              author=current_user.id)
@@ -71,12 +71,12 @@ def edit_event(slug):
         event.title = form.title.data
         event.content = form.content.data
         event.published = form.published.data
-        event.start_time = form.datetime.data
+        event.start_time = form.start_time.data
         event.location = form.location.data
         event.save()
         return redirect(event.slug)
 
-    return render_template('event/edit-event.html', form=form)
+    return render_template('events/edit-event.html', form=form)
 
 
 @mod.route('/<slug>/remove/')

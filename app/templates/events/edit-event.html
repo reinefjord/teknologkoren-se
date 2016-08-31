@@ -9,7 +9,6 @@
 {% block body %}
 <section class="container">
   <div class='edit-post'>
-    {{ form.errors }}
     <h2>Edit post</h2>
     <form method="POST">
       {{ form.csrf_token }}
@@ -21,7 +20,7 @@
       <trix-editor input="trix"></trix-editor>
       <label>
         Date:<br>
-        {{ form.datetime() }}
+        {{ form.start_time() }}
       </label>
       <label>
         Location:<br>
@@ -40,7 +39,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
 <script type="text/javascript">
-jQuery('#datetime').datetimepicker({
+jQuery('#start_time').datetimepicker({
   format:'Y-m-d H:i'
 });
 </script>

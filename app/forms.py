@@ -87,5 +87,5 @@ class EditPostForm(Form):
 
 
 class EditEventForm(EditPostForm):
-    datetime = DateTimeField(format='%Y-%m-%d %H:%M')
+    start_time = DateTimeField(format='%Y-%m-%d %H:%M')
     location = StringField('Location')
