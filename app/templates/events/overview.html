@@ -11,8 +11,8 @@
   {% endif %}
   {%- for event in pagination %}
   <article>
-    <h2><a href="/{{ event.slug }}/">{{ event.title }}</a></h2>
-    {{ post.content|safe }}
+    <h2><a href="/konserter/{{ event.slug }}/">{{ event.title }}</a></h2>
+    {{ event.content|safe }}
   </article>
   {%- endfor %}
 </section>

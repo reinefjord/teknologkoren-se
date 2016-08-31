@@ -9,16 +9,23 @@
 {% block body %}
 <section class="container">
   <div class='edit-post'>
+    {{ form.errors }}
     <h2>Edit post</h2>
     <form method="POST">
       {{ form.csrf_token }}
       <label class='title'>
-        Title: {{ form.title() }}
+        Title:<br>
+        {{ form.title() }}
       </label>
       {{ form.content(id="trix") }}
       <trix-editor input="trix"></trix-editor>
       <label>
-        Date:<br><input type="text" id="datepicker">
+        Date:<br>
+        {{ form.datetime() }}
+      </label>
+      <label>
+        Location:<br>
+        {{ form.location() }}
       </label>
       <label>
         {{ form.published() }} Publish
@@ -27,5 +34,14 @@
     </form>
   </div>
 </section>
-
+{% endblock %}
+{% block after_body %}
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript">
+jQuery('#datetime').datetimepicker({
+  format:'Y-m-d H:i'
+});
+</script>
 {% endblock %}

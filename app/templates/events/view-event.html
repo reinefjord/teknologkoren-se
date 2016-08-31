@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% set title = event.title %}
+
+{% block body %}
+
+<section class="container">
+  <article>
+    <h2>{{ event.title }} <small>{{ (event.timestamp|string)[:16] }}</small></h2>
+    {{ event.content|safe }}
+  </article>
+  {% if current_user.is_authenticated %}
+  <p>
+    <a href="/{{ event.slug }}/edit/">Edit</a>
+    | <a href="/{{ event.slug }}/remove/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
+  </p>
+  {% endif %}
+</section>
+
+{% endblock %}

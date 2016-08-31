@@ -2,7 +2,7 @@ from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import Form
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
-                     HiddenField)
+                     HiddenField, DateTimeField)
 from wtforms.validators import Email, InputRequired
 from peewee import DoesNotExist
 from .models import User
@@ -85,5 +85,7 @@ class EditPostForm(Form):
     title = StringField('Title', validators=[InputRequired()])
     published = BooleanField('Publish')
 
+
 class EditEventForm(EditPostForm):
-    pass
+    datetime = DateTimeField(format='%Y-%m-%d %H:%M')
+    location = StringField('Location')

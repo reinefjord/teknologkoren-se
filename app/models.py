@@ -55,7 +55,6 @@ class Post(flask_db.Model):
 
 class Event(Post):
     start_time = DateTimeField()
-    duration = DateTimeField()
     location = CharField()
 
     def __str__(self):

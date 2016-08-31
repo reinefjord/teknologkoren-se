@@ -7,7 +7,7 @@ from app.forms import EditEventForm
 from app.models import Event
 
 
-mod = Blueprint('events', __name__, url_prefix='/konserter/')
+mod = Blueprint('events', __name__, url_prefix='/konserter')
 
 
 @mod.route('/', defaults={'page': 1})
@@ -43,12 +43,12 @@ def new_event():
                              content=form.content.data,
                              published=form.published.data,
                              start_time=form.datetime.data,
-                             duration=form.duration.data,
+                             location=form.location.data,
                              timestamp=datetime.datetime.now(),
                              author=current_user.id)
         return redirect(event.slug)
 
-    return render_template('event/edit-event.html', form=form)
+    return render_template('events/edit-event.html', form=form)
 
 
 @mod.route('/<slug>/')
@@ -71,13 +71,15 @@ def edit_event(slug):
         event.title = form.title.data
         event.content = form.content.data
         event.published = form.published.data
+        event.start_time = form.datetime.data
+        event.location = form.location.data
         event.save()
         return redirect(event.slug)
 
     return render_template('event/edit-event.html', form=form)
 
 
-@mod.route('/<slug>/remove/', methods=['GET'])
+@mod.route('/<slug>/remove/')
 @login_required
 def remove_event(slug):
     event = get_object_or_404(Event, Event.slug == slug)
