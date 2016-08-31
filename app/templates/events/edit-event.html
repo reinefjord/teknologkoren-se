@@ -4,7 +4,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
 {% endblock %}
 {% block body %}
 <section class="container">
@@ -20,7 +20,7 @@
       <trix-editor input="trix"></trix-editor>
       <label>
         Date:<br>
-        {{ form.start_time() }}
+        {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
       </label>
       <label>
         Location:<br>
@@ -33,12 +33,12 @@
     </form>
   </div>
 </section>
-{% endblock %}
-{% block after_body %}
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
-<script type="text/javascript">
+
+<script>
 jQuery('#start_time').datetimepicker({
   format:'Y-m-d H:i'
 });
