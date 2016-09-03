@@ -13,6 +13,13 @@
   <article>
     <h2><a href="/konserter/{{ event.slug }}/">{{ event.title }}</a></h2>
     {{ event.content|safe }}
+
+    <label>
+      Tid: {{ event.start_time }}
+    </label>
+    <label>
+      Plats: {{ event.location }}
+    </label>
   </article>
   {%- endfor %}
 </section>
