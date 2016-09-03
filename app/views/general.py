@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from app.forms import BookingForm
 
 
 mod = Blueprint('general', __name__)
@@ -9,9 +10,12 @@ def om_oss():
     return render_template('general/om-oss.html')
 
 
-@mod.route('/boka/')
+@mod.route('/boka/', methods=['GET', 'POST'])
 def boka():
-    return render_template('general/boka.html')
+    form = BookingForm()
+    if form.validate_on_submit():
+        pass
+    return render_template('general/boka.html', form=form)
 
 
 @mod.route('/sjung/')
