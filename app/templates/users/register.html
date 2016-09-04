@@ -1,13 +1,9 @@
 {% extends "layout.html" %}
 
-{% block title %}Logga in{% endblock %}
-{% block head %}
-  {{ super() }}
-  <link href="/static/css/login.css" rel="stylesheet">
-{% endblock %}
+{% set title="Register" %}
 
 {% block body %}
-  <section class="container">
+  <div class="container">
     <form class="form-register" method='POST'>
       {{ form.csrf_token }}
       <h2>Register</h2>
@@ -18,5 +14,5 @@
       {% endif %}
       {{ form.submit() }}
     </form>
-  </section>
+  </div>
 {% endblock %}

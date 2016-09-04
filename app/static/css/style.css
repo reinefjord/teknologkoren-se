@@ -12,19 +12,22 @@ img {
 
 h1, h2, h3 {
     line-height: 1.2;
-    margin: 0;
 }
 
 a {
     color: #444;
 }
 
-.pageheader {
-    text-align: center;
+article h1 {
+    margin: 0;
 }
 
 article header {
     margin: 20px 0;
+}
+
+.pageheader {
+    text-align: center;
 }
 
 .logo img {
