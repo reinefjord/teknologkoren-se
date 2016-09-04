@@ -12,6 +12,7 @@ img {
 
 h1, h2, h3 {
     line-height: 1.2;
+    margin: 0;
 }
 
 a {
@@ -20,6 +21,10 @@ a {
 
 .pageheader {
     text-align: center;
+}
+
+article header {
+    margin: 20px 0;
 }
 
 .logo img {
@@ -108,4 +113,8 @@ a {
 label {
     display: block;
     margin: 20px auto;
+}
+
+.pubdate {
+    font-size: small;
 }

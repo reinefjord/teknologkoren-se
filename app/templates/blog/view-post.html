@@ -4,11 +4,13 @@
 
 {% block body %}
 
-  <section class="container">
+  <div class="container">
     <article>
       <header>
         <h1>{{ post.title }}</h1>
-        <p>{{ (post.timestamp|string)[:16] }}</p>
+        <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
+          {{ post.timestamp.strftime("%d %B %Y") }}
+        </time>
       </header>
       {{ post.content|safe }}
     </article>
@@ -18,6 +20,6 @@
       | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
       </p>
     {% endif %}
-  </section>
+  </div>
 
 {% endblock %}

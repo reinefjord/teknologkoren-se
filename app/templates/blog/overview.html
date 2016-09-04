@@ -12,10 +12,10 @@
       {% for post in pagination %}
         <article>
           <header>
-            <time datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
+            <h1><a href="/{{ post.slug }}/">{{ post.title }}</a></h1>
+            <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
               {{ post.timestamp.strftime("%d %B %Y") }}
             </time>
-            <h1><a href="/{{ post.slug }}/">{{ post.title }}</a></h1>
           </header>
           {{ post.content|safe }}
         </article>

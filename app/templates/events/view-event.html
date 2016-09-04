@@ -4,17 +4,19 @@
 
 {% block body %}
 
-<section class="container">
-  <article>
-    <h1>{{ event.title }}</h1>
-    {{ event.content|safe }}
-  </article>
-  {% if current_user.is_authenticated %}
-  <p>
-    <a href="/konserter/{{ event.slug }}/edit/">Edit</a>
-    | <a href="/konserter/{{ event.slug }}/remove/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
-  </p>
-  {% endif %}
-</section>
+  <div class="container">
+    <article>
+      <header>
+        <h1>{{ event.title }}</h1>
+      </header>
+      {{ event.content|safe }}
+    {% if current_user.is_authenticated %}
+      <p>
+      <a href="/konserter/{{ event.slug }}/edit/">Edit</a>
+      | <a href="/konserter/{{ event.slug }}/remove/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
+      </p>
+    {% endif %}
+    </article>
+  </div>
 
 {% endblock %}
