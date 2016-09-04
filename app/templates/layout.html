@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ title }} | Kongl. Teknologkören</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:600|Open+Sans">
-    <link rel="stylesheet" href="/static/css/style.css">
-    {% block head %}{% endblock %}
+    {% block head %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{{ title }} | Kongl. Teknologkören</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.min.css">
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Crimson+Text:600|Open+Sans">
+      <link rel="stylesheet" href="/static/css/style.css">
+    {% endblock %}
   </head>
   <body>
     <div class=box>
@@ -21,7 +22,7 @@
       ('/intranet/', 'intranet', 'Intranät'),
       ] -%}
       {% set active_page = active_page -%}
-      <header>
+      <header class="pageheader">
         <div class="logo">
           <img src="/static/images/logo.png">
           <h1>

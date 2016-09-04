@@ -4,17 +4,20 @@
 
 {% block body %}
 
-<section class="container">
-  <article>
-    <h2>{{ post.title }} <small>{{ (post.timestamp|string)[:16] }}</small></h2>
-    {{ post.content|safe }}
-  </article>
-  {% if current_user.is_authenticated %}
-  <p>
-    <a href="/{{ post.slug }}/edit/">Edit</a>
-    | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
-  </p>
-  {% endif %}
-</section>
+  <section class="container">
+    <article>
+      <header>
+        <h1>{{ post.title }}</h1>
+        <p>{{ (post.timestamp|string)[:16] }}</p>
+      </header>
+      {{ post.content|safe }}
+    </article>
+    {% if current_user.is_authenticated %}
+      <p>
+      <a href="/{{ post.slug }}/edit/">Edit</a>
+      | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
+      </p>
+    {% endif %}
+  </section>
 
 {% endblock %}

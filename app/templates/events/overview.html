@@ -4,37 +4,41 @@
 {% set active_page = "konserter" %}
 
 {% block body %}
+  <div class="container">
+    <section class="overview">
+      {% if current_user.is_authenticated %}
+        <p><a href="/konserter/new-event/">Create new event</a></p>
+      {% endif %}
+      {% for event in pagination %}
+        <article>
+          <header>
+            <h1><a href="/konserter/{{ event.slug }}/">{{ event.title }}</a></h1>
+          </header>
+          {{ event.content|safe }}
 
-<section class="container overview">
-  {% if current_user.is_authenticated %}
-  <p><a href="/konserter/new-event/">Create new event</a></p>
-  {% endif %}
-  {%- for event in pagination %}
-  <article>
-    <h2><a href="/konserter/{{ event.slug }}/">{{ event.title }}</a></h2>
-    {{ event.content|safe }}
+          <label>
+            Tid: <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
+              {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
+            </time>
+          </label>
+          <label>
+            Plats: {{ event.location }}
+          </label>
+        </article>
+      {% endfor %}
+    </section>
+  </div>
 
-    <label>
-      Tid: {{ event.start_time }}
-    </label>
-    <label>
-      Plats: {{ event.location }}
-    </label>
-  </article>
-  {%- endfor %}
-</section>
-
-<div class="container">
-  <nav class="pager">
-    {%- if has_next %}
-    <a class="older" href="{{ url_for_other_page(page + 1) }}">
-      &larr; Older</a>
-    {%- endif %}
-    {%- if page > 1 %}
-    <a class="newer" href="{{ url_for_other_page(page - 1) }}">
-      Newer &rarr;</a>
-    {%- endif %}
-  </nav>
-</div>
-
+  <div class="container">
+    <nav class="pager">
+      {% if has_next %}
+        <a class="older" href="{{ url_for_other_page(page + 1) }}">
+          &larr; Older</a>
+      {% endif %}
+      {% if page > 1 %}
+        <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+          Newer &rarr;</a>
+      {% endif %}
+    </nav>
+  </div>
 {% endblock %}

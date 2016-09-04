@@ -4,30 +4,35 @@
 {% set title = "I takt med tiden" %}
 
 {% block body %}
+  <div class="container">
+    <section class="overview">
+      {% if current_user.is_authenticated %}
+        <p><a href="/new-post/">Create new post</a></p>
+      {% endif %}
+      {% for post in pagination %}
+        <article>
+          <header>
+            <time datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
+              {{ post.timestamp.strftime("%d %B %Y") }}
+            </time>
+            <h1><a href="/{{ post.slug }}/">{{ post.title }}</a></h1>
+          </header>
+          {{ post.content|safe }}
+        </article>
+      {% endfor %}
+    </section>
+  </div>
 
-<section class="container overview">
-  {% if current_user.is_authenticated %}
-  <p><a href="/new-post/">Create new post</a></p>
-  {% endif %}
-  {%- for post in pagination %}
-  <article>
-    <h2><a href="/{{ post.slug }}/">{{ post.title }}</a></h2>
-  {{ post.content|safe }}
-  </article>
-  {%- endfor %}
-</section>
-
-<div class="container">
-  <nav class="pager">
-    {%- if has_next %}
-    <a class="older" href="{{ url_for_other_page(page + 1) }}">
-      &larr; Older</a>
-    {%- endif %}
-    {%- if page > 1 %}
-    <a class="newer" href="{{ url_for_other_page(page - 1) }}">
-      Newer &rarr;</a>
-    {%- endif %}
-  </nav>
-</div>
-
+  <div class="container">
+    <nav class="pager">
+      {% if has_next %}
+        <a class="older" href="{{ url_for_other_page(page + 1) }}">
+          &larr; Older</a>
+      {% endif %}
+      {% if page > 1 %}
+        <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+          Newer &rarr;</a>
+      {% endif %}
+    </nav>
+  </div>
 {% endblock %}

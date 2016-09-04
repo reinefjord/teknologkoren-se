@@ -3,44 +3,45 @@
 {% set title = "Edit event" %}
 
 {% block head %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
+  {{ super() }}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
 {% endblock %}
 {% block body %}
-<section class="container">
-  <div class='edit-post'>
-    <h2>Edit post</h2>
-    <form method="POST">
-      {{ form.csrf_token }}
-      <label class='title'>
-        Title:<br>
-        {{ form.title() }}
-      </label>
-      {{ form.content(id="trix") }}
-      <trix-editor input="trix"></trix-editor>
-      <label>
-        Date:<br>
-        {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
-      </label>
-      <label>
-        Location:<br>
-        {{ form.location() }}
-      </label>
-      <label>
-        {{ form.published() }} Publish
-      </label>
-      {{ form.submit() }}
-    </form>
-  </div>
-</section>
+  <section class="container">
+    <div class='edit-post'>
+      <h2>Edit post</h2>
+      <form method="POST">
+        {{ form.csrf_token }}
+        <label class='title'>
+          Title:<br>
+          {{ form.title() }}
+        </label>
+        {{ form.content(id="trix") }}
+        <trix-editor input="trix"></trix-editor>
+        <label>
+          Date:<br>
+          {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
+        </label>
+        <label>
+          Location:<br>
+          {{ form.location() }}
+        </label>
+        <label>
+          {{ form.published() }} Publish
+        </label>
+        {{ form.submit() }}
+      </form>
+    </div>
+  </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
 
-<script>
+  <script>
 jQuery('#start_time').datetimepicker({
   format:'Y-m-d H:i'
 });
-</script>
+  </script>
 {% endblock %}

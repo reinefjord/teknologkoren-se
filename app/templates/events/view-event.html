@@ -6,7 +6,7 @@
 
 <section class="container">
   <article>
-    <h2>{{ event.title }}</h2>
+    <h1>{{ event.title }}</h1>
     {{ event.content|safe }}
   </article>
   {% if current_user.is_authenticated %}
