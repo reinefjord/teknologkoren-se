@@ -3,6 +3,7 @@ header {
 }
 
 body {
+    font-family: Open Sans, sans-serif;
     font-size: 18px;
     line-height: 1.6;
     color: #444;
@@ -31,12 +32,12 @@ a {
 }
 
 .logo h1 {
-    font-family: serif;
+    font-family: Crimson Text, serif;
     margin: 0 20px;
 }
 
 .logo .tagline {
-    font-family: sans-serif;
+    font-family: Open Sans, sans-serif;
     font-weight: normal;
     font-size: 20px;
 }
