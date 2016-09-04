@@ -1,4 +1,3 @@
-from time import strftime, strptime
 from flask_login import UserMixin
 from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
