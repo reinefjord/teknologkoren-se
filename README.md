@@ -4,11 +4,12 @@ Set environment variable `FLASK_APP` to `app/__init__.py`, then run `flask run`.
 To enable debugging, set `FLASK_DEBUG` to `1`.
 
 Dependencies:
-  * flask
-  * flask-admin
-  * flask-bcrypt
-  * flask-login
-  * flask-wtf
+  * Flask
+  * Flask-Admin
+  * Flask-Bcrypt
+  * Flask-Login
+  * Flask-WTF
   * peewee
   * python-slugify
-  * wtforms
+  * wtf-peewee
+  * WTForms
