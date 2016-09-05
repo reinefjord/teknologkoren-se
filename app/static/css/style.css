@@ -30,14 +30,15 @@ article header {
 }
 
 .logo img {
-    height: 100px;
+    margin-right: 20px;
 }
 
 .logo h1 {
+    margin: 0;
     font-family: 'Vollkorn', serif;
     font-size: 2.7rem;
     font-weight: normal;
-    margin: 0 20px;
+    text-align: left;
 }
 
 .logo .tagline {
@@ -72,10 +73,10 @@ article header {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
 }
 .nav li {
-    display: inline-block;
-    margin: 0 20px;
+    margin: 0 auto;
 }
 .nav a {
     text-decoration: none;
@@ -122,3 +123,32 @@ label {
 .pubdate {
     font-size: small;
 }
+
+@media screen and (max-width: 600px) {
+    .logo img {
+        margin: 0;
+    }
+
+    .logo h1 {
+        display: block;
+        margin: 20px auto;
+    }
+
+    .logo h1,
+    .logo .tagline {
+        clear;
+        text-align: center;
+    }
+    .nav ul {
+        display: block;
+    }
+
+    .nav li {
+        margin: 10px auto;
+    }
+
+    .container {
+        margin: 30px 0;
+    }
+}
+
