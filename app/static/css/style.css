@@ -124,7 +124,7 @@ label {
     font-size: small;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 38em) {
     .logo img {
         margin: 0;
     }
