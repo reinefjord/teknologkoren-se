@@ -1,6 +1,6 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.2em;
     line-height: 1.6;
     overflow-y: scroll;
 }
@@ -11,6 +11,7 @@ img {
 
 h1, h2, h3 {
     line-height: 1.2;
+    font-size: 1.7em;
 }
 
 a {
@@ -36,7 +37,7 @@ article header {
 .logo h1 {
     margin: 0;
     font-family: 'Vollkorn', serif;
-    font-size: 2.7rem;
+    font-size: 2.2em;
     font-weight: normal;
     text-align: left;
 }
@@ -44,7 +45,7 @@ article header {
 .logo .tagline {
     font-family: 'Open Sans', sans-serif;
     font-weight: normal;
-    font-size: 1.4rem;
+    font-size: 0.5em;
     text-align: left;
 }
 
