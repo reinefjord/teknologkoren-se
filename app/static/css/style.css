@@ -102,17 +102,16 @@ article header {
     margin-bottom: 50px;
 }
 
+.pager {
+    display: flex;
+}
 .pager a {
     text-decoration: none;
 }
-
-.pager .older {
-    text-align: left;
-}
-
 .pager .newer {
-    text-align: right;
+    margin-left: auto;
 }
+
 
 label {
     display: block;
