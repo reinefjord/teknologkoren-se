@@ -28,6 +28,7 @@ article header {
 
 .pageheader {
     text-align: center;
+    margin-bottom: 50px;
 }
 
 .logo img {
@@ -62,12 +63,12 @@ article header {
 }
 
 .container {
-    margin: 50px auto;
+    margin: 0 auto;
     max-width: 34em;
 }
 
 .nav {
-    margin: 30px 0;
+    margin-top: 30px;
 }
 
 .nav ul {
@@ -81,7 +82,6 @@ article header {
 }
 .nav a {
     text-decoration: none;
-    color: #000;
 }
 .nav .active {
     text-decoration: underline;
@@ -104,16 +104,14 @@ article header {
 
 .pager a {
     text-decoration: none;
-    color: #000;
-    margin-bottom: 20px;
 }
 
 .pager .older {
-    float: left;
+    text-align: left;
 }
 
 .pager .newer {
-    float: right;
+    text-align: right;
 }
 
 label {
@@ -126,6 +124,10 @@ label {
 }
 
 @media screen and (max-width: 38em) {
+    .pageheader {
+        margin-bottom: 30px;
+    }
+
     .logo img {
         margin: 0;
     }
@@ -150,6 +152,10 @@ label {
 
     .container {
         margin: 30px 0;
+    }
+
+    article header {
+        text-align: center;
     }
 }
 
