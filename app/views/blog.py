@@ -30,7 +30,9 @@ def overview(page):
     pagination = posts.paginate(page, 5)
 
     if not pagination and posts:
-        last_page = (len(posts) // 5) + 1
+        last_page = len(posts) // 5
+        if len(posts) % 5:
+            last_page += 1
         return redirect(url_for('.overview', page=last_page))
 
     has_next = True if posts.paginate(page+1, 5) else False
