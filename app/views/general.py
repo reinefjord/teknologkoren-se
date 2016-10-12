@@ -12,10 +12,7 @@ def om_oss():
 
 @mod.route('/boka/', methods=['GET', 'POST'])
 def boka():
-    form = BookingForm()
-    if form.validate_on_submit():
-        pass
-    return render_template('general/boka.html', form=form)
+    return render_template('general/boka.html')
 
 
 @mod.route('/sjung/')

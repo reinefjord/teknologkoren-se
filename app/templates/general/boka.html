@@ -9,38 +9,6 @@
   <p>
     Här kan du boka kören!
   </p>
-  <form method='POST'>
-    <label>
-    {{ form.csrf_token }}
-    </label>
-    <label>
-      Namn:</br>
-      {{ form.name }}
-    </label>
-    <label>
-      Kontaktperson:</br>
-      {{ form.contact }}
-    </label>
-    <label>
-      Datum:</br>
-      {{ form.date }}
-    </label>
-    <label>
-      Plats:</br>
-      {{ form.location }}
-    </label>
-    <label>
-      Antal sångare:</br>
-      {{ form.amount }}
-    </label>
-    <label>
-      Övriga kommentarer:</br>
-      {{ form.comments }}
-    </label>
-    <label>
-      {{ form.submit }}
-    </label>
-  </form>
 </section>
 
 {% endblock %}

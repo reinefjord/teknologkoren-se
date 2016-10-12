@@ -89,14 +89,3 @@ class EditPostForm(Form):
 class EditEventForm(EditPostForm):
     start_time = DateTimeField(format='%Y-%m-%d %H:%M')
     location = StringField('Location')
-
-
-class BookingForm(Form):
-    name = StringField('Namn')
-    contact = StringField('Contact')
-    phone = StringField('Phone')
-    date = DateTimeField(format='%Y-%m-%d %H:%M')
-    location = StringField('Location')
-    amount = IntegerField()
-    comments = TextField('Comments')
-    submit = SubmitField('Submit')
