@@ -1,5 +1,4 @@
 from flask import Blueprint, render_template
-from app.forms import BookingForm
 
 
 mod = Blueprint('general', __name__)
