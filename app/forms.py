@@ -1,6 +1,6 @@
 from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
                      HiddenField, DateTimeField, IntegerField, TextField)
 from wtforms.validators import Email, InputRequired
@@ -23,11 +23,11 @@ def get_redirect_target():
             return target
 
 
-class RedirectForm(Form):
+class RedirectForm(FlaskForm):
     next = HiddenField()
 
     def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
+        FlaskForm.__init__(self, *args, **kwargs)
         if not self.next.data:
             self.next.data = get_redirect_target() or ''
 
@@ -45,7 +45,7 @@ class LoginForm(RedirectForm):
     submit = SubmitField('Login')
 
     def validate(self):
-        if not Form.validate(self):
+        if not FlaskForm.validate(self):
             return False
 
         try:
@@ -67,7 +67,7 @@ class RegisterForm(RedirectForm):
     submit = SubmitField('Submit')
 
     def validate(self):
-        if not Form.validate(self):
+        if not FlaskForm.validate(self):
             return False
 
         try:
@@ -79,7 +79,7 @@ class RegisterForm(RedirectForm):
         return False
 
 
-class EditPostForm(Form):
+class EditPostForm(FlaskForm):
     content = HiddenField(validators=[InputRequired()])
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
