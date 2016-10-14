@@ -51,13 +51,18 @@ def overview(page):
 def new_post():
     form = EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
+        if form.upload.has_file():
+            image = images.save(form.upload.data)
+        else:
+            image = None
+
         post = Post.create(
                 title=form.title.data,
                 content=form.content.data,
                 published=form.published.data,
                 timestamp=datetime.datetime.now(),
                 author=current_user.id,
-                image=images.save(form.upload.data)
+                image=image
                 )
         return redirect(post.slug)
 
