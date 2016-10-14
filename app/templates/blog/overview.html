@@ -17,7 +17,11 @@
               {{ post.timestamp.strftime("%d %B %Y") }}
             </time>
           </header>
-          {{ post.content|safe }}
+          {% if post.image %}
+          <img src="{{ image_url(post.image) }}">
+          {% endif %}
+          {{ post.content|striptags|truncate(200) }}
+          <p><a href="/{{ post.slug }}/">Läs mer</a></p>
         </article>
       {% endfor %}
     </section>
