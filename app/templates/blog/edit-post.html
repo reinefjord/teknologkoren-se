@@ -11,7 +11,7 @@
   <section class="container">
     <div class='edit-post'>
       <h2>Edit post</h2>
-      <form method="POST">
+      <form method="POST" enctype="multipart/form-data">
         {{ form.csrf_token }}
         <label class='title'>
           Title: {{ form.title() }}
@@ -21,6 +21,7 @@
         <label>
           {{ form.published() }} Publish
         </label>
+        {{ form.upload() }}
         {{ form.submit() }}
       </form>
     </div>

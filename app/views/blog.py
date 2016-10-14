@@ -2,8 +2,8 @@ import datetime
 from flask import abort, Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
-from app import app
-from app import login_manager
+from werkzeug.datastructures import CombinedMultiDict
+from app import app, images
 from app.forms import EditPostForm
 from app.models import Post
 
@@ -15,7 +15,10 @@ def url_for_other_page(page):
     args = request.view_args.copy()
     args['page'] = page
     return url_for(request.endpoint, **args)
+
+
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+app.jinja_env.globals['image_url'] = images.url
 
 
 @mod.route('/', defaults={'page': 1})
@@ -46,13 +49,16 @@ def overview(page):
 @mod.route('/new-post/', methods=['GET', 'POST'])
 @login_required
 def new_post():
-    form = EditPostForm(request.form)
+    form = EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
-        post = Post.create(title=form.title.data,
-                           content=form.content.data,
-                           published=form.published.data,
-                           timestamp=datetime.datetime.now(),
-                           author=current_user.id)
+        post = Post.create(
+                title=form.title.data,
+                content=form.content.data,
+                published=form.published.data,
+                timestamp=datetime.datetime.now(),
+                author=current_user.id,
+                image=images.save(form.upload.data)
+                )
         return redirect(post.slug)
 
     return render_template('blog/edit-post.html', form=form)
@@ -72,9 +78,11 @@ def view_post(slug):
 @login_required
 def edit_post(slug):
     post = get_object_or_404(Post, Post.slug == slug)
-    form = EditPostForm(request.form, post)
+    form = EditPostForm(CombinedMultiDict((request.form, request.files)), post)
 
     if form.validate_on_submit():
+        if form.upload.has_file():
+            post.image = images.save(form.upload.data)
         post.title = form.title.data
         post.content = form.content.data
         post.published = form.published.data

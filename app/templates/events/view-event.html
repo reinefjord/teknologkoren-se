@@ -9,6 +9,9 @@
       <header>
         <h1>{{ event.title }}</h1>
       </header>
+      {% if event.image %}
+      <img src="{{ image_url(event.image) }}">
+      {% endif %}
       {{ event.content|safe }}
     {% if current_user.is_authenticated %}
       <p>

@@ -7,7 +7,7 @@
       <title>{{ title }} | Kongl. Teknologkören</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Vollkorn">
-      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock %}
   </head>
   <body>
@@ -24,7 +24,7 @@
     <div class=box>
       <header class="pageheader">
         <div class="logo">
-          <img src="/static/images/logo.png">
+          <img src="{{ url_for('static', filename='images/logo.png') }}">
           <h1>
             Kongl. Teknologkören
             <div class="tagline">I takt med tiden - sedan 1930</div>

@@ -12,6 +12,9 @@
           {{ post.timestamp.strftime("%d %B %Y") }}
         </time>
       </header>
+      {% if post.image %}
+      <img src="{{ image_url(post.image) }}">
+      {% endif %}
       {{ post.content|safe }}
     </article>
     {% if current_user.is_authenticated %}

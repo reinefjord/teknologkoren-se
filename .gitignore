@@ -3,4 +3,4 @@ venv/
 
 *.db
 
-*.jpg
+app/static/uploads/*

@@ -1,10 +1,12 @@
 from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileAllowed, FileField
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
-                     HiddenField, DateTimeField, IntegerField, TextField)
+                     HiddenField, DateTimeField)
 from wtforms.validators import Email, InputRequired
 from peewee import DoesNotExist
+from app import images
 from .models import User
 
 
@@ -79,7 +81,13 @@ class RegisterForm(RedirectForm):
         return False
 
 
-class EditPostForm(FlaskForm):
+class UploadForm(FlaskForm):
+    upload = FileField('image', validators=[
+        FileAllowed(images, 'Images only!')
+        ])
+
+
+class EditPostForm(UploadForm):
     content = HiddenField(validators=[InputRequired()])
     submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
