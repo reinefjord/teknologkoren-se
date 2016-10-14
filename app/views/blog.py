@@ -1,11 +1,12 @@
 import datetime
 from flask import abort, Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
+from peewee import SQL
 from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
 from app import app, images
 from app.forms import EditPostForm
-from app.models import Post
+from app.models import Post, Event
 
 
 mod = Blueprint('blog', __name__)
@@ -24,11 +25,19 @@ app.jinja_env.globals['image_url'] = images.url
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def overview(page):
-    if current_user.is_authenticated:
-        posts = Post.select().order_by(Post.timestamp.desc())
-    else:
-        posts = Post.select().where(Post.published == True
-                                    ).order_by(Post.timestamp.desc())
+    blogposts = Post.select(
+            Post,
+            SQL(" '' AS location"),
+            SQL(" '' AS start_time")
+            )
+
+    events = Event.select()
+
+    if not current_user.is_authenticated:
+        blogposts = blogposts.where(Post.published == True)
+        events = events.where(Event.published == True)
+
+    posts = (blogposts | events).select().order_by(Post.timestamp.desc())
 
     pagination = posts.paginate(page, 5)
 
