@@ -55,6 +55,7 @@ def new_event():
     if form.validate_on_submit():
         event = Event.create(
                 title=form.title.data,
+                path=url_for('.overview'),
                 content=form.content.data,
                 published=form.published.data,
                 start_time=form.start_time.data,

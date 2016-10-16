@@ -67,6 +67,7 @@ def new_post():
 
         post = Post.create(
                 title=form.title.data,
+                path=url_for('.overview'),
                 content=form.content.data,
                 published=form.published.data,
                 timestamp=datetime.datetime.now(),

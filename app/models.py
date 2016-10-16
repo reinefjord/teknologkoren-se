@@ -28,6 +28,7 @@ class User(UserMixin, flask_db.Model):
 class Post(flask_db.Model):
     title = CharField()
     slug = CharField(unique=True)
+    path = CharField()
     content = TextField()
     published = BooleanField()
     timestamp = DateTimeField()

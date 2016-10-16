@@ -12,7 +12,7 @@
       {% for event in pagination %}
         <article>
           <header>
-            <h1><a href="/konserter/{{ event.slug }}/">{{ event.title }}</a></h1>
+            <h1><a href="{{ event.path + event.slug }}/">{{ event.title }}</a></h1>
           </header>
           {{ event.content|safe }}
 
