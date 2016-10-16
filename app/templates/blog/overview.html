@@ -18,7 +18,7 @@
             </time>
           </header>
           {% if post.image %}
-          <img src="{{ image_url(post.image) }}">
+          <img src="{{ resized_img_src(post.image, width=1000, height=300, mode='crop') }}">
           {% endif %}
           {{ post.content|striptags|truncate(200) }}
           <p><a href="/{{ post.slug }}/">Läs mer</a></p>

@@ -10,7 +10,7 @@
         <h1>{{ event.title }}</h1>
       </header>
       {% if event.image %}
-      <img src="{{ image_url(event.image) }}">
+      <img src="{{ resized_img_src(event.image, width=1000) }}">
       {% endif %}
       {{ event.content|safe }}
     {% if current_user.is_authenticated %}
