@@ -20,7 +20,7 @@
           {% if post.image %}
           <img src="{{ resized_img_src(post.image, width=1000, height=300, mode='crop') }}">
           {% endif %}
-          {{ post.content|striptags|truncate(200) }}
+          <p>{{ post.content|striptags|truncate(200) }}</p>
           <p><a href="{{ post.path + post.slug }}">Läs mer</a></p>
         </article>
       {% endfor %}
