@@ -112,6 +112,9 @@ article header {
     margin-left: auto;
 }
 
+.nowrap {
+    white-space: nowrap;
+}
 
 label {
     display: block;
