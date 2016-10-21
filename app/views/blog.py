@@ -1,4 +1,5 @@
 import datetime
+from operator import attrgetter
 from flask import abort, Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
 from peewee import SQL
@@ -22,24 +23,26 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
 
 
+def paginate(content, page, page_size):
+    start_index = (page-1) * page_size
+    end_index = start_index + page_size
+    pagination = content[start_index:end_index]
+    return pagination
+
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def overview(page):
-    blogposts = Post.select(
-            Post,
-            SQL(" '' AS location"),
-            SQL(" '' AS start_time")
-            )
-
+    blogposts = Post.select()
     events = Event.select()
 
     if not current_user.is_authenticated:
         blogposts = blogposts.where(Post.published == True)
         events = events.where(Event.published == True)
 
-    posts = (blogposts | events).select().order_by(Post.timestamp.desc())
+    unsorted_posts = list(blogposts) + list(events)
+    posts = sorted(unsorted_posts, key=attrgetter('timestamp'), reverse=True)
 
-    pagination = posts.paginate(page, 5)
+    pagination = paginate(posts, page, 5)
 
     if not pagination and posts:
         last_page = len(posts) // 5
@@ -47,7 +50,7 @@ def overview(page):
             last_page += 1
         return redirect(url_for('.overview', page=last_page))
 
-    has_next = True if posts.paginate(page+1, 5) else False
+    has_next = True if paginate(posts, page+1, 5) else False
 
     return render_template('blog/overview.html',
                            pagination=pagination,
