@@ -18,8 +18,15 @@ def url_for_other_page(page):
     return url_for(request.endpoint, **args)
 
 
+def is_event(post):
+    if isinstance(post, Event):
+        return True
+    return False
+
+
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
+app.jinja_env.tests['event'] = is_event
 
 
 def paginate(content, page, page_size):
