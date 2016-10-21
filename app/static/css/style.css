@@ -26,6 +26,11 @@ article header {
     margin: 20px 0;
 }
 
+.article-image {
+    display: block;
+    text-align: center;
+}
+
 .pageheader {
     text-align: center;
     margin-bottom: 50px;

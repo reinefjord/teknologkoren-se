@@ -13,7 +13,9 @@
         </time>
       </header>
       {% if post.image %}
-      <img src="{{ resized_img_src(post.image, width=1000) }}">
+      <div class="article-image">
+        <img src="{{ resized_img_src(post.image, height=400) }}">
+      </div>
       {% endif %}
       {{ post.content|safe }}
     </article>

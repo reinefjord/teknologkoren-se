@@ -18,7 +18,11 @@
             </time>
           </header>
           {% if post.image %}
-          <img src="{{ resized_img_src(post.image, width=1000, height=300, mode='crop') }}">
+            {% if post is event %}
+            <img src="{{ resized_img_src(post.image, height=300) }}">
+            {% else %}
+            <img src="{{ resized_img_src(post.image, width=1000, height=300, mode='crop') }}">
+            {% endif %}
           {% endif %}
           <p>{{ post.content|striptags|truncate(200) }}</p>
           <p><a href="{{ post.path + post.slug }}">Läs mer</a></p>
