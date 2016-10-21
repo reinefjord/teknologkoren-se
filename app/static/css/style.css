@@ -130,6 +130,10 @@ label {
     font-size: small;
 }
 
+.trix-content {
+    min-height: 12em;
+}
+
 @media screen and (max-width: 38em) {
     .pageheader {
         margin-bottom: 30px;
