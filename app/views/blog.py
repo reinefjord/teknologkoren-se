@@ -2,7 +2,6 @@ import datetime
 from operator import attrgetter
 from flask import abort, Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user, login_required
-from peewee import SQL
 from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
 from app import app, images
@@ -29,6 +28,7 @@ def paginate(content, page, page_size):
     pagination = content[start_index:end_index]
     return pagination
 
+
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def overview(page):
@@ -39,8 +39,8 @@ def overview(page):
         blogposts = blogposts.where(Post.published == True)
         events = events.where(Event.published == True)
 
-    unsorted_posts = list(blogposts) + list(events)
-    posts = sorted(unsorted_posts, key=attrgetter('timestamp'), reverse=True)
+    posts = list(blogposts) + list(events)
+    posts.sort(key=attrgetter('timestamp'), reverse=True)
 
     pagination = paginate(posts, page, 5)
 
