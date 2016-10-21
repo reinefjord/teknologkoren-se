@@ -11,7 +11,9 @@
       </header>
       {% if event.image %}
       <div class="article-image">
-        <img src="{{ resized_img_src(event.image, height=400) }}">
+        <a href="{{ image_url(event.image) }}">
+          <img src="{{ resized_img_src(event.image, height=400) }}">
+        </a>
       </div>
       {% endif %}
       {{ event.content|safe }}

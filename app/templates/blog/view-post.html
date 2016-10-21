@@ -14,7 +14,9 @@
       </header>
       {% if post.image %}
       <div class="article-image">
-        <img src="{{ resized_img_src(post.image, height=400) }}">
+        <a href="{{ image_url(post.image) }}">
+          <img src="{{ resized_img_src(post.image, height=400) }}">
+        </a>
       </div>
       {% endif %}
       {{ post.content|safe }}
