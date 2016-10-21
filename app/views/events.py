@@ -24,13 +24,10 @@ app.jinja_env.globals['image_url'] = images.url
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def overview(page):
-    if current_user.is_authenticated:
-        events = Event.select().order_by(Event.start_time)
-    else:
-        events = Event.select().where(Event.published == True
-                                      ).order_by(Event.start_time)
+    events = Event.select().order_by(Event.start_time.desc())
 
-    events = events.order_by(Event.start_time.desc())
+    if not current_user.is_authenticated:
+        events = events.where(Event.published == True)
 
     pagination = events.paginate(page, 5)
 
