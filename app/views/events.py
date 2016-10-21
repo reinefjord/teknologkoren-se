@@ -91,7 +91,8 @@ def edit_event(slug):
         event.published = form.published.data
         event.start_time = form.start_time.data
         event.location = form.location.data
-        event.image = images.save(form.upload.data)
+        if form.upload.has_file():
+            event.image = images.save(form.upload.data)
         event.save()
         return redirect(url_for('.view_event', slug=event.slug))
 
