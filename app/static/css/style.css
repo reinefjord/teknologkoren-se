@@ -134,6 +134,13 @@ label {
     min-height: 12em;
 }
 
+.contacts {
+    width: 100%;
+}
+.contacts td {
+    height: 2em;
+}
+
 @media screen and (max-width: 38em) {
     .pageheader {
         margin-bottom: 30px;

@@ -21,4 +21,18 @@ def sjung():
 
 @mod.route('/kontakt/')
 def kontakt():
-    return render_template('general/kontakt.html')
+    # FIXME!
+    class contact:
+        """!!!PLACEHOLDER!!!"""
+        def __init__(self, role, name, email):
+            self.role = role
+            self.name = name
+            self.email = email
+
+    contacts = [
+            contact("Ordförande", "Namn Efternamn", "ordf@teknologkoren.se"),
+            contact("Vice ordförande", "Namn Efternamn", "vice@teknologkoren.se"),
+            contact("Kassör", "Namn Efternamn", "pengar@teknologkoren.se")
+    ]
+
+    return render_template('general/kontakt.html', contacts=contacts)
