@@ -1,13 +1,18 @@
 from flask_login import UserMixin
 from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
-                    ForeignKeyField)
+                    ForeignKeyField, FixedCharField)
 from playhouse.hybrid import hybrid_property
 from slugify import slugify
 
 
 class User(UserMixin, flask_db.Model):
     email = CharField(unique=True)
+    first_name = CharField()
+    last_name = CharField()
+    phone = CharField(null=True)
+    active = BooleanField()
+    voice = FixedCharField(max_length=2)
     _password = CharField()
 
     @hybrid_property

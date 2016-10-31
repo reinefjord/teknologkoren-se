@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% set title = "Reset password" %}
+
+{% block body %}
+  <div class="container">
+    <form method='POST'>
+      {{ form.csrf_token }}
+      <h2>Reset password</h2>
+      {{ form.email(placeholder='Email address') }}
+      {{ form.submit() }}
+    </form>
+  </div>
+{% endblock %}

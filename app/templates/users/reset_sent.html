@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% set title = "Reset link sent" %}
+
+{% block body %}
+  <div class="container">
+    <p>A password reset link has been sent to {{ email }}. The link expires in
+      15 minutes.</p>
+  </div>
+{% endblock %}

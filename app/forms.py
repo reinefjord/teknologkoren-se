@@ -4,7 +4,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
                      HiddenField, DateTimeField)
-from wtforms.validators import Email, InputRequired
+from wtforms.validators import Email, InputRequired, Length, Regexp, EqualTo
 from peewee import DoesNotExist
 from app import images
 from .models import User
@@ -63,9 +63,35 @@ class LoginForm(RedirectForm):
         return True
 
 
-class RegisterForm(RedirectForm):
+class EmailForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
+    submit = SubmitField('Submit')
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+
+        try:
+            self.user = User.get(User.email == self.email.data)
+        except User.DoesNotExist:
+            self.email.errors.append("Unknown email")
+            return False
+
+        return True
+
+
+class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
+    submit = SubmitField('Submit')
+
+
+class AddUserForm(RedirectForm):
+    first_name = StringField('First Name', validators=[InputRequired()])
+    last_name = StringField('First Name', validators=[InputRequired()])
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
+    active = BooleanField('Active')
+    voice = StringField('Voice', validators=[Length(min=2, max=2)])
     submit = SubmitField('Submit')
 
     def validate(self):
