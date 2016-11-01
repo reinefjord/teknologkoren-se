@@ -19,11 +19,11 @@
     ('/sjung/', 'sjung', 'Sjung med'),
     ('/kontakt/', 'kontakt', 'Kontakt'),
     ] -%}
-    {# ('/intranet/', 'intranet', 'Intranät'), #}
     {% set active_page = active_page -%}
     <div class=box>
       <header class="pageheader">
         <div class="logo">
+        <a href="/">
           <img src="{{ url_for('static', filename='images/logo.png') }}">
           <h1>
             Kongl. Teknologkören
@@ -32,6 +32,7 @@
               <span class="nowrap">- sedan 1930</span>
             </div>
           </h1>
+          </a>
         </div>
         <nav class="nav">
           <ul>
