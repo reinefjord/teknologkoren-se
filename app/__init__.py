@@ -3,7 +3,6 @@ from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.peewee import ModelView
-from flask_images import Images as image_resizer
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from playhouse.flask_utils import FlaskDB
 
@@ -33,8 +32,6 @@ bcrypt = Bcrypt(app)
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
-
-resize = image_resizer(app)
 
 from app.models import User, Post, Event
 admin = Admin(app, name='teknologkoren.se')

@@ -12,7 +12,7 @@
       {% if event.image %}
       <div class="article-image">
         <a href="{{ image_url(event.image) }}">
-          <img src="{{ resized_img_src(event.image, height=400) }}">
+          <img src="{{ image_url(event.image) }}">
         </a>
       </div>
       {% endif %}

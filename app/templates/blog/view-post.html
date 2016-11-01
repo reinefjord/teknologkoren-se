@@ -15,7 +15,7 @@
       {% if post.image %}
       <div class="article-image">
         <a href="{{ image_url(post.image) }}">
-          <img src="{{ resized_img_src(post.image, height=400) }}">
+          <img src="{{ image_url(post.image) }}">
         </a>
       </div>
       {% endif %}

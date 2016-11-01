@@ -12,6 +12,3 @@ TEMPLATES_AUTO_RELOAD = True
 
 UPLOADS_DEFAULT_DEST = 'app/static/uploads/'
 UPLOADS_DEFAULT_URL = '/static/uploads/'
-
-IMAGES_PATH = ['static/images', 'static/uploads/images']
-IMAGES_URL = '/img'

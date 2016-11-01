@@ -1,25 +1,11 @@
 bcrypt==3.1.1
-cffi==1.8.3
-click==6.6
 Flask==0.11.1
 Flask-Admin==1.4.2
 Flask-Bcrypt==0.7.1
--e git+https://github.com/mikeboers/Flask-Images.git@85f6730d8b62327a8a7eaba7205c6b2a9c022deb#egg=Flask_Images
 Flask-Login==0.3.2
 Flask-Uploads==0.2.1
 Flask-WTF==0.13.1
-itsdangerous==0.24
-Jinja2==2.8
-MarkupSafe==0.23
 peewee==2.8.5
-PIL==1.1.7
-pilkit==1.1.13
-Pillow==3.4.1
-pillowcase==2.0.0
-pycparser==2.14
 python-slugify==1.2.1
-six==1.10.0
-Unidecode==0.4.19
-Werkzeug==0.11.11
 wtf-peewee==0.2.6
 WTForms==2.1

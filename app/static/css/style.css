@@ -26,9 +26,17 @@ article header {
     margin: 20px 0;
 }
 
-.article-image {
-    display: block;
-    text-align: center;
+.post-image {
+    height: 300px;
+    overflow: hidden;
+}
+
+.event-image img {
+    height: 300px;
+}
+
+.article-image img {
+    max-height: 400px;
 }
 
 .pageheader {
