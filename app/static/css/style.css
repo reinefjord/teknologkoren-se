@@ -27,12 +27,12 @@ article header {
 }
 
 .post-image {
-    height: 300px;
+    max-height: 300px;
     overflow: hidden;
 }
 
 .event-image img {
-    height: 300px;
+    max-height: 300px;
 }
 
 .article-image img {
