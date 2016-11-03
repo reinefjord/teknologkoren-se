@@ -12,7 +12,6 @@ class User(UserMixin, flask_db.Model):
     last_name = CharField()
     phone = CharField(null=True)
     active = BooleanField()
-    voice = FixedCharField(max_length=2)
     _password = CharField()
 
     @hybrid_property
@@ -28,6 +27,18 @@ class User(UserMixin, flask_db.Model):
 
     def __str__(self):
         return self.email
+
+
+class Group(flask_db.Model):
+    name = CharField(unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class UserGroup(flask_db.Model):
+    user = ForeignKeyField(User)
+    group = ForeignKeyField(Group)
 
 
 class Post(flask_db.Model):

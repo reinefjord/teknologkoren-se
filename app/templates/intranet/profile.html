@@ -1,0 +1,18 @@
+{% extends "intranet/layout.html" %}
+
+{% if current_user.id == user.id %}
+{% set active_page = "profile" %}
+{% else %}
+{% set active_page = "members" %}
+{% endif %}
+
+{% set title = "Intranät" %}
+
+{% block body %}
+<div class="container">
+  <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+  <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
+  <p>Number: {{ user.phone }}</p>
+  <p>Groups: {% for group in groups %}{{ group.name }} {% endfor %}</p>
+</div>
+{%- endblock %}

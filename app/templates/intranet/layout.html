@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% block head %}
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>{{ title }} | Kongl. Teknologkören</title>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Vollkorn">
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% endblock %}
+  </head>
+  <body>
+    {% set navigation_bar = [
+    ('/intranet/', 'intranet', 'Intranät'),
+    ('/intranet/members/', 'members', 'Medlemmar'),
+    ('/intranet/profile/', 'profile', 'Profil'),
+    ] -%}
+    {% set active_page = active_page -%}
+    <div class=box>
+      <header class="pageheader">
+        <div class="logo">
+        <a href="/">
+          <img src="{{ url_for('static', filename='images/logo.png') }}">
+          <h1>
+            Kongl. Teknologkören
+            <div class="tagline">
+              I takt med tiden
+              <span class="nowrap">- sedan 1930</span>
+            </div>
+          </h1>
+          </a>
+        </div>
+        <nav class="nav">
+          <ul>
+            {% for href, id, caption in navigation_bar -%}
+              <li{% if id == active_page %} class="active"{% endif %}>
+                <a href="{{ href|e }}">{{ caption|e }}</a>
+              </li>
+            {% endfor -%}
+          </ul>
+        </nav>
+      </header>
+      {% block body %}{% endblock %}
+    </div>
+  </body>
+</html>
