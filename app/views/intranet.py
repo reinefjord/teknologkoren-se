@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
-from app.models import User, Group, UserGroup
+from app.models import User, Tag, UserTag
 
 mod = Blueprint('intranet', __name__, url_prefix='/intranet')
 
@@ -25,13 +25,12 @@ def my_profile():
 @mod.route('/profile/<int:id>/')
 def profile(id):
     user = get_object_or_404(User, User.id == id)
-    groups = (Group
+    tags = (Tag
               .select()
-              .join(UserGroup)
-              .where(UserGroup.user == user))
+              .join(UserTag)
+              .where(UserTag.user == user))
 
-    print(groups)
-    return render_template('intranet/profile.html', user=user, groups=groups)
+    return render_template('intranet/profile.html', user=user, tags=tags)
 
 
 @mod.route('/profile/<int:id>/edit/', methods=['GET', 'POST'])
@@ -48,8 +47,8 @@ def members():
     voices = {}
     for voice in ['S1', 'S2', 'A1', 'A2', 'T1', 'T2', 'B1', 'B2']:
         voices[voice] = (users
-                         .join(UserGroup)
-                         .join(Group)
-                         .where(Group.name == voice))
+                         .join(UserTag)
+                         .join(Tag)
+                         .where(Tag.name == voice))
 
     return(render_template('intranet/members.html', voices=voices))

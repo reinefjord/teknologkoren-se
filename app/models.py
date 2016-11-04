@@ -29,16 +29,16 @@ class User(UserMixin, flask_db.Model):
         return self.email
 
 
-class Group(flask_db.Model):
+class Tag(flask_db.Model):
     name = CharField(unique=True)
 
     def __str__(self):
         return self.name
 
 
-class UserGroup(flask_db.Model):
+class UserTag(flask_db.Model):
     user = ForeignKeyField(User)
-    group = ForeignKeyField(Group)
+    tag = ForeignKeyField(Tag)
 
 
 class Post(flask_db.Model):
