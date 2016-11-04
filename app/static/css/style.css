@@ -1,8 +1,11 @@
 body {
-    font-family: 'Open Sans', sans-serif;
     font-size: 1.2em;
     line-height: 1.6;
     overflow-y: scroll;
+}
+
+body, .tagline {
+    font-family: sans-serif;
 }
 
 img {
@@ -50,14 +53,13 @@ article header {
 
 .logo h1 {
     margin: 0;
-    font-family: 'Vollkorn', serif;
+    font-family: serif;
     font-size: 2.2em;
     font-weight: normal;
     text-align: left;
 }
 
 .logo .tagline {
-    font-family: 'Open Sans', sans-serif;
     font-weight: normal;
     font-size: 0.5em;
     text-align: left;
@@ -177,9 +179,9 @@ label {
     }
 
     .nav li {
-        margin: 0 10px;
-        width: 5em;
-        height: 2.2em;
+        margin: 5px;
+        width: 5.5em;
+        height: 1.5em;
         display: inline-block;
     }
 
