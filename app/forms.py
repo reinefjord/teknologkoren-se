@@ -44,7 +44,6 @@ class LoginForm(RedirectForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember = BooleanField('Remember me')
-    submit = SubmitField('Login')
 
     def validate(self):
         if not FlaskForm.validate(self):
@@ -65,7 +64,6 @@ class LoginForm(RedirectForm):
 
 class EmailForm(FlaskForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
-    submit = SubmitField('Submit')
 
     def validate(self):
         if not FlaskForm.validate(self):
@@ -82,7 +80,6 @@ class EmailForm(FlaskForm):
 
 class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
-    submit = SubmitField('Submit')
 
 
 class AddUserForm(RedirectForm):
@@ -92,7 +89,6 @@ class AddUserForm(RedirectForm):
     phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
     active = BooleanField('Active')
     voice = StringField('Voice', validators=[Length(min=2, max=2)])
-    submit = SubmitField('Submit')
 
     def validate(self):
         if not FlaskForm.validate(self):
@@ -115,7 +111,6 @@ class UploadForm(FlaskForm):
 
 class EditPostForm(UploadForm):
     content = HiddenField(validators=[InputRequired()])
-    submit = SubmitField('Submit')
     title = StringField('Title', validators=[InputRequired()])
     published = BooleanField('Publish')
 
