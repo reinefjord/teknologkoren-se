@@ -7,15 +7,17 @@
 
 <section class="container">
   <p>E-postadresser till alla i styrelsen finnes nedan.</p>
-  <table class="contacts">
-  {% for person in contacts %}
-    <tr>
-      <td>{{ person.role }}</td>
-      <td>{{ person.name }}</td>
-      <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
-    </tr>
-  {% endfor %}
-  </table>
+  <div class="table">
+    <table class="contacts">
+      {% for person in contacts %}
+      <tr>
+        <td>{{ person.role }}</td>
+        <td>{{ person.name }}</td>
+        <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </section>
 
 {% endblock %}

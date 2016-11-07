@@ -148,11 +148,17 @@ label {
     min-height: 12em;
 }
 
+.table {
+    overflow-x: auto;
+}
+
 .contacts {
     width: 100%;
 }
 .contacts td {
+    white-space: nowrap;
     height: 2em;
+    padding-right: 10px;
 }
 
 @media screen and (max-width: 38em) {
