@@ -23,7 +23,7 @@ def login():
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
-        return form.redirect(url_for('blog.overview'))
+        return form.redirect('blog.overview')
 
     return render_template('users/login.html', form=form)
 
