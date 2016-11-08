@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% set navigation_bar = [
+('/', 'index', 'Hem'),
+('/om-oss/', 'om-oss', 'Om oss'),
+('/konserter/', 'konserter', 'Konserter'),
+('/boka/', 'boka', 'Boka'),
+('/sjung/', 'sjung', 'Sjung med'),
+('/kontakt/', 'kontakt', 'Kontakt'),
+] %}
+
+{% block logo %}
+<a href="/">
+  <img src="{{ url_for('static', filename='images/logo.png') }}">
+  <h1>
+    Kongl. Teknologkören
+    <div class="tagline">
+      I takt med tiden
+      <span class="nowrap">- sedan 1930</span>
+    </div>
+  </h1>
+</a>
+{% endblock %}

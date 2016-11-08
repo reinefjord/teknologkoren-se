@@ -1,10 +1,9 @@
 body {
+    margin: 20px auto;
+    max-width: 40em;
     font-size: 1.2em;
     line-height: 1.6;
     overflow-y: scroll;
-}
-
-body, .tagline {
     font-family: sans-serif;
 }
 
@@ -54,7 +53,7 @@ article header {
 .logo h1 {
     margin: 0;
     font-family: serif;
-    font-size: 2.2em;
+    font-size: 2.1em;
     font-weight: normal;
     text-align: left;
 }
@@ -75,14 +74,9 @@ article header {
     text-decoration: none;
 }
 
-.box {
-    margin: 20px auto;
-    padding: 0 20px;
-    max-width: 40em;
-}
-
 .container {
     margin: 0 auto;
+    padding: 0 20px;
     max-width: 34em;
 }
 
