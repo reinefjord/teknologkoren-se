@@ -47,12 +47,12 @@ def adduser():
                 email=form.email.data,
                 first_name=form.first_name.data,
                 last_name=form.last_name.data,
-                voice=form.voice.data,
+                phone=form.phone.data,
                 active=form.active.data,
                 password=password,
                 )
 
-        return form.redirect(url_for('blog.overview'))
+        return form.redirect('blog.overview')
 
     return render_template('users/adduser.html', form=form)
 

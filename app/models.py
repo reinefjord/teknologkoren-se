@@ -26,7 +26,7 @@ class User(UserMixin, flask_db.Model):
         return bcrypt.check_password_hash(self._password, plaintext)
 
     def __str__(self):
-        return self.email
+        return "{} {}".format(self.first_name, self.last_name)
 
 
 class Tag(flask_db.Model):

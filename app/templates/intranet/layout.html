@@ -6,6 +6,11 @@
 ('/intranet/profile/', 'profile', 'Profil'),
 ] -%}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/intranet.css') }}">
+{% endblock %}
+
 {% block logo %}
 <a href="/">
   <img src="{{ url_for('static', filename='images/logo.png') }}">

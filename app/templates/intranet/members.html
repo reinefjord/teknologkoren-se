@@ -6,11 +6,15 @@
 
 {% block body %}
 <div class="container">
-  {% for voice in ['S1', 'S2', 'A1', 'A2', 'T1', 'T2', 'B1', 'B2'] %}
-  <h2>{{ voice }}</h2>
-  {% for member in voices[voice] %}
-  <a href="/intranet/profile/{{ member.id }}">{{ member.first_name }} {{ member.last_name }}</a>
-  {% endfor %}
-  {% endfor %}
+  <ul class="member-list">
+    {% for voice in voice_tags %}
+    <li><h2>{{ voice }}</h2>
+      <ul>
+        {% for member in voices[voice] %}
+        <li><a href="/intranet/profile/{{ member.id }}">{{ member.first_name }} {{ member.last_name }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    {% endfor %}
 </div>
 {%- endblock %}

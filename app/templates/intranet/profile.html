@@ -13,7 +13,7 @@
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
   <p>Number: {{ user.phone }}</p>
-  <p>Groups: {% for group in groups %}{{ group.name }} {% endfor %}</p>
+  <p>Tags: {% for tag in tags %}{{ tag.name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</p>
   {% if current_user.id == user.id %}
   <p><a href="edit/">Edit</a></p>
   {% endif %}

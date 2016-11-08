@@ -45,10 +45,15 @@ def edit_profile(id):
 def members():
     users = User.select().where(User.active == True)
     voices = {}
-    for voice in ['S1', 'S2', 'A1', 'A2', 'T1', 'T2', 'B1', 'B2']:
+    voice_tags = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
+                  'Tenor 2', 'Bas 1', 'Bas 2']
+    for voice in voice_tags:
         voices[voice] = (users
                          .join(UserTag)
                          .join(Tag)
                          .where(Tag.name == voice))
 
-    return(render_template('intranet/members.html', voices=voices))
+    return(render_template(
+        'intranet/members.html',
+        voices=voices,
+        voice_tags=voice_tags))

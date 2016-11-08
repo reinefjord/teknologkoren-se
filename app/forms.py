@@ -76,7 +76,6 @@ class AddUserForm(RedirectForm):
     email = StringField('Email', validators=[InputRequired(), Email()])
     phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
     active = BooleanField('Active')
-    voice = StringField('Voice', validators=[Length(min=2, max=2)])
 
     def validate(self):
         if not FlaskForm.validate(self):
