@@ -1,0 +1,46 @@
+{% macro post_article(post, overview) %}
+<article>
+  <header>
+    <h1><a href="{{ post.path + post.slug }}/">{{ post.title }}</a></h1>
+    <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
+      {{ post.timestamp.strftime("%d %B %Y") }}
+    </time>
+  </header>
+  {% if post.image %}
+  <div class="post-image{% if overview %} truncate{% endif %}">
+    <img src="{{ image_url(post.image) }}">
+  </div>
+  {% endif %}
+  {{ post.content|safe }}
+</article>
+{% endmacro %}
+
+{% macro event_article(event) %}
+<article>
+  <header>
+    <h1><a href="{{ event.path + event.slug }}/">{{ event.title }}</a></h1>
+  </header>
+  <div class="event-container">
+    <div class="event-text">
+      {{ event.content|safe }}
+      <dl class="event-detail">
+        <dt>Tid:</dt>
+        <dd>
+        <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
+          {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
+        </time>
+        </dd>
+        <dt>Plats:</dt>
+        <dd>{{ event.location }}</dd>
+      </dl>
+    </div>
+    {% if event.image %}
+    <div class="event-image">
+      <a href="{{ image_url(event.image) }}">
+        <img src="{{ image_url(event.image) }}">
+      </a>
+    </div>
+    {% endif %}
+  </div>
+</article>
+{% endmacro %}

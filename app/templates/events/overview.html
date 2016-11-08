@@ -1,45 +1,28 @@
 {% extends "main.html" %}
+{% from "macros.html" import event_article %}
 
 {% set title = "Konserter" %}
 {% set active_page = "konserter" %}
 
 {% block body %}
-  <div class="container">
-    <section class="overview">
-      {% if current_user.is_authenticated %}
-        <p><a href="/konserter/new-event/">Create new event</a></p>
-      {% endif %}
-      {% for event in pagination %}
-        <article>
-          <header>
-            <h1><a href="{{ event.path + event.slug }}/">{{ event.title }}</a></h1>
-          </header>
-          <div class="event-image">
-            <a href="{{ image_url(event.image) }}">
-              <img src="{{ image_url(event.image) }}">
-            </a>
-          </div>
-          {{ event.content|safe }}
-          <label>
-            Tid: <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
-              {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
-            </time>
-          </label>
-          <label>
-            Plats: {{ event.location }}
-          </label>
-        </article>
-      {% endfor %}
-    </section>
-    <nav class="pager">
-      {% if has_next %}
-        <a class="older" href="{{ url_for_other_page(page + 1) }}">
-          &larr; Older</a>
-      {% endif %}
-      {% if page > 1 %}
-        <a class="newer" href="{{ url_for_other_page(page - 1) }}">
-          Newer &rarr;</a>
-      {% endif %}
-    </nav>
-  </div>
+<div class="container">
+  <section class="overview">
+    {% if current_user.is_authenticated %}
+    <p><a href="/konserter/new-event/">Create new event</a></p>
+    {% endif %}
+    {% for event in pagination %}
+    {{ event_article(event) }}
+    {% endfor %}
+  </section>
+  <nav class="pager">
+    {% if has_next %}
+    <a class="older" href="{{ url_for_other_page(page + 1) }}">
+      &larr; Older</a>
+    {% endif %}
+    {% if page > 1 %}
+    <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+      Newer &rarr;</a>
+    {% endif %}
+  </nav>
+</div>
 {% endblock %}

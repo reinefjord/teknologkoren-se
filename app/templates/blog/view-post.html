@@ -1,31 +1,18 @@
 {% extends "main.html" %}
+{% from "macros.html" import post_article %}
 
 {% set title = post.title %}
 
 {% block body %}
 
   <div class="container">
-    <article>
-      <header>
-        <h1>{{ post.title }}</h1>
-        <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
-          {{ post.timestamp.strftime("%d %B %Y") }}
-        </time>
-      </header>
-      {% if post.image %}
-      <div class="article-image">
-        <a href="{{ image_url(post.image) }}">
-          <img src="{{ image_url(post.image) }}">
-        </a>
-      </div>
-      {% endif %}
-      {{ post.content|safe }}
-    </article>
+    {{ post_article(post, False) }}
+
     {% if current_user.is_authenticated %}
-      <p>
-      <a href="/{{ post.slug }}/edit/">Edit</a>
-      | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
-      </p>
+    <p>
+    <a href="/{{ post.slug }}/edit/">Edit</a>
+    | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
+    </p>
     {% endif %}
   </div>
 

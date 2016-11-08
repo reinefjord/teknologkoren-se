@@ -36,17 +36,26 @@ article header {
     margin: 20px 0;
 }
 
-.post-image {
+.event-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.event-text {
+    margin-right: 15px;
+}
+.event-image {
+    max-width: 200px;
+    flex: none;
+}
+
+.post-image img {
+    max-height: 400px;
+}
+
+.truncate {
     max-height: 300px;
     overflow: hidden;
-}
-
-.event-image img {
-    max-height: 300px;
-}
-
-.article-image img {
-    max-height: 400px;
 }
 
 .pageheader {
@@ -138,7 +147,6 @@ article header {
 }
 
 label {
-    display: block;
     margin: 20px auto;
 }
 
@@ -197,11 +205,7 @@ label {
         margin: 30px 0;
     }
 
-    article header {
-        text-align: center;
-    }
-
-    .post-image, .event-image {
+    .post-image {
         text-align: center;
     }
 
@@ -212,5 +216,14 @@ label {
     .article-image img {
         max-height: 300px;
     }
-}
 
+    .event-container {
+        flex-direction: column-reverse;
+    }
+    .event-text {
+        margin: 0;
+    }
+    .event-image {
+        align-self: center;
+    }
+}

@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% from 'macros.html' import post_article, event_article %}
 {% set active_page = "index" %}
 
 {% set title = "I takt med tiden" %}
@@ -10,21 +11,11 @@
         <p><a href="/new-post/">Create new post</a></p>
       {% endif %}
       {% for post in pagination %}
-        <article>
-          <header>
-            <h1><a href="{{ post.path + post.slug }}/">{{ post.title }}</a></h1>
-            <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}" pubdate>
-              {{ post.timestamp.strftime("%d %B %Y") }}
-            </time>
-          </header>
-          {% if post.image %}
-          <div class="{% if post is event %}event-image{% else %}post-image{% endif %}"> 
-            <img src="{{ image_url(post.image) }}">
-          </div>
-          {% endif %}
-          <p>{{ post.content|striptags|truncate(200) }}</p>
-          <p><a href="{{ post.path + post.slug }}">Läs mer</a></p>
-        </article>
+      {% if post is event %}
+      {{ event_article(post) }}
+      {% else %}
+      {{ post_article(post, True) }}
+      {% endif %}
       {% endfor %}
     </section>
 

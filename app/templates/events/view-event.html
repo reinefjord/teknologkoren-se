@@ -1,29 +1,16 @@
 {% extends "main.html" %}
+{% from 'macros.html' import event_article %}
 
 {% set title = event.title %}
 
 {% block body %}
-
-  <div class="container">
-    <article>
-      <header>
-        <h1>{{ event.title }}</h1>
-      </header>
-      {% if event.image %}
-      <div class="article-image">
-        <a href="{{ image_url(event.image) }}">
-          <img src="{{ image_url(event.image) }}">
-        </a>
-      </div>
-      {% endif %}
-      {{ event.content|safe }}
-    {% if current_user.is_authenticated %}
-      <p>
-      <a href="/konserter/{{ event.slug }}/edit/">Edit</a>
-      | <a href="/konserter/{{ event.slug }}/remove/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
-      </p>
-    {% endif %}
-    </article>
-  </div>
-
+<div class="container">
+  {{ event_article(event) }}
+  {% if current_user.is_authenticated %}
+  <p>
+  <a href="/konserter/{{ event.slug }}/edit/">Edit</a>
+  | <a href="/konserter/{{ event.slug }}/remove/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
+  </p>
+  {% endif %}
+</div>
 {% endblock %}
