@@ -190,15 +190,15 @@ label {
         clear;
         text-align: center;
     }
+
     .nav ul {
-        display: block;
+        padding: 5px;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .nav li {
-        margin: 5px;
-        width: 5.5em;
-        height: 1.5em;
-        display: inline-block;
+        margin: 5px 15px;
     }
 
     .container {
