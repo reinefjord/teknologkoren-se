@@ -9,10 +9,11 @@
   <p>E-postadresser till alla i styrelsen finnes nedan.</p>
   <div class="table">
     <table class="contacts">
-      {% for person in contacts %}
+      {% for tag in tags %}
+      {% set person = board[tag] %}
       <tr>
-        <td>{{ person.role }}</td>
-        <td>{{ person.name }}</td>
+        <td>{{ tag }}</td>
+        <td>{{ person.first_name }} {{ person.last_name }}</td>
         <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
       </tr>
       {% endfor %}

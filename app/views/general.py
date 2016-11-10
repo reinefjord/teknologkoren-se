@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template
+from app.models import User, Tag, UserTag
 
 
 mod = Blueprint('general', __name__)
@@ -21,18 +22,22 @@ def sjung():
 
 @mod.route('/kontakt/')
 def kontakt():
-    # FIXME!
-    class contact:
-        """!!!PLACEHOLDER!!!"""
-        def __init__(self, role, name, email):
-            self.role = role
-            self.name = name
-            self.email = email
+    users = User.select()
+    board = {}
+    tags = ['Ordförande', 'Vice ordförande', 'Kassör', 'Sekreterare',
+            'PRoletär', 'Notfisqual', 'Qlubbmästare']
 
-    contacts = [
-            contact("Ordförande", "Namn Efternamn", "ordf@teknologkoren.se"),
-            contact("Vice ordförande", "Namn Efternamn", "vice@teknologkoren.se"),
-            contact("Kassör", "Namn Efternamn", "pengar@teknologkoren.se")
-    ]
+    tags_copy = list(tags)
 
-    return render_template('general/kontakt.html', contacts=contacts)
+    for tag in tags_copy:
+        try:
+            board[tag] = (users
+                          .join(UserTag)
+                          .join(Tag)
+                          .where(Tag.name == tag)
+                          .get())
+
+        except User.DoesNotExist:
+            tags.remove(tag)
+
+    return render_template('general/kontakt.html', board=board, tags=tags)
