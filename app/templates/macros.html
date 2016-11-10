@@ -44,3 +44,16 @@
   </div>
 </article>
 {% endmacro %}
+
+{% macro pager(has_next, page) %}
+<nav class="pager">
+  {% if has_next %}
+  <a class="older" href="{{ url_for_other_page(page + 1) }}">
+    &larr; Older</a>
+  {% endif %}
+  {% if page > 1 %}
+  <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+    Newer &rarr;</a>
+  {% endif %}
+</nav>
+{% endmacro %}

@@ -1,5 +1,5 @@
 {% extends "main.html" %}
-{% from "macros.html" import event_article %}
+{% from "macros.html" import event_article, pager %}
 
 {% set title = "Konserter" %}
 {% set active_page = "konserter" %}
@@ -14,15 +14,8 @@
     {{ event_article(event) }}
     {% endfor %}
   </section>
-  <nav class="pager">
-    {% if has_next %}
-    <a class="older" href="{{ url_for_other_page(page + 1) }}">
-      &larr; Older</a>
-    {% endif %}
-    {% if page > 1 %}
-    <a class="newer" href="{{ url_for_other_page(page - 1) }}">
-      Newer &rarr;</a>
-    {% endif %}
-  </nav>
+  {% if has_next or page > 1 %}
+  {{ pager(has_next, page) }}
+  {% endif %}
 </div>
 {% endblock %}
