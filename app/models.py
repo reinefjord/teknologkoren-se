@@ -43,7 +43,7 @@ class UserTag(flask_db.Model):
 
 class Post(flask_db.Model):
     title = CharField()
-    slug = CharField(unique=True)
+    slug = CharField()
     path = CharField()
     content = TextField()
     published = BooleanField()
@@ -52,28 +52,13 @@ class Post(flask_db.Model):
     image = CharField(null=True)
 
     def save(self, *args, **kwargs):
-        if not self.slug:
-            slug = slugify(self.title)
-            self.slug = slug
-            uid = 2
-            while True:
-                try:
-                    Post.get(Post.slug == self.slug)
-                except Post.DoesNotExist:
-                    break
-                else:
-                    self.slug = slug + '-' + str(uid)
-                    uid += 1
-
+        self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
-        return self.slug
+        return "{}{}/{}".format(self.path, self.id, self.slug)
 
 
 class Event(Post):
     start_time = DateTimeField()
     location = CharField()
-
-    def __str__(self):
-        return self.slug

@@ -10,8 +10,8 @@
 
     {% if current_user.is_authenticated %}
     <p>
-    <a href="/{{ post.slug }}/edit/">Edit</a>
-    | <a href="/{{ post.slug }}/remove/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
+    <a href="/edit/{{ post.id }}/{{ post.slug }}/">Edit</a>
+    | <a href="/remove/{{ post.id }}/{{ post.slug }}/" onclick="return confirm('This will delete post &quot;{{ post.title }}&quot;\nSure you want to do that?')">Remove</a>
     </p>
     {% endif %}
   </div>

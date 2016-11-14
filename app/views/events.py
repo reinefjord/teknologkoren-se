@@ -61,25 +61,41 @@ def new_event():
                 author=current_user.id,
                 image=images.save(form.upload.data)
                 )
-        return redirect(url_for('.view_event', slug=event.slug))
+        return redirect(url_for('.view_event',
+                                event_id=event.id,
+                                slug=event.slug))
 
     return render_template('events/edit-event.html', form=form)
 
 
-@mod.route('/<slug>/')
-def view_event(slug):
-    event = get_object_or_404(Event, Event.slug == slug)
+@mod.route('/<int:event_id>/')
+@mod.route('/<int:event_id>/<slug>/')
+def view_event(event_id, slug=None):
+    event = get_object_or_404(Event, Event.id == event_id)
 
     if not event.published and not current_user.is_authenticated:
         return abort(404)
 
+    if slug != event.slug:
+        return redirect(url_for(
+            '.view_event',
+            event_id=event.id,
+            slug=event.slug))
+
     return render_template('events/view-event.html', event=event)
 
 
-@mod.route('/<slug>/edit/', methods=['GET', 'POST'])
+@mod.route('/edit/<int:event_id>/', methods=['GET', 'POST'])
+@mod.route('/edit/<int:event_id>/<slug>/', methods=['GET', 'POST'])
 @login_required
-def edit_event(slug):
-    event = get_object_or_404(Event, Event.slug == slug)
+def edit_event(event_id, slug=None):
+    event = get_object_or_404(Event, Event.id == event_id)
+
+    if slug != event.slug:
+        return redirect(url_for('.edit_event',
+                        event_id=event.id,
+                        slug=event.slug))
+
     form = EditEventForm(
             CombinedMultiDict((request.form, request.files)),
             event
@@ -94,14 +110,17 @@ def edit_event(slug):
         if form.upload.has_file():
             event.image = images.save(form.upload.data)
         event.save()
-        return redirect(url_for('.view_event', slug=event.slug))
+        return redirect(url_for('.view_event',
+                                event_id=event.id,
+                                slug=event.slug))
 
     return render_template('events/edit-event.html', form=form)
 
 
-@mod.route('/<slug>/remove/')
+@mod.route('/remove/<int:event_id>/')
+@mod.route('/remove/<int:event_id>/<slug>/')
 @login_required
-def remove_event(slug):
-    event = get_object_or_404(Event, Event.slug == slug)
+def remove_event(event_id, slug=None):
+    event = get_object_or_404(Event, Event.id == event_id)
     event.delete_instance()
     return redirect(url_for('.overview'))

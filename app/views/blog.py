@@ -84,25 +84,34 @@ def new_post():
                 author=current_user.id,
                 image=image
                 )
-        return redirect(post.slug)
+        return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
 
     return render_template('blog/edit-post.html', form=form)
 
 
-@mod.route('/<slug>/')
-def view_post(slug):
-    post = get_object_or_404(Post, Post.slug == slug)
+@mod.route('/<int:post_id>/')
+@mod.route('/<int:post_id>/<slug>/')
+def view_post(post_id, slug=None):
+    post = get_object_or_404(Post, Post.id == post_id)
 
     if not post.published and not current_user.is_authenticated:
         return abort(404)
 
+    if slug != post.slug:
+        return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
+
     return render_template('blog/view-post.html', post=post)
 
 
-@mod.route('/<slug>/edit/', methods=['GET', 'POST'])
+@mod.route('/edit/<int:post_id>/', methods=['GET', 'POST'])
+@mod.route('/edit/<int:post_id>/<slug>/', methods=['GET', 'POST'])
 @login_required
-def edit_post(slug):
-    post = get_object_or_404(Post, Post.slug == slug)
+def edit_post(post_id, slug=None):
+    post = get_object_or_404(Post, Post.id == post_id)
+
+    if slug != post.slug:
+        return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
+
     form = EditPostForm(CombinedMultiDict((request.form, request.files)), post)
 
     if form.validate_on_submit():
@@ -112,14 +121,15 @@ def edit_post(slug):
         post.content = form.content.data
         post.published = form.published.data
         post.save()
-        return redirect(post.slug)
+        return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
 
     return render_template('blog/edit-post.html', form=form)
 
 
-@mod.route('/<slug>/remove/', methods=['GET'])
+@mod.route('/remove/<int:post_id>/')
+@mod.route('/remove/<int:post_id>/<slug>/')
 @login_required
-def remove_post(slug):
-    post = get_object_or_404(Post, Post.slug == slug)
+def remove_post(post_id, slug=None):
+    post = get_object_or_404(Post, Post.id == post_id)
     post.delete_instance()
-    return redirect(url_for('blog.overview'))
+    return redirect(url_for('.overview'))
