@@ -50,6 +50,11 @@ def overview(page):
 def new_event():
     form = EditEventForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
+        if form.upload.has_file():
+            image = images.save(form.upload.data)
+        else:
+            image = None
+
         event = Event.create(
                 title=form.title.data,
                 path=url_for('.overview'),
@@ -59,7 +64,7 @@ def new_event():
                 location=form.location.data,
                 timestamp=datetime.datetime.now(),
                 author=current_user.id,
-                image=images.save(form.upload.data)
+                image=image
                 )
         return redirect(url_for('.view_event',
                                 event_id=event.id,
