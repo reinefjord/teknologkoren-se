@@ -3,46 +3,51 @@
 {% set title = "Edit event" %}
 
 {% block head %}
-  {{ super() }}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
 {% endblock %}
 {% block body %}
-  <section class="container">
-    <div class='edit-post'>
-      <h2>Edit post</h2>
-      <form method="POST" enctype="multipart/form-data">
-        {{ form.csrf_token }}
-        <label class='title'>
-          Title:<br>
-          {{ form.title() }}
-        </label>
-        {{ form.content(id="trix") }}
-        <trix-editor input="trix" class="trix-content"></trix-editor>
-        <label>
-          Date:<br>
-          {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
-        </label>
-        <label>
-          Location:<br>
-          {{ form.location() }}
-        </label>
-        <label>
-          {{ form.published() }} Publish
-        </label>
-        {{ form.upload() }}
-        <input type=submit value="Submit">
-      </form>
+<section class="container">
+  <h2>Edit post</h2>
+  <form method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <div class="field">
+      <label for="title">Title:</label>
+      {{ form.title() }}
     </div>
-  </section>
+    <div class="field">
+      {{ form.content(id="trix") }}
+      <trix-editor input="trix" class="trix-content"></trix-editor>
+    </div>
+    <div class="field">
+      <label for="start_time">Date:</label>
+      {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
+    </div>
+    <div class="field">
+      <label for="location">Location:</label>
+      {{ form.location() }}
+    </div>
+    <div class="field">
+      {{ form.upload() }}
+    </div>
+    <div class="field">
+      {{ form.published() }}
+      <label for="published">Publish</label>
+    </div>
+    <div class="field">
+      <input type=submit value="Submit">
+    </div>
+  </form>
+</section>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
 
-  <script>
+<script>
 jQuery('#start_time').datetimepicker({
   format:'Y-m-d H:i'
 });
-  </script>
+</script>
 {% endblock %}

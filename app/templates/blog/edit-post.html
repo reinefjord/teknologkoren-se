@@ -3,28 +3,34 @@
 {% set title = "Edit post" %}
 
 {% block head %}
-  {{ super() }}
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
 {% endblock %}
 {% block body %}
-  <section class="container">
-    <div class='edit-post'>
-      <h2>Edit post</h2>
-      <form method="POST" enctype="multipart/form-data">
-        {{ form.csrf_token }}
-        <label class='title'>
-          Title: {{ form.title() }}
-        </label>
-        {{ form.content(id="trix") }}
-        <trix-editor input="trix" class="trix-content"></trix-editor>
-        <label>
-          {{ form.published() }} Publish
-        </label>
-        {{ form.upload() }}
-        <input type=submit value="Submit">
-      </form>
+<section class="container">
+  <h2>Edit post</h2>
+  <form class="edit-post" method="POST" enctype="multipart/form-data">
+    {{ form.csrf_token }}
+    <div class="field">
+      <label for="title">Title: </label>
+      {{ form.title(class="form-input") }}
     </div>
-  </section>
+    <div class="field">
+      {{ form.content(id="trix") }}
+      <trix-editor input="trix" class="trix-content"></trix-editor>
+    </div>
+    <div class="field">
+      {{ form.upload(class="form-input") }}
+    </div>
+    <div class="field">
+      {{ form.published(class="form-input") }}
+      <label for="published">Publish</label>
+    </div>
+    <div class="field">
+      <input type=submit value="Submit">
+    </div>
+  </form>
+</section>
 
 {% endblock %}
