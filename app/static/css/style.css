@@ -36,6 +36,10 @@ article header {
     margin: 20px 0;
 }
 
+.post-text {
+    margin-top: 10px;
+}
+
 .event-container {
     display: flex;
     justify-content: space-between;

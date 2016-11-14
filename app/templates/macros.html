@@ -11,7 +11,9 @@
     <img src="{{ image_url(post.image) }}">
   </div>
   {% endif %}
-  {{ post.content|safe }}
+  <div class="post-text">
+    {{ post.content|safe }}
+  </div>
 </article>
 {% endmacro %}
 
