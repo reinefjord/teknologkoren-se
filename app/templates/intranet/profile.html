@@ -14,7 +14,7 @@
   <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
   <p>Number: {{ user.phone }}</p>
   <p>Tags: {% for tag in tags %}{{ tag.name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</p>
-  {% if current_user.id == user.id %}
+  {% if edit %}
   <p><a href="edit/">Edit</a></p>
   {% endif %}
 </div>

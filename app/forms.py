@@ -101,17 +101,38 @@ class AddUserForm(RedirectForm):
     phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
     active = BooleanField('Active')
 
+
+class EditUserForm(FlaskForm):
+    email = StringField('Email', validators=[InputRequired(), Email()])
+    phone = StringField('Phone', validators=[
+        InputRequired(),
+        Regexp(r'^\+?[0-9]*$')])
+    password = PasswordField('Password', validators=[Optional()])
+
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
     def validate(self):
         if not FlaskForm.validate(self):
             return False
 
         try:
-            User.get(email=self.email.data)
-        except DoesNotExist:
-            return True
+            user = User.get(User.email == self.email.data)
+        except User.DoesNotExist:
+            pass
+        else:
+            if user.id != self.user.id:
+                self.email.errors.append("This email is already in use")
+                return False
 
-        self.email.errors.append("This email is already in use")
-        return False
+        return True
+
+
+class FullEditUserForm(EditUserForm):
+    first_name = StringField('First Name', validators=[InputRequired()])
+    last_name = StringField('Last Name', validators=[InputRequired()])
+    active = BooleanField('Active')
 
 
 class UploadForm(FlaskForm):
