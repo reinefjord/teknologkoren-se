@@ -1,6 +1,7 @@
 import random
 from string import ascii_letters, digits
-from flask import Blueprint, request, redirect, render_template, url_for, abort
+from flask import (Blueprint, request, redirect, render_template, url_for,
+                   abort, flash)
 from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from app import login_manager
@@ -55,6 +56,35 @@ def adduser():
         return form.redirect('blog.overview')
 
     return render_template('users/adduser.html', form=form)
+
+
+def verify_email(user, email):
+    token = ts.dumps([user.id, email], 'verify-email')
+
+    verify_link = url_for('users.verify_token', token=token, _external=True)
+
+    email_body = render_template(
+            'users/email_verification.jinja2',
+            name=user.first_name,
+            link=verify_link)
+
+    send_email(email, email_body)
+
+
+@mod.route('/verify/<token>/')
+def verify_token(token):
+    try:
+        user_id, email = ts.loads(token, salt='verify-email', max_age=900)
+    except:
+        abort(404)
+
+    user = get_object_or_404(User, User.id == user_id)
+
+    user.email = email
+    user.save()
+
+    flash("{} has been verified!".format(email))
+    return redirect(url_for('blog.overview'))
 
 
 @mod.route('/reset/', methods=['GET', 'POST'])

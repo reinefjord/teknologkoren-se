@@ -1,8 +1,10 @@
-from flask import Blueprint, render_template, redirect, url_for, request
+from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
+from app.views.users import verify_email
 from app.forms import EditUserForm, FullEditUserForm
 from app.models import User, Tag, UserTag
+from app.util import ts, send_email
 
 mod = Blueprint('intranet', __name__, url_prefix='/intranet')
 
@@ -59,7 +61,11 @@ def edit_user(id):
         full_form = False
 
     if form.validate_on_submit():
-        user.email = form.email.data
+        if form.email.data != user.email:
+            verify_email(user, form.email.data)
+            flash("Please check {} for a verification link."
+                  .format(form.email.data))
+
         user.phone = form.phone.data
 
         if form.password.data:
