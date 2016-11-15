@@ -26,17 +26,21 @@
         </ul>
       </nav>
     </header>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
+    {% if get_flashed_messages() %}
     <div class="container">
-    <ul class="flashes">
-      {% for message in messages %}
-      <li>{{ message }}</li>
-      {% endfor %}
-    </ul>
-    </div>
+    {% for type in ['success', 'info', 'error'] %}
+    {% with messages = get_flashed_messages(category_filter=[type]) %}
+    {% if messages %}
+      <ul class="flashes {{ type }}">
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
     {% endif %}
     {% endwith %}
+    {% endfor %}
+    </div>
+    {% endif %}
     {% block body %}{% endblock %}
   </body>
 </html>

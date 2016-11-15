@@ -6,9 +6,6 @@
   <div class="container">
     <form class="form-signin" method='POST'>
       {{ form.csrf_token }}
-      {% if form.errors %}
-        <span>Sorry, you entered an incorrect email address or password.</span>
-      {% endif %}
       <h2>Sign in</h2>
       {{ form.email(placeholder='Email address') }}
       {{ form.password(placeholder='Password') }}

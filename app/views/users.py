@@ -25,6 +25,8 @@ def login():
         user = form.user
         login_user(user, remember=form.remember.data)
         return form.redirect('blog.overview')
+    elif form.email.errors or form.password.errors:
+        flash("Sorry, your email address or password was incorrect.", 'error')
 
     return render_template('users/login.html', form=form)
 
@@ -83,7 +85,7 @@ def verify_token(token):
     user.email = email
     user.save()
 
-    flash("{} has been verified!".format(email))
+    flash("{} is now verified!".format(email))
     return redirect(url_for('blog.overview'))
 
 
@@ -103,10 +105,14 @@ def reset():
 
         send_email(user.email, email_body)
 
-        return render_template('users/reset_sent.html', email=form.email.data)
+        flash("A password reset link valid for 15 minutes has been sent to {}"
+              .format(form.email.data), 'info')
+        return redirect(url_for('.login'))
 
     elif form.email.data is not None:
-        return render_template('users/reset_sent.html', email=form.email.data)
+        flash("A password reset link valid for 15 minutes has been sent to {}."
+              .format(form.email.data), 'info')
+        return redirect(url_for('.login'))
 
     return render_template('users/reset.html', form=form)
 
@@ -124,10 +130,9 @@ def reset_token(token):
         user = get_object_or_404(User, (User.email == email))
 
         user.password = form.password.data
-        if user.reset_password:
-            user.reset_password = False
         user.save()
 
+        flash("Your password has been reset!", 'success')
         return redirect(url_for('.login'))
 
     return render_template('users/reset_token.html', form=form)

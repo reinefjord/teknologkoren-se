@@ -1,3 +1,5 @@
+/* palette: http://paletton.com/palette.php?uid=73C2b0kpczF5YXuhyJVv-q5G7dw */
+
 body {
     margin: 20px auto 50px auto;
     max-width: 40em;
@@ -180,6 +182,26 @@ article header {
     display: block;
     margin: 20px 0;
 }
+
+.flashes {
+    list-style: none;
+    padding: 5px 10px;
+    margin: 0 auto;
+    border-radius: 7px;
+}
+.success {
+    background-color: #C9F7DD;
+    color: #004D21;
+}
+.info {
+    background-color: #CBDEF5;
+    color: #042246;
+}
+.error {
+    background-color: #FFD9D0;
+    color: #6C1600;
+}
+
 
 @media screen and (max-width: 38em) {
     .pageheader {
