@@ -25,6 +25,15 @@ class User(UserMixin, flask_db.Model):
     def verify_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)
 
+    @property
+    def tags(self):
+        return [tag.name for tag in (
+            Tag
+            .select()
+            .join(UserTag)
+            .join(User)
+            .where(User.id == self.id))]
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
