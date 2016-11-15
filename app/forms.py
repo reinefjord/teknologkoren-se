@@ -2,9 +2,10 @@ from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
-from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
+from wtforms import (StringField, PasswordField, BooleanField,
                      HiddenField, DateTimeField)
-from wtforms.validators import Email, InputRequired, Length, Regexp, EqualTo
+from wtforms.validators import (Email, InputRequired, Regexp, Optional,
+                                ValidationError)
 from peewee import DoesNotExist
 from app import images
 from .models import User
@@ -15,6 +16,21 @@ def is_safe_url(target):
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
         ref_url.netloc == test_url.netloc
+
+
+class Unique:
+    def __init__(self, model, field, message='This element already exists.'):
+        self.model = model
+        self.field = field
+        self.message = message
+
+    def __call__(self, form, field):
+        try:
+            user = self.model.get(self.field == field.data)
+        except self.model.DoesNotExist:
+            pass
+        else:
+            raise ValidationError(self.message)
 
 
 class RedirectForm(FlaskForm):
@@ -73,7 +89,15 @@ class PasswordForm(FlaskForm):
 class AddUserForm(RedirectForm):
     first_name = StringField('First Name', validators=[InputRequired()])
     last_name = StringField('First Name', validators=[InputRequired()])
-    email = StringField('Email', validators=[InputRequired(), Email()])
+
+    email = StringField('Email', validators=[
+        InputRequired(),
+        Email(),
+        Unique(
+            User,
+            User.email,
+            message="This email is already in use")])
+
     phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
     active = BooleanField('Active')
 
