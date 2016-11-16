@@ -43,6 +43,7 @@ article header {
 }
 
 .event-container {
+    display: -webkit-flex;
     display: flex;
     justify-content: space-between;
 }
@@ -52,6 +53,7 @@ article header {
 }
 .event-image {
     max-width: 200px;
+    -webkit-flex: none;
     flex: none;
 }
 
@@ -112,6 +114,7 @@ article header {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: -webkit-flex;
     display: flex;
 }
 .nav li {
@@ -140,6 +143,7 @@ article header {
 }
 
 .pager {
+    display: -webkit-flex;
     display: flex;
 }
 .pager a {
@@ -225,7 +229,9 @@ article header {
 
     .nav ul {
         padding: 5px;
+        -webkit-flex-wrap: wrap;
         flex-wrap: wrap;
+        -webkit-justify-content: center;
         justify-content: center;
     }
 
@@ -242,6 +248,7 @@ article header {
     }
 
     .event-container {
+        -webkit-flex-direction: column-reverse;
         flex-direction: column-reverse;
     }
     .event-text {
