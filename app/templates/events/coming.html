@@ -1,0 +1,15 @@
+{% extends "events/overview.html" %}
+{% from "macros.html" import event_article %}
+
+{% set active_sub = "kommande" %}
+
+{% block overview %}
+{% if pagination %}
+{% for event in pagination %}
+{{ event_article(event) }}
+{% endfor %}
+{% else %}
+<p>Vi har inga konserter planerade i denna stund!</br>Du kan se våra tidigare
+konserter i <a href="/konserter/arkiv/">konsertarkivet</a>.</p>
+{% endif %}
+{% endblock %}

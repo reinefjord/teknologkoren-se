@@ -6,13 +6,21 @@
 
 {% block body %}
 <div class="container">
+  {% if current_user.is_authenticated %}
+  <p><a href="/konserter/new-event/">Create new event</a></p>
+  {% endif %}
+  <nav class="nav">
+    <ul>
+      <li{% if active_sub == "kommande"  %} class="active"{% endif %}>
+        <a href="/konserter/">Kommande konserter</a>
+      </li>
+      <li{% if active_sub == "arkiv" %} class="active"{% endif %}>
+        <a href="/konserter/arkiv/">Konsertarkiv</a>
+      </li>
+    </ul>
+  </nav>
   <section class="overview">
-    {% if current_user.is_authenticated %}
-    <p><a href="/konserter/new-event/">Create new event</a></p>
-    {% endif %}
-    {% for event in pagination %}
-    {{ event_article(event) }}
-    {% endfor %}
+    {% block overview %}{% endblock %}
   </section>
   {% if has_next or page > 1 %}
   {{ pager(has_next, page) }}

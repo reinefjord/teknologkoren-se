@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime, timedelta
 from flask import abort, Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
@@ -21,11 +21,7 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
 
 
-@mod.route('/', defaults={'page': 1})
-@mod.route('/page/<int:page>/')
-def overview(page):
-    events = Event.select().order_by(Event.start_time.desc())
-
+def overview(template, events, page):
     if not current_user.is_authenticated:
         events = events.where(Event.published == True)
 
@@ -39,10 +35,30 @@ def overview(page):
 
     has_next = True if events.paginate(page+1, 5) else False
 
-    return render_template('events/overview.html',
+    return render_template(template,
                            pagination=pagination,
                            page=page,
                            has_next=has_next)
+
+
+@mod.route('/', defaults={'page': 1})
+@mod.route('/page/<int:page>/')
+def coming(page):
+    old = datetime.now() - timedelta(hours=3)
+    events = Event.select(
+            ).where(Event.start_time > old).order_by(Event.start_time.desc())
+    return overview('events/coming.html', events, page)
+
+
+@mod.route('/arkiv/', defaults={'page': 1})
+@mod.route('/arkiv/page/<int:page>/')
+def archive(page):
+    old = datetime.now() - timedelta(hours=3)
+    events = Event.select(
+            ).where(Event.start_time < old).order_by(Event.start_time.desc())
+    has_next = True if events.paginate(page+1, 5) else False
+
+    return overview('events/archive.html', events, page)
 
 
 @mod.route('/new-event/', methods=['GET', 'POST'])
@@ -57,12 +73,12 @@ def new_event():
 
         event = Event.create(
                 title=form.title.data,
-                path=url_for('.overview'),
+                path='/konserter/',
                 content=form.content.data,
                 published=form.published.data,
                 start_time=form.start_time.data,
                 location=form.location.data,
-                timestamp=datetime.datetime.now(),
+                timestamp=datetime.now(),
                 author=current_user.id,
                 image=image
                 )
@@ -128,4 +144,4 @@ def edit_event(event_id, slug=None):
 def remove_event(event_id, slug=None):
     event = get_object_or_404(Event, Event.id == event_id)
     event.delete_instance()
-    return redirect(url_for('.overview'))
+    return redirect(url_for('.coming'))
