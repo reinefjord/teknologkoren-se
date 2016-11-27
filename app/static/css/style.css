@@ -215,6 +215,18 @@ article header {
     color: #6C1600;
 }
 
+.tags {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    height: 15em;
+    overflow: auto;
+}
+.tags ul {
+    list-style: none;
+    padding: 0 10px;
+}
+
+
 @media screen and (max-width: 55em) {
     html {
         background-color: #fff;
