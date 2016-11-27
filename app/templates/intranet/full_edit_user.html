@@ -14,7 +14,6 @@
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    {% if full_form %}
     <div class="field">
       <label for="first_name">First name: </label>
       {{ form.first_name() }}
@@ -24,12 +23,6 @@
       <label for="last_name">Last name: </label>
       {{ form.last_name() }}
     </div>
-
-    <div class="field">
-      {{ form.active() }}
-      <label for="active">Active</label>
-    </div>
-    {% endif %}
 
     <div class="field">
       <label for="email">Email: </label>
@@ -46,23 +39,24 @@
       {{ form.password() }}
     </div>
 
-    <label for="filter">Filter tags</label>
-    <input type="text" id="filter">
-    <div class="tags">
+    <div class="field">
+      {{ form.active() }}
+      <label for="active">Active</label>
+    </div>
+
+    <fieldset class="tags">
       {{ form.tags.csrf_token }}
 
-      <ul>
+      <legend>Tags</legend>
+
+      <input type="text" id="filter" placeholder="Filter">
       {% for field in form.tags if field.name != "tags-csrf_token" %}
-      <li>
       <div class="field">
         {{ field }}
         <label for="{{ field.id }}">{{ field.label }}</label>
       </div>
-      </li>
       {% endfor %}
-      </ul>
-
-    </div>
+    </fieldset>
 
     <div class="field">
       <input type=submit value="Submit">
@@ -82,7 +76,7 @@ $(document).ready(function(){
     var filter = $(this).val()
 
       // Loop through the comment list
-      $(".tags ul li").each(function(){
+      $(".tags .field").each(function(){
 
         // Hide list item if it does not contain the text phrase
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
