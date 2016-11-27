@@ -54,21 +54,20 @@ def edit_user(id):
     elif current_user.id != id:
         return redirect(url_for('.profile', id=id))
 
-    user = current_user
-    form = EditUserForm(user, request.form, user)
+    form = EditUserForm(current_user, request.form, current_user)
 
     if form.validate_on_submit():
-        if form.email.data != user.email:
-            verify_email(user, form.email.data)
+        if form.email.data != current_user.email:
+            verify_email(current_user, form.email.data)
             flash("Please check {} for a verification link."
                   .format(form.email.data))
 
-        user.phone = form.phone.data
+        current_user.phone = form.phone.data
 
         if form.password.data:
-            user.password = form.password.data
+            current_user.password = form.password.data
 
-        user.save()
+        current_user.save()
 
         return redirect(url_for('.profile', id=id))
 
@@ -126,8 +125,8 @@ def full_edit_user(id):
 
         return redirect(url_for('.profile', id=id))
 
-    return render_template('intranet/edit_user.html',
-                           user=current_user,
+    return render_template('intranet/full_edit_user.html',
+                           user=user,
                            form=form,
                            full_form=True)
 

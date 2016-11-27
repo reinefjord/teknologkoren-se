@@ -1,10 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% if current_user.id == user.id %}
 {% set active_page = "profile" %}
-{% else %}
-{% set active_page = "members" %}
-{% endif %}
 
 {% set title = "Intranät" %}
 
@@ -13,23 +9,6 @@
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
-
-    {% if full_form %}
-    <div class="field">
-      <label for="first_name">First name: </label>
-      {{ form.first_name() }}
-    </div>
-
-    <div class="field">
-      <label for="last_name">Last name: </label>
-      {{ form.last_name() }}
-    </div>
-
-    <div class="field">
-      {{ form.active() }}
-      <label for="active">Active</label>
-    </div>
-    {% endif %}
 
     <div class="field">
       <label for="email">Email: </label>
@@ -46,24 +25,6 @@
       {{ form.password() }}
     </div>
 
-    <label for="filter">Filter tags</label>
-    <input type="text" id="filter">
-    <div class="tags">
-      {{ form.tags.csrf_token }}
-
-      <ul>
-      {% for field in form.tags if field.name != "tags-csrf_token" %}
-      <li>
-      <div class="field">
-        {{ field }}
-        <label for="{{ field.id }}">{{ field.label }}</label>
-      </div>
-      </li>
-      {% endfor %}
-      </ul>
-
-    </div>
-
     <div class="field">
       <input type=submit value="Submit">
     </div>
@@ -71,29 +32,4 @@
     <a href="/intranet/profile/{{ user.id }}/">Cancel</a>
   </form>
 </div>
-
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-<script>
-$(document).ready(function(){
-  $("#filter").keyup(function(){
-
-    // Retrieve the input field text
-    var filter = $(this).val()
-
-      // Loop through the comment list
-      $(".tags ul li").each(function(){
-
-        // Hide list item if it does not contain the text phrase
-        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-          $(this).hide();
-
-          // Show the list item if the phrase matches
-        } else {
-          $(this).show();
-        }
-      });
-  });
-});
-</script>
 {%- endblock %}
