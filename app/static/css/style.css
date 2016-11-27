@@ -136,17 +136,6 @@ article header {
     text-decoration: underline;
 }
 
-.form-signin {
-    margin: auto;
-}
-#email {
-    display: block;
-}
-#password {
-    display: block;
-    margin-top: 5px;
-}
-
 .overview article {
     margin-bottom: 50px;
 }
