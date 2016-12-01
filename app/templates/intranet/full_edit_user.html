@@ -15,33 +15,33 @@
     {{ form.csrf_token }}
 
     <div class="field">
-      <label for="first_name">First name: </label>
-      {{ form.first_name() }}
+      {{ form.first_name.label }}
+      {{ form.first_name }}
     </div>
 
     <div class="field">
-      <label for="last_name">Last name: </label>
-      {{ form.last_name() }}
+      {{ form.last_name.label }}
+      {{ form.last_name }}
     </div>
 
     <div class="field">
-      <label for="email">Email: </label>
-      {{ form.email() }}
+      {{ form.email.label }}
+      {{ form.email }}
     </div>
 
     <div class="field">
-      <label for="phone">Number: </label>
-      {{ form.phone() }}
+      {{ form.phone.label }}
+      {{ form.phone }}
     </div>
 
     <div class="field">
-      <label for="password">Password: </label>
-      {{ form.password() }}
+      {{ form.password.label }}
+      {{ form.password }}
     </div>
 
     <div class="field">
-      {{ form.active() }}
-      <label for="active">Active</label>
+      {{ form.active.label }}
+      {{ form.active }}
     </div>
 
     <fieldset class="tags">

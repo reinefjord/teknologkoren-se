@@ -13,27 +13,27 @@
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
     <div class="field">
-      <label for="title">Title:</label>
-      {{ form.title() }}
+      {{ form.title.label }}
+      {{ form.title }}
     </div>
     <div class="field">
       {{ form.content(id="trix") }}
       <trix-editor input="trix" class="trix-content"></trix-editor>
     </div>
     <div class="field">
-      <label for="start_time">Date:</label>
+      {{ form.start_time.label }}
       {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
     </div>
     <div class="field">
-      <label for="location">Location:</label>
-      {{ form.location() }}
+      {{ form.location.label }}
+      {{ form.location }}
     </div>
     <div class="field">
       {{ form.upload() }}
     </div>
     <div class="field">
-      {{ form.published() }}
-      <label for="published">Publish</label>
+      {{ form.published }}
+      {{ form.published.label }}
     </div>
     <div class="field">
       <input type=submit value="Submit">

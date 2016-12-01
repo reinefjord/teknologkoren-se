@@ -11,18 +11,18 @@
     {{ form.csrf_token }}
 
     <div class="field">
-      <label for="email">Email: </label>
-      {{ form.email() }}
+      {{ form.email.label }}
+      {{ form.email }}
     </div>
 
     <div class="field">
-      <label for="phone">Number: </label>
-      {{ form.phone() }}
+      {{ form.phone.label }}
+      {{ form.phone }}
     </div>
 
     <div class="field">
-      <label for="password">Password: </label>
-      {{ form.password() }}
+      {{ form.password.label }}
+      {{ form.password }}
     </div>
 
     <div class="field">
