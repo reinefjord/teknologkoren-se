@@ -53,7 +53,7 @@
       {% for field in form.tags if field.name != "tags-csrf_token" %}
       <div class="field">
         {{ field }}
-        <label for="{{ field.id }}">{{ field.label }}</label>
+        {{ field.label }}
       </div>
       {% endfor %}
     </fieldset>
@@ -66,28 +66,23 @@
   </form>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
 <script>
-$(document).ready(function(){
-  $("#filter").keyup(function(){
+var filter = document.getElementById("filter");
 
-    // Retrieve the input field text
-    var filter = $(this).val()
+filter.addEventListener("input", function ()
+    {
+      var re = new RegExp(filter.value, "i");
 
-      // Loop through the comment list
-      $(".tags .field").each(function(){
+      var tags = document.getElementsByClassName("tags")[0].getElementsByClassName("field");
 
-        // Hide list item if it does not contain the text phrase
-        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-          $(this).hide();
-
-          // Show the list item if the phrase matches
+      for (var i = 0; i < tags.length; i++) {
+        var label = tags[i].getElementsByTagName("label")[0];
+        if (re.test(label.innerHTML)) {
+          tags[i].style.display = "block";
         } else {
-          $(this).show();
+          tags[i].style.display = "none";
         }
-      });
-  });
-});
+      }
+    })
 </script>
 {%- endblock %}
