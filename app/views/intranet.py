@@ -34,7 +34,7 @@ def profile(id):
             .join(UserTag)
             .where(UserTag.user == user))
 
-    if current_user.id == id or 'Webmaster' in current_user.tags:
+    if current_user.id == id or 'Webmaster' in current_user.tag_names:
         edit = True
     else:
         edit = False
@@ -48,7 +48,7 @@ def profile(id):
 
 @mod.route('/profile/<int:id>/edit/', methods=['GET', 'POST'])
 def edit_user(id):
-    if 'Webmaster' in current_user.tags:
+    if 'Webmaster' in current_user.tag_names:
         return full_edit_user(id)
 
     elif current_user.id != id:
@@ -107,7 +107,6 @@ def full_edit_user(id):
 
         user.first_name = form.first_name.data
         user.last_name = form.last_name.data
-        user.active = form.active.data
 
         tag_form = form.tags
         for tag in Tag.select():
@@ -131,19 +130,29 @@ def full_edit_user(id):
                            full_form=True)
 
 
-@mod.route('/members/')
-def members():
-    users = User.select().where(User.active == True)
-    voices = {}
-    voice_tags = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
-                  'Tenor 2', 'Bas 1', 'Bas 2']
-    for voice in voice_tags:
-        voices[voice] = (users
-                         .join(UserTag)
-                         .join(Tag)
-                         .where(Tag.name == voice))
+def members(tag_list):
+    active_users = User.has_tag('Active')
+
+    tag_dict = {}
+    for tag in tag_list:
+        tag_dict[tag] = active_users & User.has_tag(tag)
 
     return(render_template(
         'intranet/members.html',
-        voices=voices,
-        voice_tags=voice_tags))
+        tag_list=tag_list,
+        tag_dict=tag_dict))
+
+
+@mod.route('/members/')
+def voices():
+    tag_list = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
+                'Tenor 2', 'Bas 1', 'Bas 2']
+
+    return(members(tag_list))
+
+
+@mod.route('/members/groups/')
+def groups():
+    tag_list = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
+
+    return(members(tag_list))

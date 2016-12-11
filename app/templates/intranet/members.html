@@ -7,10 +7,10 @@
 {% block body %}
 <div class="container">
   <ul class="member-list">
-    {% for voice in voice_tags %}
-    <li><h2>{{ voice }}</h2>
+    {% for tag in tag_list %}
+    <li><h2>{{ tag }}</h2>
       <ul>
-        {% for member in voices[voice] %}
+        {% for member in tag_dict[tag] %}
         <li><a href="/intranet/profile/{{ member.id }}">{{ member.first_name }} {{ member.last_name }}</a></li>
         {% endfor %}
       </ul>

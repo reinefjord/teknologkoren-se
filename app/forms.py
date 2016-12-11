@@ -99,7 +99,6 @@ class AddUserForm(RedirectForm):
             message="This email is already in use")])
 
     phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
-    active = BooleanField('Active')
 
 
 class EditUserForm(FlaskForm):
@@ -132,7 +131,6 @@ class EditUserForm(FlaskForm):
 class FullEditUserForm(EditUserForm):
     first_name = StringField('First Name', validators=[InputRequired()])
     last_name = StringField('Last Name', validators=[InputRequired()])
-    active = BooleanField('Active')
 
 
 class UploadForm(FlaskForm):

@@ -11,7 +11,6 @@ class User(UserMixin, flask_db.Model):
     first_name = CharField()
     last_name = CharField()
     phone = CharField(null=True)
-    active = BooleanField()
     _password = CharField()
 
     @hybrid_property
@@ -25,14 +24,27 @@ class User(UserMixin, flask_db.Model):
     def verify_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)
 
-    @property
+    @hybrid_property
     def tags(self):
-        return [tag.name for tag in (
+        return (
             Tag
             .select()
             .join(UserTag)
             .join(User)
-            .where(User.id == self.id))]
+            .where(User.id == self.id))
+
+    @hybrid_property
+    def tag_names(self):
+        return [tag.name for tag in self.tags]
+
+    @staticmethod
+    def has_tag(tag_name):
+        return (User
+                .select()
+                .join(UserTag)
+                .join(Tag)
+                .where(Tag.name << User.tag_names,
+                       Tag.name == tag_name))
 
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
