@@ -86,6 +86,10 @@ class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
 
 
+class PasswordResetForm(EmailForm, PasswordForm):
+    pass
+
+
 class AddUserForm(RedirectForm):
     first_name = StringField('First Name', validators=[InputRequired()])
     last_name = StringField('First Name', validators=[InputRequired()])

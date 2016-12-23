@@ -5,7 +5,7 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
 from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from app import login_manager
-from app.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
+from app.forms import LoginForm, AddUserForm, PasswordForm, PasswordResetForm
 from app.models import User
 from app.util import send_email, ts
 
@@ -91,10 +91,11 @@ def verify_token(token):
 
 @mod.route('/reset/', methods=['GET', 'POST'])
 def reset():
-    form = EmailForm()
+    form = PasswordResetForm()
     if form.validate_on_submit():
         user = form.user
-        token = ts.dumps(user.email, salt='recover-key')
+        password = form.password.data
+        token = ts.dumps((user.email, password), salt='recover-key')
 
         recover_url = url_for('.reset_token', token=token, _external=True)
 
@@ -109,10 +110,13 @@ def reset():
               .format(form.email.data), 'info')
         return redirect(url_for('.login'))
 
-    elif form.email.data is not None:
+    elif form.email.data and form.password.data:
         flash("A password reset link valid for 15 minutes has been sent to {}."
               .format(form.email.data), 'info')
         return redirect(url_for('.login'))
+
+    elif form.errors:
+        flash("Please fill in all fields.", 'error')
 
     return render_template('users/reset.html', form=form)
 
@@ -120,19 +124,13 @@ def reset():
 @mod.route('/reset/<token>/', methods=['GET', 'POST'])
 def reset_token(token):
     try:
-        email = ts.loads(token, salt='recover-key', max_age=900)
+        data = ts.loads(token, salt='recover-key', max_age=900)
     except:
         abort(404)
 
-    form = PasswordForm()
+    user = get_object_or_404(User, User.email == data[0])
+    user.password = data[1]
+    user.save()
 
-    if form.validate_on_submit():
-        user = get_object_or_404(User, (User.email == email))
-
-        user.password = form.password.data
-        user.save()
-
-        flash("Your password has been reset!", 'success')
-        return redirect(url_for('.login'))
-
-    return render_template('users/reset_token.html', form=form)
+    flash("Your password has been reset!", 'success')
+    return redirect(url_for('.login'))
