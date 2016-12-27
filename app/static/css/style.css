@@ -210,6 +210,10 @@ article header {
     overflow: auto;
 }
 
+.field ul {
+    list-style: none;
+}
+
 @media screen and (max-width: 55em) {
     html {
         background-color: #fff;

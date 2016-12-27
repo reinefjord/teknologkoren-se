@@ -28,8 +28,9 @@
       {{ form.location.label }}
       {{ form.location }}
     </div>
+    <button id="add-upload" type="button">Add image</button>
     <div class="field">
-      {{ form.upload() }}
+      {{ form.upload }}
     </div>
     <div class="field">
       {{ form.published }}
@@ -49,5 +50,37 @@
 jQuery('#start_time').datetimepicker({
   format:'Y-m-d H:i'
 });
+</script>
+<script>
+var index = 0;
+
+function newUploadElement() {
+  var uploadList = document.getElementById("upload");
+
+  var listItem = document.createElement("li");
+
+  var id = "upload-" + index;
+  var name = "upload-" + index;
+
+  var field = document.createElement("input");
+  field.id=id, field.name=name, field.type="file";
+
+  var remove = document.createElement("button");
+  remove.innerHTML = "Remove";
+  remove.addEventListener("click", removeUploadElement);
+
+  listItem.appendChild(field);
+  listItem.appendChild(remove);
+  uploadList.appendChild(listItem);
+
+  index++;
+}
+
+function removeUploadElement() {
+  this.parentNode.remove();
+}
+
+
+document.getElementById("add-upload").addEventListener("click", newUploadElement);
 </script>
 {% endblock %}

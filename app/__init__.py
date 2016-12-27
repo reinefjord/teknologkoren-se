@@ -33,13 +33,16 @@ bcrypt = Bcrypt(app)
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
-from app.models import User, Post, Event, Tag, UserTag
+from app.models import User, Post, Event, Tag, File, UserTag, PostFile, EventFile
 admin = Admin(app, name='teknologkoren.se')
 admin.add_view(ModelView(User, name='User'))
 admin.add_view(ModelView(Post, name='Post'))
 admin.add_view(ModelView(Event, name='Event'))
 admin.add_view(ModelView(Tag, name='Tag'))
+admin.add_view(ModelView(File, name='File'))
 admin.add_view(ModelView(UserTag, name='UserTag'))
+admin.add_view(ModelView(PostFile, name='PostFile'))
+admin.add_view(ModelView(EventFile, name='EventFile'))
 
 from app.views import (general,
                        users,

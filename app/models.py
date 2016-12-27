@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
-                    ForeignKeyField, FixedCharField)
+                    ForeignKeyField)
 from playhouse.hybrid import hybrid_property
 from slugify import slugify
 
@@ -65,21 +65,51 @@ class UserTag(flask_db.Model):
 class Post(flask_db.Model):
     title = CharField()
     slug = CharField()
-    path = CharField()
     content = TextField()
     published = BooleanField()
     timestamp = DateTimeField()
     author = ForeignKeyField(User)
-    image = CharField(null=True)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
 
+    @hybrid_property
+    def files(self):
+        return (
+            File
+            .select()
+            .join(PostFile)
+            .join(Post)
+            .where(Post.id == self.id))
+
     def __str__(self):
-        return "{}{}/{}".format(self.path, self.id, self.slug)
+        return "<{} {}/{}>".format(self.__class__.__name__, self.id, self.slug)
 
 
 class Event(Post):
     start_time = DateTimeField()
     location = CharField()
+
+    @hybrid_property
+    def files(self):
+        return (
+            File
+            .select()
+            .join(EventFile)
+            .join(Event)
+            .where(Event.id == self.id))
+
+
+class File(flask_db.Model):
+    name = CharField()
+
+
+class PostFile(flask_db.Model):
+    post = ForeignKeyField(Post)
+    file = ForeignKeyField(File)
+
+
+class EventFile(flask_db.Model):
+    event = ForeignKeyField(Event)
+    file = ForeignKeyField(File)

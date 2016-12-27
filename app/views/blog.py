@@ -6,7 +6,7 @@ from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
 from app import app, images
 from app.forms import EditPostForm
-from app.models import Post, Event
+from app.models import Post, Event, File, PostFile
 
 
 mod = Blueprint('blog', __name__)
@@ -70,20 +70,20 @@ def overview(page):
 def new_post():
     form = EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
-        if form.upload.has_file():
-            image = images.save(form.upload.data)
-        else:
-            image = None
-
         post = Post.create(
                 title=form.title.data,
-                path=url_for('.overview'),
                 content=form.content.data,
                 published=form.published.data,
                 timestamp=datetime.datetime.now(),
                 author=current_user.id,
-                image=image
                 )
+
+        for field in form.upload.entries:
+            if field.has_file():
+                image_name = images.save(field.data)
+                file = File.create(name=image_name)
+                PostFile.create(post=post, file=file)
+
         return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
 
     return render_template('blog/edit-post.html', form=form)
@@ -115,12 +115,17 @@ def edit_post(post_id, slug=None):
     form = EditPostForm(CombinedMultiDict((request.form, request.files)), post)
 
     if form.validate_on_submit():
-        if form.upload.has_file():
-            post.image = images.save(form.upload.data)
         post.title = form.title.data
         post.content = form.content.data
         post.published = form.published.data
         post.save()
+
+        for field in form.upload.entries:
+            if field.has_file():
+                image_name = images.save(field.data)
+                file = File.create(name=image_name)
+                PostFile.create(post=post, file=file)
+
         return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
 
     return render_template('blog/edit-post.html', form=form)

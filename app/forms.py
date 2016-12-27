@@ -3,7 +3,7 @@ from flask import request, url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed, FileField
 from wtforms import (StringField, PasswordField, BooleanField,
-                     HiddenField, DateTimeField)
+                     HiddenField, DateTimeField, FieldList)
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from peewee import DoesNotExist
@@ -138,9 +138,7 @@ class FullEditUserForm(EditUserForm):
 
 
 class UploadForm(FlaskForm):
-    upload = FileField('image', validators=[
-        FileAllowed(images, 'Images only!')
-        ])
+    upload = FieldList(FileField('image', validators=[FileAllowed(images, 'Images only!')]))
 
 
 class EditPostForm(UploadForm):

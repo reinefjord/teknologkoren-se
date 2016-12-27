@@ -3,6 +3,12 @@
 
 {% set title = post.title %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ideal-image-slider/1.5.1/ideal-image-slider.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ideal-image-slider/1.5.1/themes/default/default.min.css">
+{% endblock %}
+
 {% block body %}
 
   <div class="container">
@@ -15,5 +21,14 @@
     </p>
     {% endif %}
   </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ideal-image-slider/1.5.1/ideal-image-slider.min.js"></script>
+<script>
+new IdealImageSlider.Slider({
+  selector: "#slider",
+  effect: "fade",
+  height: 400
+});
+</script>
 
 {% endblock %}

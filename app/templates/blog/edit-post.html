@@ -14,17 +14,18 @@
     {{ form.csrf_token }}
     <div class="field">
       {{ form.title.label }}
-      {{ form.title(class="form-input") }}
+      {{ form.title }}
     </div>
     <div class="field">
       {{ form.content(id="trix") }}
       <trix-editor input="trix" class="trix-content"></trix-editor>
     </div>
+    <button id="add-upload" type="button">Add image</button>
     <div class="field">
-      {{ form.upload(class="form-input") }}
+      {{ form.upload }}
     </div>
     <div class="field">
-      {{ form.published(class="form-input") }}
+      {{ form.published }}
       {{ form.published.label }}
     </div>
     <div class="field">
@@ -32,5 +33,38 @@
     </div>
   </form>
 </section>
+
+<script>
+var index = 0;
+
+function newUploadElement() {
+  var uploadList = document.getElementById("upload");
+
+  var listItem = document.createElement("li");
+
+  var id = "upload-" + index;
+  var name = "upload-" + index;
+
+  var field = document.createElement("input");
+  field.id=id, field.name=name, field.type="file";
+
+  var remove = document.createElement("button");
+  remove.innerHTML = "Remove";
+  remove.addEventListener("click", removeUploadElement);
+
+  listItem.appendChild(field);
+  listItem.appendChild(remove);
+  uploadList.appendChild(listItem);
+
+  index++;
+}
+
+function removeUploadElement() {
+  this.parentNode.remove();
+}
+
+
+document.getElementById("add-upload").addEventListener("click", newUploadElement);
+</script>
 
 {% endblock %}

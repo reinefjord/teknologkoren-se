@@ -5,7 +5,7 @@ from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
 from app import app, images
 from app.forms import EditEventForm
-from app.models import Event
+from app.models import Event, File, EventFile
 
 
 mod = Blueprint('events', __name__, url_prefix='/konserter')
@@ -65,23 +65,24 @@ def archive(page):
 @login_required
 def new_event():
     form = EditEventForm(CombinedMultiDict((request.form, request.files)))
-    if form.validate_on_submit():
-        if form.upload.has_file():
-            image = images.save(form.upload.data)
-        else:
-            image = None
 
+    if form.validate_on_submit():
         event = Event.create(
                 title=form.title.data,
-                path='/konserter/',
                 content=form.content.data,
                 published=form.published.data,
                 start_time=form.start_time.data,
                 location=form.location.data,
                 timestamp=datetime.now(),
                 author=current_user.id,
-                image=image
                 )
+
+        for field in form.upload.entries:
+            if field.has_file():
+                image_name = images.save(field.data)
+                file = File.create(name=image_name)
+                EventFile.create(event=event, file=file)
+
         return redirect(url_for('.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
@@ -128,9 +129,14 @@ def edit_event(event_id, slug=None):
         event.published = form.published.data
         event.start_time = form.start_time.data
         event.location = form.location.data
-        if form.upload.has_file():
-            event.image = images.save(form.upload.data)
         event.save()
+
+        for field in form.upload.entries:
+            if field.has_file():
+                image_name = images.save(field.data)
+                file = File.create(name=image_name)
+                EventFile.create(event=event, file=file)
+
         return redirect(url_for('.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
