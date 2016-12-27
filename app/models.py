@@ -65,7 +65,6 @@ class UserTag(flask_db.Model):
 class Post(flask_db.Model):
     title = CharField()
     slug = CharField()
-    path = CharField()
     content = TextField()
     published = BooleanField()
     timestamp = DateTimeField()
@@ -77,7 +76,7 @@ class Post(flask_db.Model):
         super(Post, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "{}{}/{}".format(self.path, self.id, self.slug)
+        return "<{} {}/{}>".format(self.__class__.__name__, self.id, self.slug)
 
 
 class Event(Post):
