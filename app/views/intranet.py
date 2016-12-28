@@ -84,7 +84,7 @@ def full_edit_user(id):
         pass
 
     for tag in Tag.select():
-        if tag.name in user.tags:
+        if tag.name in user.tag_names:
             field = BooleanField(tag.name, default=True)
         else:
             field = BooleanField(tag.name)
@@ -112,10 +112,10 @@ def full_edit_user(id):
         for tag in Tag.select():
             tag_field = getattr(tag_form, tag.name)
 
-            if tag_field.data and tag.name not in user.tags:
+            if tag_field.data and tag.name not in user.tag_names:
                 UserTag.create(user=user, tag=tag)
 
-            elif not tag_field.data and tag.name in user.tags:
+            elif not tag_field.data and tag.name in user.tag_names:
                 user_tag = UserTag.get(UserTag.user == user and
                                        UserTag.tag == tag)
                 user_tag.delete_instance()
