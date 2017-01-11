@@ -4,6 +4,7 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
                    abort, flash)
 from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
+from itsdangerous import SignatureExpired
 from app import login_manager
 from app.forms import LoginForm, AddUserForm, PasswordForm, PasswordResetForm
 from app.models import User
@@ -77,6 +78,9 @@ def verify_email(user, email):
 def verify_token(token):
     try:
         user_id, email = ts.loads(token, salt='verify-email', max_age=900)
+    except SignatureExpired:
+        flash("Sorry, the link has expired. Please try again.", 'error')
+        return redirect(url_for('blog.overview'))
     except:
         abort(404)
 
@@ -85,7 +89,7 @@ def verify_token(token):
     user.email = email
     user.save()
 
-    flash("{} is now verified!".format(email))
+    flash("{} is now verified!".format(email), 'success')
     return redirect(url_for('blog.overview'))
 
 
@@ -106,7 +110,7 @@ def reset():
 
         send_email(user.email, email_body)
 
-        flash("A password reset link valid for 15 minutes has been sent to {}"
+        flash("A password reset link valid for 15 minutes has been sent to {}."
               .format(form.email.data), 'info')
         return redirect(url_for('.login'))
 
@@ -125,6 +129,9 @@ def reset():
 def reset_token(token):
     try:
         data = ts.loads(token, salt='recover-key', max_age=900)
+    except SignatureExpired:
+        flash("Sorry, the link has expired. Please try again.", 'error')
+        return redirect(url_for('.login'))
     except:
         abort(404)
 

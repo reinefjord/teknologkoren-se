@@ -60,7 +60,7 @@ def edit_user(id):
         if form.email.data != current_user.email:
             verify_email(current_user, form.email.data)
             flash("Please check {} for a verification link."
-                  .format(form.email.data))
+                  .format(form.email.data), 'info')
 
         current_user.phone = form.phone.data
 
@@ -98,7 +98,7 @@ def full_edit_user(id):
         if form.email.data != user.email:
             verify_email(user, form.email.data)
             flash("A verification link has been sent to {}"
-                  .format(form.email.data))
+                  .format(form.email.data), 'info')
 
         user.phone = form.phone.data
 

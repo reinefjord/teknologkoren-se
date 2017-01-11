@@ -193,14 +193,17 @@ article header {
 }
 .success {
     background-color: #C9F7DD;
+    border: 1px solid #62D895;
     color: #004D21;
 }
 .info {
     background-color: #CBDEF5;
+    border: 1px solid #6797D0;
     color: #042246;
 }
 .error {
     background-color: #FFD9D0;
+    border: 1px solid #FF9073;
     color: #6C1600;
 }
 
