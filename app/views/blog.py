@@ -70,7 +70,7 @@ def overview(page):
 def new_post():
     form = EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
-        if form.upload.has_file():
+        if form.upload.data:
             image = images.save(form.upload.data)
         else:
             image = None
@@ -112,10 +112,11 @@ def edit_post(post_id, slug=None):
     if slug != post.slug:
         return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
 
-    form = EditPostForm(CombinedMultiDict((request.form, request.files)), post)
+    form = EditPostForm(CombinedMultiDict((request.form, request.files)),
+                        obj=post)
 
     if form.validate_on_submit():
-        if form.upload.has_file():
+        if form.upload.data:
             post.image = images.save(form.upload.data)
         post.title = form.title.data
         post.content = form.content.data

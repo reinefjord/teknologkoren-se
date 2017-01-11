@@ -54,7 +54,7 @@ def edit_user(id):
     elif current_user.id != id:
         return redirect(url_for('.profile', id=id))
 
-    form = EditUserForm(current_user, request.form, current_user)
+    form = EditUserForm(current_user, request.form)
 
     if form.validate_on_submit():
         if form.email.data != current_user.email:
@@ -92,7 +92,7 @@ def full_edit_user(id):
         setattr(F, tag.name, field)
 
     setattr(FullEditUserForm, 'tags', FormField(F))
-    form = FullEditUserForm(user, request.form, user)
+    form = FullEditUserForm(user, request.form)
 
     if form.validate_on_submit():
         if form.email.data != user.email:

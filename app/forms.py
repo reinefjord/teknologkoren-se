@@ -1,9 +1,9 @@
 from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed, FileField
+from flask_wtf.file import FileAllowed
 from wtforms import (StringField, PasswordField, BooleanField,
-                     HiddenField, DateTimeField)
+                     HiddenField, DateTimeField, FileField)
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from peewee import DoesNotExist
@@ -114,7 +114,7 @@ class EditUserForm(FlaskForm):
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
-        super().__init__(*args, **kwargs)
+        super().__init__(obj=user, *args, **kwargs)
 
     def validate(self):
         if not FlaskForm.validate(self):

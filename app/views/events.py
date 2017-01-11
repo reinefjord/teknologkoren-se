@@ -66,7 +66,7 @@ def archive(page):
 def new_event():
     form = EditEventForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
-        if form.upload.has_file():
+        if form.upload.data:
             image = images.save(form.upload.data)
         else:
             image = None
@@ -117,10 +117,8 @@ def edit_event(event_id, slug=None):
                         event_id=event.id,
                         slug=event.slug))
 
-    form = EditEventForm(
-            CombinedMultiDict((request.form, request.files)),
-            event
-            )
+    form = EditEventForm(CombinedMultiDict((request.form, request.files)),
+                         obj=event)
 
     if form.validate_on_submit():
         event.title = form.title.data
@@ -128,7 +126,7 @@ def edit_event(event_id, slug=None):
         event.published = form.published.data
         event.start_time = form.start_time.data
         event.location = form.location.data
-        if form.upload.has_file():
+        if form.upload.data:
             event.image = images.save(form.upload.data)
         event.save()
         return redirect(url_for('.view_event',
