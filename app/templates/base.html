@@ -31,9 +31,9 @@
     {% for type in ['success', 'info', 'error'] %}
     {% with messages = get_flashed_messages(category_filter=[type]) %}
     {% if messages %}
-      <ul class="flashes {{ type }}">
+      <ul class="flashes">
         {% for message in messages %}
-        <li>{{ message }}</li>
+        <li class="flash {{ type }}">{{ message }}</li>
         {% endfor %}
       </ul>
     {% endif %}
