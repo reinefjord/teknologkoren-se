@@ -1,0 +1,16 @@
+{% extends "intranet/admin.html" %}
+
+{% set active_sub = "events" %}
+
+{% set title = "Events" %}
+
+{% block content %}
+  <h2>Events</h2>
+  <ul>
+    {% for event in events %}
+    <li>
+      <a href="/intranet/edit-event/{{ event.id }}/">{{ event.title }}</a>
+    </li>
+    {% endfor %}
+  </ul>
+{%- endblock %}

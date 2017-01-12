@@ -1,13 +1,19 @@
+import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from wtforms import BooleanField, FormField
+from werkzeug.datastructures import CombinedMultiDict
+from app import app, images
 from app.views.users import verify_email
-from app.forms import EditUserForm, FullEditUserForm, FlaskForm
-from app.models import User, Tag, UserTag
-from app.util import ts, send_email
+from app.forms import (EditUserForm, FullEditUserForm, FlaskForm, EditPostForm,
+                       EditEventForm)
+from app.models import User, Tag, UserTag, Post, Event
+from app.util import tag_required
 
 mod = Blueprint('intranet', __name__, url_prefix='/intranet')
+
+app.jinja_env.add_extension('jinja2.ext.do')
 
 
 @mod.before_request
@@ -156,3 +162,150 @@ def groups():
     tag_list = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
 
     return(members(tag_list))
+
+
+@mod.route('/admin/')
+@tag_required('Webmaster')
+def admin():
+    return(render_template('intranet/admin.html'))
+
+
+@mod.route('/view-posts/')
+@tag_required('Webmaster')
+def view_posts():
+    posts = Post.select().order_by(Post.timestamp.desc())
+
+    return(render_template('intranet/view-posts.html', posts=posts))
+
+
+@mod.route('/view-events/')
+@tag_required('Webmaster')
+def view_events():
+    events = Event.select().order_by(Event.timestamp.desc())
+
+    return(render_template('intranet/view-events.html', events=events))
+
+
+@mod.route('/new-post/', methods=['GET', 'POST'])
+@login_required
+@tag_required('Webmaster')
+def new_post():
+    form = EditPostForm(CombinedMultiDict((request.form, request.files)))
+    if form.validate_on_submit():
+        if form.upload.data:
+            image = images.save(form.upload.data)
+        else:
+            image = None
+
+        post = Post.create(
+                title=form.title.data,
+                path=url_for('.index'),
+                content=form.content.data,
+                published=form.published.data,
+                timestamp=datetime.datetime.now(),
+                author=current_user.id,
+                image=image
+                )
+        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
+
+    return render_template('intranet/edit-post.html', form=form, post=None)
+
+
+@mod.route('/edit-post/<int:post_id>/', methods=['GET', 'POST'])
+@mod.route('/edit-post/<int:post_id>/<slug>/', methods=['GET', 'POST'])
+@tag_required('Webmaster')
+def edit_post(post_id, slug=None):
+    post = get_object_or_404(Post, Post.id == post_id)
+
+    if slug != post.slug:
+        return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
+
+    form = EditPostForm(CombinedMultiDict((request.form, request.files)),
+                        obj=post)
+
+    if form.validate_on_submit():
+        if form.upload.data:
+            post.image = images.save(form.upload.data)
+        post.title = form.title.data
+        post.content = form.content.data
+        post.published = form.published.data
+        post.save()
+        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
+
+    return render_template('intranet/edit-post.html', form=form, post=post)
+
+
+@mod.route('/remove-post/<int:post_id>/')
+@mod.route('/remove-post/<int:post_id>/<slug>/')
+@tag_required('Webmaster')
+def remove_post(post_id, slug=None):
+    post = get_object_or_404(Post, Post.id == post_id)
+    post.delete_instance()
+    return redirect(url_for('.view_posts'))
+
+
+@mod.route('/new-event/', methods=['GET', 'POST'])
+@tag_required('Webmaster')
+def new_event():
+    form = EditEventForm(CombinedMultiDict((request.form, request.files)))
+    if form.validate_on_submit():
+        if form.upload.data:
+            image = images.save(form.upload.data)
+        else:
+            image = None
+
+        event = Event.create(
+                title=form.title.data,
+                path='/konserter/',
+                content=form.content.data,
+                published=form.published.data,
+                start_time=form.start_time.data,
+                location=form.location.data,
+                timestamp=datetime.now(),
+                author=current_user.id,
+                image=image
+                )
+        return redirect(url_for('events.view_event',
+                                event_id=event.id,
+                                slug=event.slug))
+
+    return render_template('intranet/edit-event.html', form=form)
+
+
+@mod.route('/edit-event/<int:event_id>/', methods=['GET', 'POST'])
+@mod.route('/edit-event/<int:event_id>/<slug>/', methods=['GET', 'POST'])
+@tag_required('Webmaster')
+def edit_event(event_id, slug=None):
+    event = get_object_or_404(Event, Event.id == event_id)
+
+    if slug != event.slug:
+        return redirect(url_for('.edit_event',
+                        event_id=event.id,
+                        slug=event.slug))
+
+    form = EditEventForm(CombinedMultiDict((request.form, request.files)),
+                         obj=event)
+
+    if form.validate_on_submit():
+        event.title = form.title.data
+        event.content = form.content.data
+        event.published = form.published.data
+        event.start_time = form.start_time.data
+        event.location = form.location.data
+        if form.upload.data:
+            event.image = images.save(form.upload.data)
+        event.save()
+        return redirect(url_for('.view_event',
+                                event_id=event.id,
+                                slug=event.slug))
+
+    return render_template('intranet/edit-event.html', form=form)
+
+
+@mod.route('/remove-event/<int:event_id>/')
+@mod.route('/remove-event/<int:event_id>/<slug>/')
+@tag_required('Webmaster')
+def remove_event(event_id, slug=None):
+    event = get_object_or_404(Event, Event.id == event_id)
+    event.delete_instance()
+    return redirect(url_for('.view-events'))

@@ -6,6 +6,10 @@
 ('/intranet/profile/', 'profile', 'Profil'),
 ] -%}
 
+{% if 'Webmaster' in current_user.tag_names %}
+{% do navigation_bar.append(('/intranet/admin/', 'admin', 'Administration')) %}
+{% endif %}
+
 {% block head %}
 {{ super() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/intranet.css') }}">

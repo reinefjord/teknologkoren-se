@@ -1,0 +1,24 @@
+{% extends "intranet/layout.html" %}
+
+{% set active_page = "admin" %}
+{% set title = "Administration" %}
+
+{% set admin_nav = [
+('/intranet/view-posts', 'posts', 'Posts'),
+('/intranet/view-events/', 'events', 'Events'),
+] -%}
+
+{% block body %}
+<div class="container">
+  <nav class="nav">
+    <ul>
+      {% for href, id, caption in admin_nav -%}
+      <li{% if id == active_sub %} class="active"{% endif %}>
+        <a href="{{ href|e }}">{{ caption|e }}</a>
+      </li>
+      {% endfor -%}
+    </ul>
+  </nav>
+  {% block content %}{% endblock %}
+</div>
+{%- endblock %}

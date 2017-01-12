@@ -1,4 +1,4 @@
-{% extends "main.html" %}
+{% extends "intranet/layout.html" %}
 
 {% set title = "Edit post" %}
 
@@ -31,6 +31,20 @@
       <input type=submit value="Submit">
     </div>
   </form>
+  {% if post %}
+  <p>
+    <a id="remove" href="/intranet/remove-post/{{ post.id }}/{{ post.slug }}/">Remove</a>
+  </p>
+  {% endif %}
 </section>
 
+{% if post %}
+<script>
+document.getElementById("remove").addEventListener("click", function (event) {
+  if (!confirm('This will delete post "{{ post.title }}"\nAre you sure you want to do that?')) {
+    event.preventDefault();
+  }
+}, false)
+</script>
+{% endif %}
 {% endblock %}

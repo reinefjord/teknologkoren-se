@@ -21,7 +21,7 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
 
 
-def overview(template, events, page):
+def index(template, events, page):
     if not current_user.is_authenticated:
         events = events.where(Event.published == True)
 
@@ -47,7 +47,7 @@ def coming(page):
     old = datetime.now() - timedelta(hours=3)
     events = Event.select(
             ).where(Event.start_time > old).order_by(Event.start_time.desc())
-    return overview('events/coming.html', events, page)
+    return index('events/coming.html', events, page)
 
 
 @mod.route('/arkiv/', defaults={'page': 1})
@@ -58,35 +58,7 @@ def archive(page):
             ).where(Event.start_time < old).order_by(Event.start_time.desc())
     has_next = True if events.paginate(page+1, 5) else False
 
-    return overview('events/archive.html', events, page)
-
-
-@mod.route('/new-event/', methods=['GET', 'POST'])
-@login_required
-def new_event():
-    form = EditEventForm(CombinedMultiDict((request.form, request.files)))
-    if form.validate_on_submit():
-        if form.upload.data:
-            image = images.save(form.upload.data)
-        else:
-            image = None
-
-        event = Event.create(
-                title=form.title.data,
-                path='/konserter/',
-                content=form.content.data,
-                published=form.published.data,
-                start_time=form.start_time.data,
-                location=form.location.data,
-                timestamp=datetime.now(),
-                author=current_user.id,
-                image=image
-                )
-        return redirect(url_for('.view_event',
-                                event_id=event.id,
-                                slug=event.slug))
-
-    return render_template('events/edit-event.html', form=form)
+    return index('events/archive.html', events, page)
 
 
 @mod.route('/<int:event_id>/')
@@ -104,42 +76,3 @@ def view_event(event_id, slug=None):
             slug=event.slug))
 
     return render_template('events/view-event.html', event=event)
-
-
-@mod.route('/edit/<int:event_id>/', methods=['GET', 'POST'])
-@mod.route('/edit/<int:event_id>/<slug>/', methods=['GET', 'POST'])
-@login_required
-def edit_event(event_id, slug=None):
-    event = get_object_or_404(Event, Event.id == event_id)
-
-    if slug != event.slug:
-        return redirect(url_for('.edit_event',
-                        event_id=event.id,
-                        slug=event.slug))
-
-    form = EditEventForm(CombinedMultiDict((request.form, request.files)),
-                         obj=event)
-
-    if form.validate_on_submit():
-        event.title = form.title.data
-        event.content = form.content.data
-        event.published = form.published.data
-        event.start_time = form.start_time.data
-        event.location = form.location.data
-        if form.upload.data:
-            event.image = images.save(form.upload.data)
-        event.save()
-        return redirect(url_for('.view_event',
-                                event_id=event.id,
-                                slug=event.slug))
-
-    return render_template('events/edit-event.html', form=form)
-
-
-@mod.route('/remove/<int:event_id>/')
-@mod.route('/remove/<int:event_id>/<slug>/')
-@login_required
-def remove_event(event_id, slug=None):
-    event = get_object_or_404(Event, Event.id == event_id)
-    event.delete_instance()
-    return redirect(url_for('.coming'))

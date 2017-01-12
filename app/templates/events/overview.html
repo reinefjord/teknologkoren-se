@@ -6,9 +6,6 @@
 
 {% block body %}
 <div class="container">
-  {% if current_user.is_authenticated %}
-  <p><a href="/konserter/new-event/">Create new event</a></p>
-  {% endif %}
   <nav class="nav">
     <ul>
       <li{% if active_sub == "kommande"  %} class="active"{% endif %}>

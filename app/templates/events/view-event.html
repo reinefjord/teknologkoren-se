@@ -6,11 +6,5 @@
 {% block body %}
 <div class="container">
   {{ event_article(event) }}
-  {% if current_user.is_authenticated %}
-  <p>
-  <a href="/konserter/edit/{{ event.id }}/{{ event.slug }}/">Edit</a>
-  | <a href="/konserter/remove/{{ event.id }}/{{ event.slug }}/" onclick="return confirm('This will delete event &quot;{{ event.title }}&quot;\nSure you want to do that?')">Remove</a>
-  </p>
-  {% endif %}
 </div>
 {% endblock %}

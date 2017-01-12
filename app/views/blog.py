@@ -1,11 +1,8 @@
-import datetime
 from operator import attrgetter
 from flask import abort, Blueprint, redirect, request, render_template, url_for
-from flask_login import current_user, login_required
+from flask_login import current_user
 from playhouse.flask_utils import get_object_or_404
-from werkzeug.datastructures import CombinedMultiDict
 from app import app, images
-from app.forms import EditPostForm
 from app.models import Post, Event
 
 
@@ -38,7 +35,7 @@ def paginate(content, page, page_size):
 
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
-def overview(page):
+def index(page):
     blogposts = Post.select()
     events = Event.select()
 
@@ -55,7 +52,7 @@ def overview(page):
         last_page = len(posts) // 5
         if len(posts) % 5:
             last_page += 1
-        return redirect(url_for('.overview', page=last_page))
+        return redirect(url_for('.index', page=last_page))
 
     has_next = True if paginate(posts, page+1, 5) else False
 
@@ -63,30 +60,6 @@ def overview(page):
                            pagination=pagination,
                            page=page,
                            has_next=has_next)
-
-
-@mod.route('/new-post/', methods=['GET', 'POST'])
-@login_required
-def new_post():
-    form = EditPostForm(CombinedMultiDict((request.form, request.files)))
-    if form.validate_on_submit():
-        if form.upload.data:
-            image = images.save(form.upload.data)
-        else:
-            image = None
-
-        post = Post.create(
-                title=form.title.data,
-                path=url_for('.overview'),
-                content=form.content.data,
-                published=form.published.data,
-                timestamp=datetime.datetime.now(),
-                author=current_user.id,
-                image=image
-                )
-        return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
-
-    return render_template('blog/edit-post.html', form=form)
 
 
 @mod.route('/<int:post_id>/')
@@ -101,36 +74,3 @@ def view_post(post_id, slug=None):
         return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
 
     return render_template('blog/view-post.html', post=post)
-
-
-@mod.route('/edit/<int:post_id>/', methods=['GET', 'POST'])
-@mod.route('/edit/<int:post_id>/<slug>/', methods=['GET', 'POST'])
-@login_required
-def edit_post(post_id, slug=None):
-    post = get_object_or_404(Post, Post.id == post_id)
-
-    if slug != post.slug:
-        return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
-
-    form = EditPostForm(CombinedMultiDict((request.form, request.files)),
-                        obj=post)
-
-    if form.validate_on_submit():
-        if form.upload.data:
-            post.image = images.save(form.upload.data)
-        post.title = form.title.data
-        post.content = form.content.data
-        post.published = form.published.data
-        post.save()
-        return redirect(url_for('.view_post', post_id=post.id, slug=post.slug))
-
-    return render_template('blog/edit-post.html', form=form)
-
-
-@mod.route('/remove/<int:post_id>/')
-@mod.route('/remove/<int:post_id>/<slug>/')
-@login_required
-def remove_post(post_id, slug=None):
-    post = get_object_or_404(Post, Post.id == post_id)
-    post.delete_instance()
-    return redirect(url_for('.overview'))

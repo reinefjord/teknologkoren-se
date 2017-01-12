@@ -9,13 +9,7 @@ from wtforms.validators import (Email, InputRequired, Regexp, Optional,
 from peewee import DoesNotExist
 from app import images
 from .models import User
-
-
-def is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ('http', 'https') and \
-        ref_url.netloc == test_url.netloc
+from .util import is_safe_url
 
 
 class Unique:

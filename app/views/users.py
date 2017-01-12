@@ -25,7 +25,7 @@ def login():
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
-        return form.redirect('blog.overview')
+        return form.redirect('intranet.index')
     elif form.email.errors or form.password.errors:
         flash("Sorry, your email address or password was incorrect.", 'error')
 
@@ -36,7 +36,7 @@ def login():
 def logout():
     if current_user.is_authenticated:
         logout_user()
-    return redirect(url_for('blog.overview'))
+    return redirect(url_for('blog.index'))
 
 
 @mod.route('/adduser/', methods=['GET', 'POST'])
@@ -56,7 +56,7 @@ def adduser():
                 password=password,
                 )
 
-        return form.redirect('blog.overview')
+        return form.redirect('blog.index')
 
     return render_template('users/adduser.html', form=form)
 
@@ -80,7 +80,7 @@ def verify_token(token):
         user_id, email = ts.loads(token, salt='verify-email', max_age=900)
     except SignatureExpired:
         flash("Sorry, the link has expired. Please try again.", 'error')
-        return redirect(url_for('blog.overview'))
+        return redirect(url_for('blog.index'))
     except:
         abort(404)
 
@@ -90,7 +90,7 @@ def verify_token(token):
     user.save()
 
     flash("{} is now verified!".format(email), 'success')
-    return redirect(url_for('blog.overview'))
+    return redirect(url_for('blog.index'))
 
 
 @mod.route('/reset/', methods=['GET', 'POST'])
