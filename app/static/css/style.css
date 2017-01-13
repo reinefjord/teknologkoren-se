@@ -210,10 +210,16 @@ article header {
     color: #6C1600;
 }
 
-.tags {
+.tag-set {
     border-radius: 5px;
-    height: 15em;
+    padding: 10px 0 0 15px;
+}
+#tag-filter {
+    margin-bottom: 10px;
+}
+.tags {
     overflow: auto;
+    height: 15em;
 }
 
 @media screen and (max-width: 55em) {

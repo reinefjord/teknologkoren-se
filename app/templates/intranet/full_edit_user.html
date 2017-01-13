@@ -39,18 +39,21 @@
       {{ form.password }}
     </div>
 
-    <fieldset class="tags">
+    <fieldset class="tag-set">
       {{ form.tags.csrf_token }}
 
       <legend>Tags</legend>
 
-      <input type="text" id="filter" placeholder="Filter">
+      <input type="text" id="tag-filter" placeholder="Filter">
+
+      <div class="tags">
       {% for field in form.tags if field.name != "tags-csrf_token" %}
       <div class="field">
         {{ field }}
         {{ field.label }}
       </div>
       {% endfor %}
+      </div>
     </fieldset>
 
     <div class="field">
@@ -62,7 +65,7 @@
 </div>
 
 <script>
-var filter = document.getElementById("filter");
+var filter = document.getElementById("tag-filter");
 
 filter.addEventListener("input", function ()
     {
