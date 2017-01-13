@@ -1,6 +1,6 @@
 from functools import wraps
 from urllib.parse import urlparse, urljoin
-from flask import flash, url_for, request, redirect, session
+from flask import flash, url_for, request, redirect
 from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
 from app import app
@@ -20,16 +20,13 @@ def is_safe_url(target):
         ref_url.netloc == test_url.netloc
 
 
-def get_redirect_target():
-    for target in request.values.get('next'), request.referrer:
+def get_redirect_target(fallback='.index'):
+    for target in (request.values.get('next'), request.referrer,
+                   url_for(fallback)):
         if not target:
             continue
         if is_safe_url(target):
             return target
-
-
-def redirect_back():
-    return redirect(session['previous_page'])
 
 
 def tag_required(tag):

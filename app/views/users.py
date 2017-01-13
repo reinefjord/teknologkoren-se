@@ -22,6 +22,10 @@ def load_user(userid):
 @mod.route('/login/', methods=['GET', 'POST'])
 def login():
     form = LoginForm(request.form)
+
+    if current_user.is_authenticated:
+        return form.redirect('intranet.index')
+
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
