@@ -7,9 +7,8 @@ html {
 body {
     background-color: #fff;
     margin: 20px auto 50px auto;
-    padding: 15px;
+    padding: 15px 15px 50px 15px;
     max-width: 40em;
-    min-height: 40em;
     font-size: 1.2em;
     line-height: 1.6;
     overflow-y: scroll;
@@ -177,7 +176,7 @@ article header {
 .contacts td {
     white-space: nowrap;
     height: 2em;
-    padding-right: 15px;
+    padding: 0 10px 0 10px;
 }
 
 .field {
