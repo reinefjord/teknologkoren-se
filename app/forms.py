@@ -4,6 +4,7 @@ from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField, PasswordField, BooleanField,
                      HiddenField, DateTimeField, FileField)
+from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from peewee import DoesNotExist
@@ -39,7 +40,7 @@ class RedirectForm(FlaskForm):
 
 
 class LoginForm(RedirectForm):
-    email = StringField('Email', validators=[InputRequired(), Email()])
+    email = EmailField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember = BooleanField('Remember me')
 
@@ -61,7 +62,7 @@ class LoginForm(RedirectForm):
 
 
 class EmailForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email()])
+    email = EmailField('Email', validators=[InputRequired(), Email()])
 
     def validate(self):
         if not FlaskForm.validate(self):
@@ -88,7 +89,7 @@ class AddUserForm(RedirectForm):
     first_name = StringField('First Name', validators=[InputRequired()])
     last_name = StringField('First Name', validators=[InputRequired()])
 
-    email = StringField('Email', validators=[
+    email = EmailField('Email', validators=[
         InputRequired(),
         Email(),
         Unique(
@@ -96,12 +97,12 @@ class AddUserForm(RedirectForm):
             User.email,
             message="This email is already in use")])
 
-    phone = StringField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
+    phone = TelField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
 
 
 class EditUserForm(FlaskForm):
-    email = StringField('Email', validators=[InputRequired(), Email()])
-    phone = StringField('Phone', validators=[
+    email = EmailField('Email', validators=[InputRequired(), Email()])
+    phone = TelField('Phone', validators=[
         InputRequired(),
         Regexp(r'^\+?[0-9]*$')])
     password = PasswordField('Password', validators=[Optional()])
