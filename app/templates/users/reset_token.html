@@ -6,9 +6,9 @@
 <div class="container">
   <form method='POST'>
     {{ form.csrf_token }}
-    <h2>Send reset password link</h2>
+    <h2>Reset password</h2>
     <div class="field">
-      {{ form.email(placeholder='Email address') }}
+      {{ form.password(placeholder='New password') }}
     </div>
     <div class="field">
       <input type=submit value="Submit">

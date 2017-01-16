@@ -6,7 +6,7 @@ from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from itsdangerous import SignatureExpired
 from app import login_manager
-from app.forms import LoginForm, AddUserForm, PasswordForm, PasswordResetForm
+from app.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
 from app.models import User
 from app.util import send_email, ts
 
@@ -99,11 +99,14 @@ def verify_token(token):
 
 @mod.route('/reset/', methods=['GET', 'POST'])
 def reset():
-    form = PasswordResetForm()
+    form = EmailForm()
+
+    reset_flash = \
+        "A password reset link valid for one hour has been sent to {}."
+
     if form.validate_on_submit():
         user = form.user
-        password = form.password.data
-        token = ts.dumps((user.email, password), salt='recover-key')
+        token = ts.dumps((user.id, user._password_id), salt='recover-key')
 
         recover_url = url_for('.reset_token', token=token, _external=True)
 
@@ -114,34 +117,44 @@ def reset():
 
         send_email(user.email, email_body)
 
-        flash("A password reset link valid for 15 minutes has been sent to {}."
-              .format(form.email.data), 'info')
+        flash(reset_flash.format(form.email.data), 'info')
         return redirect(url_for('.login'))
 
-    elif form.email.data and form.password.data:
-        flash("A password reset link valid for 15 minutes has been sent to {}."
-              .format(form.email.data), 'info')
+    elif form.email.data:
+        flash(reset_flash.format(form.email.data), 'info')
         return redirect(url_for('.login'))
 
     elif form.errors:
-        flash("Please fill in all fields.", 'error')
+        flash("Please enter your email.", 'error')
 
     return render_template('users/reset.html', form=form)
 
 
 @mod.route('/reset/<token>/', methods=['GET', 'POST'])
 def reset_token(token):
+    expired = "Sorry, the link has expired. Please try again."
+    invalid = "Sorry, the link appears to be broken. Please try again."
+
     try:
-        data = ts.loads(token, salt='recover-key', max_age=900)
+        data = ts.loads(token, salt='recover-key', max_age=3600)
+        user = User.get(User.id == data[0])
     except SignatureExpired:
-        flash("Sorry, the link has expired. Please try again.", 'error')
+        flash(expired, 'error')
         return redirect(url_for('.login'))
     except:
-        abort(404)
+        flash(invalid, 'error')
+        return redirect(url_for('.login'))
 
-    user = get_object_or_404(User, User.email == data[0])
-    user.password = data[1]
-    user.save()
+    if data[1] != user._password_id:
+        flash(expired, 'error')
+        return redirect(url_for('.login'))
 
-    flash("Your password has been reset!", 'success')
-    return redirect(url_for('.login'))
+    form = PasswordForm()
+
+    if form.validate_on_submit():
+        user.password = form.password.data
+        user.save()
+        flash("Your password has been reset!", 'success')
+        return redirect(url_for('.login'))
+
+    return render_template('users/reset_token.html', form=form)
