@@ -1,5 +1,4 @@
-import random
-from string import ascii_letters, digits
+from datetime import datetime
 from flask_login import UserMixin
 from app import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
@@ -14,7 +13,7 @@ class User(UserMixin, flask_db.Model):
     last_name = CharField()
     phone = CharField(null=True)
     _password = CharField()
-    _password_id = CharField()
+    _password_timestamp = DateTimeField()
 
     @hybrid_property
     def password(self):
@@ -23,8 +22,7 @@ class User(UserMixin, flask_db.Model):
     @password.setter
     def _set_password(self, plaintext):
         self._password = bcrypt.generate_password_hash(plaintext)
-        self._password_id = ''.join(random.choice(ascii_letters + digits)
-                                    for _ in range(6))
+        self._password_timestamp = datetime.utcnow()
 
     def verify_password(self, plaintext):
         return bcrypt.check_password_hash(self._password, plaintext)

@@ -106,7 +106,7 @@ def reset():
 
     if form.validate_on_submit():
         user = form.user
-        token = ts.dumps((user.id, user._password_id), salt='recover-key')
+        token = ts.dumps(user.id, salt='recover-key')
 
         recover_url = url_for('.reset_token', token=token, _external=True)
 
@@ -136,8 +136,9 @@ def reset_token(token):
     invalid = "Sorry, the link appears to be broken. Please try again."
 
     try:
-        data = ts.loads(token, salt='recover-key', max_age=3600)
-        user = User.get(User.id == data[0])
+        data, timestamp = ts.loads(token, salt='recover-key', max_age=3600,
+                                   return_timestamp=True)
+        user = User.get(User.id == data)
     except SignatureExpired:
         flash(expired, 'error')
         return redirect(url_for('.login'))
@@ -145,7 +146,7 @@ def reset_token(token):
         flash(invalid, 'error')
         return redirect(url_for('.login'))
 
-    if data[1] != user._password_id:
+    if timestamp < user._password_timestamp:
         flash(expired, 'error')
         return redirect(url_for('.login'))
 
