@@ -5,19 +5,18 @@
 {% set title = "I takt med tiden" %}
 
 {% block body %}
-  <div class="container">
-    <section class="overview">
-      {% for post in pagination %}
-      {% if post is event %}
-      {{ event_article(post) }}
-      {% else %}
-      {{ post_article(post, True) }}
-      {% endif %}
-      {% endfor %}
-    </section>
+<img src="static/images/ktk.jpg">
+<section class="overview">
+  {% for post in pagination %}
+  {% if post is event %}
+  {{ event_article(post) }}
+  {% else %}
+  {{ post_article(post, True) }}
+  {% endif %}
+  {% endfor %}
+</section>
 
-    {% if has_next or page > 1 %}
-    {{ pager(has_next, page) }}
-    {% endif %}
-  </div>
+{% if has_next or page > 1 %}
+{{ pager(has_next, page) }}
+{% endif %}
 {% endblock %}

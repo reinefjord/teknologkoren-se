@@ -5,7 +5,7 @@
 {% set title = "Intranät" %}
 
 {% block body %}
-<div class="container">
+<div class="boxed constrain-width">
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}

@@ -1,5 +1,5 @@
 {% macro post_article(post, overview) %}
-<article>
+<article class="boxed constrain-width">
   <header>
     <h1><a href="/{{ post.id }}/{{ post.slug }}/">{{ post.title }}</a></h1>
     <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
@@ -18,7 +18,7 @@
 {% endmacro %}
 
 {% macro event_article(event) %}
-<article>
+<article class="boxed constrain-width">
   <header>
     <h1><a href="/konserter/{{ event.id }}/{{ event.slug }}/">{{ event.title }}</a></h1>
   </header>
@@ -48,7 +48,7 @@
 {% endmacro %}
 
 {% macro pager(has_next, page) %}
-<nav class="pager">
+<nav class="pager constrain-width boxed">
   {% if has_next %}
   <a class="older" href="{{ url_for_other_page(page + 1) }}">
     &larr; Older</a>
