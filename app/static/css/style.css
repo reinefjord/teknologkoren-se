@@ -67,7 +67,6 @@ article header {
 }
 
 .post-image img {
-    max-height: 400px;
 }
 
 .truncate {
@@ -114,13 +113,14 @@ article header {
     margin-top: 30px;
 }
 
+
 .nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
     display: -webkit-flex;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .nav li {
     margin: 0;
@@ -130,6 +130,10 @@ article header {
 }
 .nav .active {
     text-decoration: underline;
+}
+
+.sub-nav ul {
+    justify-content: space-around;
 }
 
 .overview article {
