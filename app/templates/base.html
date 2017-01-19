@@ -12,14 +12,14 @@
   </head>
   <body>
     {% set active_page = active_page -%}
-    <header class="pageheader">
+    <header class="pageheader boxed">
       <div class="logo">
         {% block logo %}{% endblock %}
       </div>
       <nav class="nav">
         <ul>
           {% for href, id, caption in navigation_bar -%}
-          <li{% if id == active_page %} class="active"{% endif %}>
+          <li class="nowrap{% if id == active_page %} active{% endif %}">
             <a href="{{ href|e }}">{{ caption|e }}</a>
           </li>
           {% endfor -%}

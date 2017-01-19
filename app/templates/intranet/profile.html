@@ -9,7 +9,7 @@
 {% set title = "Intranät" %}
 
 {% block body %}
-<div class="container">
+<div class="boxed constrain-width">
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
   <p>Number: {{ user.phone }}</p>

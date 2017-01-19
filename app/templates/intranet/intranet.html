@@ -2,8 +2,8 @@
 {% set active_page = "intranet" %}
 {% set title = "Intranät" %}
 {% block body %}
-  <div class="container">
+<div class="boxed constrain-width">
   <p>Intranät - {{ current_user.email }}</p>
   <p><a href="/logout/">Logout</a></p>
-  {%- endblock %}
 </div>
+{%- endblock %}

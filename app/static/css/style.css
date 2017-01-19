@@ -1,20 +1,11 @@
 /* palette: http://paletton.com/palette.php?uid=73C2b0kpczF5YXuhyJVv-q5G7dw */
 
-html {
-    background-color: #fafafa;
-}
-
 body {
-    background-color: #fff;
-    margin: 20px auto 50px auto;
-    padding: 15px 15px 50px 15px;
-    max-width: 40em;
+    margin: 15px 0 50px 0;
     font-size: 1.2em;
     line-height: 1.6;
     overflow-y: scroll;
     font-family: sans-serif;
-    box-shadow: 0 0 3px #ccc;
-    border-radius: 7px;
 }
 
 img {
@@ -44,6 +35,16 @@ article h1 {
 
 article header {
     margin: 20px 0;
+}
+
+.boxed {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px 0 15px;
+}
+
+.constrain-width {
+    max-width: 34em;
 }
 
 .post-text {
@@ -77,6 +78,7 @@ article header {
 .pageheader {
     text-align: center;
     margin-bottom: 40px;
+    max-width: 36em;
 }
 
 .logo img {
@@ -108,14 +110,8 @@ article header {
     text-decoration: none;
 }
 
-.container {
-    margin: 0 auto;
-    padding: 0 20px;
-    max-width: 34em;
-}
-
 .nav {
-    margin: 30px 0;
+    margin-top: 30px;
 }
 
 .nav ul {
@@ -124,9 +120,10 @@ article header {
     margin: 0;
     display: -webkit-flex;
     display: flex;
+    justify-content: space-around;
 }
 .nav li {
-    margin: 0 auto;
+    margin: 0;
 }
 .nav a {
     text-decoration: none;
@@ -221,18 +218,15 @@ article header {
     height: 15em;
 }
 
-@media screen and (max-width: 55em) {
-    html {
-        background-color: #fff;
-    }
-    body {
-        padding: 0;
-        border-radius: 0;
-        box-shadow: none;
-    }
-}
-
 @media screen and (max-width: 38em) {
+    body {
+        margin-bottom: 25px;
+    }
+
+    .boxed {
+        padding: 0 7px 0 7px;
+    }
+
     .pageheader {
         margin-bottom: 30px;
     }
