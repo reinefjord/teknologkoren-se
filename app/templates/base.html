@@ -27,7 +27,7 @@
       </nav>
     </header>
     {% if get_flashed_messages() %}
-    <div class="container">
+    <div class="constrain-width boxed">
     {% for type in ['success', 'info', 'error'] %}
     {% with messages = get_flashed_messages(category_filter=[type]) %}
     {% if messages %}

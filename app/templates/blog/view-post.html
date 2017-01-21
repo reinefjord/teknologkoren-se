@@ -4,9 +4,5 @@
 {% set title = post.title %}
 
 {% block body %}
-
-  <div class="container">
-    {{ post_article(post, False) }}
-  </div>
-
+{{ post_article(post, False) }}
 {% endblock %}
