@@ -59,11 +59,10 @@ article header {
 
 .event-text {
     margin-right: 15px;
+    flex: 2;
 }
 .event-image {
-    max-width: 200px;
-    -webkit-flex: none;
-    flex: none;
+    flex: 1;
 }
 
 .post-image img {
@@ -279,5 +278,6 @@ article header {
     }
     .event-image {
         align-self: center;
+        max-width: 15em;
     }
 }

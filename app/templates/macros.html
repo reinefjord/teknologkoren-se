@@ -8,7 +8,7 @@
   </header>
   {% if post.image %}
   <div class="post-image{% if overview %} truncate{% endif %}">
-    <img src="{{ image_url(post.image) }}">
+    {{ img(post.image, 800) }}
   </div>
   {% endif %}
   <div class="post-text">
@@ -39,7 +39,7 @@
     {% if event.image %}
     <div class="event-image">
       <a href="{{ image_url(event.image) }}">
-        <img src="{{ image_url(event.image) }}">
+        {{ img(event.image, 400) }}
       </a>
     </div>
     {% endif %}
@@ -59,3 +59,8 @@
   {% endif %}
 </nav>
 {% endmacro %}
+
+{% macro img(image, size) %}
+<img src="{{ image_dest() }}img{{ size }}/{{ image }}">
+{% endmacro %}
+

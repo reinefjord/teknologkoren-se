@@ -1,11 +1,11 @@
 {% extends "main.html" %}
-{% from 'macros.html' import post_article, event_article, pager %}
+{% from 'macros.html' import post_article, event_article, pager, img %}
 {% set active_page = "index" %}
 
 {% set title = "I takt med tiden" %}
 
 {% block body %}
-<img src="/static/images/ktk.jpg">
+<img src="/static/images/img1600/ktk.jpg">
 <section class="overview">
   {% for post in pagination %}
   {% if post is event %}

@@ -21,8 +21,13 @@ def is_event(post):
     return False
 
 
+def image_destination():
+    return images.config.base_url
+
+
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
+app.jinja_env.globals['image_dest'] = image_destination
 app.jinja_env.tests['event'] = is_event
 
 

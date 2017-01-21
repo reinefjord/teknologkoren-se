@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, redirect
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
@@ -32,6 +32,7 @@ bcrypt = Bcrypt(app)
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
+
 
 from app.models import User, Post, Event, Tag, UserTag
 admin = Admin(app, name='teknologkoren.se')
