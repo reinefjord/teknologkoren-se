@@ -2,8 +2,8 @@ from operator import attrgetter
 from flask import abort, Blueprint, redirect, request, render_template, url_for
 from flask_login import current_user
 from playhouse.flask_utils import get_object_or_404
-from app import app, images
-from app.models import Post, Event
+from teknologkoren_se import app, images
+from teknologkoren_se.models import Post, Event
 
 
 mod = Blueprint('blog', __name__)

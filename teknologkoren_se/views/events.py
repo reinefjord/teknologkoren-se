@@ -3,9 +3,9 @@ from flask import abort, Blueprint, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
-from app import app, images
-from app.forms import EditEventForm
-from app.models import Event
+from teknologkoren_se import app, images
+from teknologkoren_se.forms import EditEventForm
+from teknologkoren_se.models import Event
 
 
 mod = Blueprint('events', __name__, url_prefix='/konserter')

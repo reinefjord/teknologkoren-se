@@ -34,7 +34,7 @@ images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
 
-from app.models import User, Post, Event, Tag, UserTag
+from teknologkoren_se.models import User, Post, Event, Tag, UserTag
 admin = Admin(app, name='teknologkoren.se')
 admin.add_view(ModelView(User, name='User'))
 admin.add_view(ModelView(Post, name='Post'))
@@ -42,7 +42,7 @@ admin.add_view(ModelView(Event, name='Event'))
 admin.add_view(ModelView(Tag, name='Tag'))
 admin.add_view(ModelView(UserTag, name='UserTag'))
 
-from app.views import (general,
+from teknologkoren_se.views import (general,
                        users,
                        blog,
                        events,

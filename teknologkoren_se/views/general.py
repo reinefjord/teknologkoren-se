@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from app.models import User, Tag, UserTag
+from teknologkoren_se.models import User, Tag, UserTag
 
 
 mod = Blueprint('general', __name__)

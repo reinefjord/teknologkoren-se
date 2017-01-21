@@ -3,7 +3,7 @@ from urllib.parse import urlparse, urljoin
 from flask import flash, url_for, request, redirect
 from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
-from app import app
+from teknologkoren_se import app
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 

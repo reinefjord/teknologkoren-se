@@ -5,10 +5,10 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
 from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from itsdangerous import SignatureExpired
-from app import login_manager
-from app.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
-from app.models import User
-from app.util import send_email, ts
+from teknologkoren_se import login_manager
+from teknologkoren_se.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
+from teknologkoren_se.models import User
+from teknologkoren_se.util import send_email, ts
 
 
 mod = Blueprint('users', __name__)

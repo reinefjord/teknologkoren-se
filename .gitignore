@@ -3,4 +3,4 @@ venv/
 
 *.db
 
-app/static/uploads/*
+teknologkoren_se/static/uploads/*

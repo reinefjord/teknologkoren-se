@@ -4,12 +4,12 @@ from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from wtforms import BooleanField, FormField
 from werkzeug.datastructures import CombinedMultiDict
-from app import app, images
-from app.views.users import verify_email
-from app.forms import (EditUserForm, FullEditUserForm, FlaskForm, EditPostForm,
+from teknologkoren_se import app, images
+from teknologkoren_se.views.users import verify_email
+from teknologkoren_se.forms import (EditUserForm, FullEditUserForm, FlaskForm, EditPostForm,
                        EditEventForm)
-from app.models import User, Tag, UserTag, Post, Event
-from app.util import tag_required
+from teknologkoren_se.models import User, Tag, UserTag, Post, Event
+from teknologkoren_se.util import tag_required
 
 mod = Blueprint('intranet', __name__, url_prefix='/intranet')
 
@@ -295,7 +295,7 @@ def edit_event(event_id, slug=None):
         if form.upload.data:
             event.image = images.save(form.upload.data)
         event.save()
-        return redirect(url_for('.view_event',
+        return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
 

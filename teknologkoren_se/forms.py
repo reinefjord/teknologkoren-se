@@ -8,7 +8,7 @@ from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from peewee import DoesNotExist
-from app import images
+from teknologkoren_se import images
 from .models import User
 from .util import is_safe_url
 

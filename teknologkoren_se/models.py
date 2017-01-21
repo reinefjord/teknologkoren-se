@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask_login import UserMixin
-from app import flask_db, bcrypt
+from teknologkoren_se import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
                     ForeignKeyField, FixedCharField)
 from playhouse.hybrid import hybrid_property
