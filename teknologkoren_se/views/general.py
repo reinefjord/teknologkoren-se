@@ -27,18 +27,23 @@ def sjung():
 def kontakt():
     users = User.select()
     board = {}
-    tags = ['Ordförande', 'Vice ordförande', 'Kassör', 'Sekreterare',
-            'PRoletär', 'Notfisqual', 'Qlubbmästare']
+    tags = [('Ordförande', 'ordf@teknologkoren.se'),
+            ('Vice ordförande', 'vice@teknologkoren.se'),
+            ('Kassör', 'pengar@teknologkoren.se'),
+            ('Sekreterare', 'sekr@teknologkoren.se'),
+            ('PRoletär', 'pr@teknologkoren.se'),
+            ('Notfisqual', 'noter@teknologkoren.se'),
+            ('Qlubbmästare', 'qm@teknologkoren.se')]
 
     tags_copy = list(tags)
 
     for tag in tags_copy:
         try:
-            board[tag] = (users
-                          .join(UserTag)
-                          .join(Tag)
-                          .where(Tag.name == tag)
-                          .get())
+            board[tag[0]] = (users
+                             .join(UserTag)
+                             .join(Tag)
+                             .where(Tag.name == tag[0])
+                             .get())
 
         except User.DoesNotExist:
             tags.remove(tag)
