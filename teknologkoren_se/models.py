@@ -74,6 +74,10 @@ class Post(flask_db.Model):
     author = ForeignKeyField(User)
     image = CharField(null=True)
 
+    @property
+    def url(self):
+        return '{}/{}/'.format(self.id, self.slug)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
