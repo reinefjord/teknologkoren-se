@@ -1,4 +1,3 @@
-from urllib.parse import urlparse, urljoin
 from flask import request, url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
@@ -7,7 +6,6 @@ from wtforms import (StringField, PasswordField, BooleanField,
 from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
-from peewee import DoesNotExist
 from teknologkoren_se import images
 from .models import User
 from .util import is_safe_url
@@ -20,11 +18,7 @@ class Unique:
         self.message = message
 
     def __call__(self, form, field):
-        try:
-            user = self.model.get(self.field == field.data)
-        except self.model.DoesNotExist:
-            pass
-        else:
+        if self.model.select().where(self.field == field.data).exists():
             raise ValidationError(self.message)
 
 
@@ -50,7 +44,7 @@ class LoginForm(RedirectForm):
 
         try:
             self.user = User.get(email=self.email.data)
-        except DoesNotExist:
+        except User.DoesNotExist:
             self.email.errors.append("Unknown email")
             return False
 
@@ -115,12 +109,8 @@ class EditUserForm(FlaskForm):
         if not FlaskForm.validate(self):
             return False
 
-        try:
-            user = User.get(User.email == self.email.data)
-        except User.DoesNotExist:
-            pass
-        else:
-            if user.id != self.user.id:
+        if User.select().where(User.email == self.email.data).exists():
+            if self.email.data != self.user.email:
                 self.email.errors.append("This email is already in use")
                 return False
 
