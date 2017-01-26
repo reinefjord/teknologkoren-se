@@ -47,6 +47,10 @@ article header {
     max-width: 34em;
 }
 
+.cover-image {
+    width: 100%;
+}
+
 .post-text {
     margin-top: 10px;
 }
