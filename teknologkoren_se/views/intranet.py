@@ -122,8 +122,8 @@ def full_edit_user(id):
                 UserTag.create(user=user, tag=tag)
 
             elif not tag_field.data and tag.name in user.tag_names:
-                user_tag = UserTag.get(UserTag.user == user and
-                                       UserTag.tag == tag)
+                user_tag = UserTag.get((UserTag.user == user) &
+                                       (UserTag.tag == tag))
                 user_tag.delete_instance()
 
         user.save()
@@ -134,7 +134,6 @@ def full_edit_user(id):
                            user=user,
                            form=form,
                            full_form=True)
-
 
 def members(tag_list):
     active_users = User.has_tag('Active')
