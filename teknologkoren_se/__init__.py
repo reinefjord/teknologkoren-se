@@ -1,10 +1,13 @@
-from flask import Flask, redirect
+import locale
+from flask import Flask
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin
 from flask_admin.contrib.peewee import ModelView
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from playhouse.flask_utils import FlaskDB
+
+locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
 app = Flask(__name__)
 app.config.from_object('config')
