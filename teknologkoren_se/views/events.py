@@ -22,8 +22,7 @@ app.jinja_env.globals['image_url'] = images.url
 
 
 def index(template, events, page):
-    if not current_user.is_authenticated:
-        events = events.where(Event.published == True)
+    events = events.where(Event.published == True)
 
     pagination = events.paginate(page, 5)
 

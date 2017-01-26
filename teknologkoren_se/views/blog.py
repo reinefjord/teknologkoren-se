@@ -41,12 +41,8 @@ def paginate(content, page, page_size):
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
 def index(page):
-    blogposts = Post.select()
-    events = Event.select()
-
-    if not current_user.is_authenticated:
-        blogposts = blogposts.where(Post.published == True)
-        events = events.where(Event.published == True)
+    blogposts = Post.select().where(Post.published == True)
+    events = Event.select().where(Event.published == True)
 
     posts = list(blogposts) + list(events)
     posts.sort(key=attrgetter('timestamp'), reverse=True)
