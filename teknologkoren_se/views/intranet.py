@@ -38,7 +38,8 @@ def profile(id):
     tags = (Tag
             .select()
             .join(UserTag)
-            .where(UserTag.user == user))
+            .where(UserTag.user == user)
+            ).order_by(Tag.name)
 
     if current_user.id == id or 'Webmaster' in current_user.tag_names:
         edit = True
@@ -89,7 +90,7 @@ def full_edit_user(id):
     class F(FlaskForm):
         pass
 
-    for tag in Tag.select():
+    for tag in Tag.select().order_by(Tag.name):
         if tag.name in user.tag_names:
             field = BooleanField(tag.name, default=True)
         else:
@@ -135,12 +136,25 @@ def full_edit_user(id):
                            form=form,
                            full_form=True)
 
-def members(tag_list):
-    active_users = User.has_tag('Active')
+
+@mod.route('/members/all/')
+def all_members():
+    tag_dict = {'All': User.select().order_by(User.first_name)}
+    tag_list = ['All']
+
+    return(render_template(
+        'intranet/members.html',
+        tag_list=tag_list,
+        tag_dict=tag_dict))
+
+
+def members_by_tags(tag_list):
+    active_users = User.has_tag('Aktiv')
 
     tag_dict = {}
     for tag in tag_list:
-        tag_dict[tag] = active_users & User.has_tag(tag)
+        tag_dict[tag] = (active_users & User.has_tag(tag)
+                         ).order_by(User.first_name)
 
     return(render_template(
         'intranet/members.html',
@@ -152,15 +166,13 @@ def members(tag_list):
 def voices():
     tag_list = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
                 'Tenor 2', 'Bas 1', 'Bas 2']
-
-    return(members(tag_list))
+    return(members_by_tags(tag_list))
 
 
 @mod.route('/members/groups/')
 def groups():
     tag_list = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
-
-    return(members(tag_list))
+    return(members_by_tags(tag_list))
 
 
 @mod.route('/admin/')
