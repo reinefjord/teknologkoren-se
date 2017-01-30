@@ -22,18 +22,7 @@ class Unique:
             raise ValidationError(self.message)
 
 
-class RedirectForm(FlaskForm):
-    next = HiddenField()
-
-    def redirect(self, endpoint='index', **values):
-        self.next.data = request.args.get('next')
-        if self.next.data and is_safe_url(self.next.data):
-            return redirect(self.next.data)
-
-        return redirect(url_for(endpoint, **values))
-
-
-class LoginForm(RedirectForm):
+class LoginForm(FlaskForm):
     email = EmailField('Email', validators=[InputRequired(), Email()])
     password = PasswordField('Password', validators=[InputRequired()])
     remember = BooleanField('Remember me')
@@ -79,7 +68,7 @@ class PasswordResetForm(EmailForm, PasswordForm):
     pass
 
 
-class AddUserForm(RedirectForm):
+class AddUserForm(FlaskForm):
     first_name = StringField('First Name', validators=[InputRequired()])
     last_name = StringField('First Name', validators=[InputRequired()])
 

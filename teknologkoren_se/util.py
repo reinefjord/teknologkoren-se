@@ -20,7 +20,7 @@ def is_safe_url(target):
         ref_url.netloc == test_url.netloc
 
 
-def get_redirect_target(fallback='.index'):
+def get_redirect_target(fallback):
     for target in (request.values.get('next'), request.referrer,
                    url_for(fallback)):
         if not target:
@@ -29,13 +29,17 @@ def get_redirect_target(fallback='.index'):
             return target
 
 
+def redirect_next(fallback='.index'):
+    return redirect(get_redirect_target(fallback))
+
+
 def tag_required(tag):
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
             if tag not in current_user.tag_names:
                 flash("You need to be {} to access that.".format(tag), 'error')
-                return redirect(get_redirect_target())
+                return redirect(redirect_next())
             return func(*args, **kwargs)
         return decorated_function
     return decorator

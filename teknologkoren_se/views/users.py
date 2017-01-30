@@ -8,7 +8,7 @@ from itsdangerous import SignatureExpired
 from teknologkoren_se import login_manager
 from teknologkoren_se.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
 from teknologkoren_se.models import User
-from teknologkoren_se.util import send_email, ts
+from teknologkoren_se.util import send_email, ts, redirect_next
 
 
 mod = Blueprint('users', __name__)
@@ -24,12 +24,12 @@ def login():
     form = LoginForm(request.form)
 
     if current_user.is_authenticated:
-        return form.redirect('intranet.index')
+        return redirect_next('intranet.index')
 
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
-        return form.redirect('intranet.index')
+        return redirect_next('intranet.index')
     elif form.email.errors or form.password.errors:
         flash("Sorry, your email address or password was incorrect.", 'error')
 
@@ -59,7 +59,7 @@ def adduser():
                 password=password,
                 )
 
-        return form.redirect('blog.index')
+        return redirect('intranet.index')
 
     return render_template('users/adduser.html', form=form)
 
