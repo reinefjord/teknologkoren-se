@@ -1,4 +1,4 @@
-from flask import request, url_for, redirect
+from flask import url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField, PasswordField, BooleanField,
@@ -8,10 +8,11 @@ from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from teknologkoren_se import images
 from .models import User
-from .util import is_safe_url
+from .util import is_safe_url, get_redirect_target
 
 
 class Unique:
+    """Validate that field is unique in model."""
     def __init__(self, model, field, message='This element already exists.'):
         self.model = model
         self.field = field
@@ -22,50 +23,69 @@ class Unique:
             raise ValidationError(self.message)
 
 
-class LoginForm(FlaskForm):
-    email = EmailField('Email', validators=[InputRequired(), Email()])
-    password = PasswordField('Password', validators=[InputRequired()])
-    remember = BooleanField('Remember me')
+class Exists:
+    """Validate that field is unique in model."""
+    def __init__(self, model, field, message='This element does not exist.'):
+        self.model = model
+        self.field = field
+        self.message = message
 
-    def validate(self):
-        if not FlaskForm.validate(self):
-            return False
+    def __call__(self, form, field):
+        if not(self.model.select().where(self.field == field.data).exists()):
+            raise ValidationError(self.message)
 
-        try:
-            self.user = User.get(email=self.email.data)
-        except User.DoesNotExist:
-            self.email.errors.append("Unknown email")
-            return False
 
-        if not self.user.verify_password(self.password.data):
-            self.password.errors.append("Invalid password")
-            return False
+class RedirectForm(FlaskForm):
+    next = HiddenField()
 
-        return True
+    def __init__(self, *args, **kwargs):
+        FlaskForm.__init__(self, *args, **kwargs)
+        if not self.next.data:
+            self.next.data = get_redirect_target() or ''
+
+    def redirect(self, endpoint='index', **values):
+        if is_safe_url(self.next.data):
+            return redirect(self.next.data)
+        target = get_redirect_target()
+        return redirect(target or url_for(endpoint, **values))
 
 
 class EmailForm(FlaskForm):
     email = EmailField('Email', validators=[InputRequired(), Email()])
 
-    def validate(self):
-        if not FlaskForm.validate(self):
-            return False
 
-        try:
-            self.user = User.get(User.email == self.email.data)
-        except User.DoesNotExist:
-            self.email.errors.append("Unknown email")
-            return False
-
-        return True
+class ExistingEmailForm(FlaskForm):
+    email = EmailField('Email', validators=[
+        InputRequired(),
+        Email(),
+        Exists(
+            User,
+            User.email,
+            message='Unknown email')])
 
 
 class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
 
 
-class PasswordResetForm(EmailForm, PasswordForm):
-    pass
+class LoginForm(RedirectForm, EmailForm, PasswordForm):
+    """Get login details."""
+    remember = BooleanField('Remember me')
+
+    def __init__(self, *args, **kwargs):
+        self.user = None
+        super().__init__(*args, **kwargs)
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+
+        user = User.authenticate(self.email.data, self.password.data)
+        if not user:
+            return False
+
+        self.user = user
+        return True
 
 
 class AddUserForm(FlaskForm):

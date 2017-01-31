@@ -6,9 +6,10 @@ from flask_login import current_user, login_user, logout_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from itsdangerous import SignatureExpired
 from teknologkoren_se import login_manager
-from teknologkoren_se.forms import LoginForm, AddUserForm, PasswordForm, EmailForm
+from teknologkoren_se.forms import (LoginForm, AddUserForm, PasswordForm,
+                                    ExistingEmailForm)
 from teknologkoren_se.models import User
-from teknologkoren_se.util import send_email, ts, redirect_next
+from teknologkoren_se.util import send_email, ts
 
 
 mod = Blueprint('users', __name__)
@@ -24,13 +25,13 @@ def login():
     form = LoginForm(request.form)
 
     if current_user.is_authenticated:
-        return redirect_next('intranet.index')
+        return form.redirect('index')
 
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
-        return redirect_next('intranet.index')
-    elif form.email.errors or form.password.errors:
+        return form.redirect('index')
+    elif form.is_submitted():
         flash("Sorry, your email address or password was incorrect.", 'error')
 
     return render_template('users/login.html', form=form)
@@ -98,13 +99,13 @@ def verify_token(token):
 
 @mod.route('/reset/', methods=['GET', 'POST'])
 def reset():
-    form = EmailForm()
-
     reset_flash = \
         "A password reset link valid for one hour has been sent to {}."
 
+    form = ExistingEmailForm()
+
     if form.validate_on_submit():
-        user = form.user
+        user = User.get(User.email == form.email.data)
         token = ts.dumps(user.id, salt='recover-key')
 
         recover_url = url_for('.reset_token', token=token, _external=True)

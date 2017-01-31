@@ -49,6 +49,28 @@ class User(UserMixin, flask_db.Model):
                 .where(Tag.name << User.tag_names,
                        Tag.name == tag_name))
 
+
+    @staticmethod
+    def authenticate(email, password):
+        """Check email and password and return user if matching.
+
+        It might be tempting to return the user that mathes the email
+        and a boolean representing if the password was correct, but
+        please don't. The email alone does not identify a user, only
+        the email toghether with a matching password is enough to
+        identify which user we want! No matching email and password ->
+        no user.
+        """
+        try:
+            user = User.get(User.email == email)
+        except User.DoesNotExist:
+            return None
+
+        if user.verify_password(password):
+            return user
+
+        return None
+
     def __str__(self):
         return "{} {}".format(self.first_name, self.last_name)
 
