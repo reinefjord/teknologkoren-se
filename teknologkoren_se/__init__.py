@@ -1,8 +1,8 @@
 import locale
-from flask import Flask
-from flask_login import LoginManager
+from flask import Flask, abort
+from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
-from flask_admin import Admin
+from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.peewee import ModelView
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from playhouse.flask_utils import FlaskDB
@@ -38,7 +38,19 @@ configure_uploads(app, (images,))
 
 
 from teknologkoren_se.models import User, Post, Event, Tag, UserTag
-admin = Admin(app, name='teknologkoren.se')
+
+
+class AdminHomeView(AdminIndexView):
+    def is_accessible(self):
+        if current_user.is_authenticated:
+            return 'Webmaster' in current_user.tag_names
+        return False
+
+    def inaccessible_callback(self, name, **kwargs):
+        return abort(403)
+
+
+admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
 admin.add_view(ModelView(User, name='User'))
 admin.add_view(ModelView(Post, name='Post'))
 admin.add_view(ModelView(Event, name='Event'))

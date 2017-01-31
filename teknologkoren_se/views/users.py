@@ -32,12 +32,12 @@ def login():
     form = LoginForm(request.form)
 
     if current_user.is_authenticated:
-        return form.redirect('index')
+        return form.redirect('intranet.index')
 
     if form.validate_on_submit():
         user = form.user
         login_user(user, remember=form.remember.data)
-        return form.redirect('index')
+        return form.redirect('intranet.index')
     elif form.is_submitted():
         flash("Sorry, your email address or password was incorrect.", 'error')
 

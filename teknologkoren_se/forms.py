@@ -44,7 +44,7 @@ class RedirectForm(FlaskForm):
             self.next.data = get_redirect_target() or ''
 
     def redirect(self, endpoint='index', **values):
-        if is_safe_url(self.next.data):
+        if self.next.data and is_safe_url(self.next.data):
             return redirect(self.next.data)
         target = get_redirect_target()
         return redirect(target or url_for(endpoint, **values))
