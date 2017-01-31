@@ -17,11 +17,18 @@ mod = Blueprint('users', __name__)
 
 @login_manager.user_loader
 def load_user(userid):
+    """Tell flask-login how to get logged in user."""
     return User.get(User.id == userid)
 
 
 @mod.route('/login/', methods=['GET', 'POST'])
 def login():
+    """Show login page and form.
+
+    Not showing which field was wrong if any is intentional. Usernames
+    and passwords only represent anything when used in combination
+    (http://ux.stackexchange.com/a/13523).
+    """
     form = LoginForm(request.form)
 
     if current_user.is_authenticated:
@@ -39,6 +46,7 @@ def login():
 
 @mod.route('/logout/')
 def logout():
+    """Logout user (if logged in) and redirect to main page."""
     if current_user.is_authenticated:
         logout_user()
     return redirect(url_for('blog.index'))
@@ -47,6 +55,7 @@ def logout():
 @mod.route('/adduser/', methods=['GET', 'POST'])
 @login_required
 def adduser():
+    """Add a user."""
     form = AddUserForm(request.form)
     if form.validate_on_submit():
         password = ''.join(
@@ -66,13 +75,20 @@ def adduser():
 
 
 def verify_email(user, email):
+    """Create an email verification email.
+
+    The user id and the requested email address is hashed and included as a
+    token in a link referring to the verification page. The link is sent to the
+    requested email address.
+
+    The token is timestamped, when verifying we can check the age.
+    """
     token = ts.dumps([user.id, email], 'verify-email')
 
     verify_link = url_for('users.verify_token', token=token, _external=True)
 
     email_body = render_template(
             'users/email_verification.jinja2',
-            name=user.first_name,
             link=verify_link)
 
     send_email(email, email_body)
@@ -80,6 +96,11 @@ def verify_email(user, email):
 
 @mod.route('/verify/<token>/')
 def verify_token(token):
+    """Verify email reset token.
+
+    Loads the user id and the requested email and simultaneously checks
+    token age. If not too old, get user with id and set email.
+    """
     try:
         user_id, email = ts.loads(token, salt='verify-email', max_age=900)
     except SignatureExpired:
@@ -99,6 +120,29 @@ def verify_token(token):
 
 @mod.route('/reset/', methods=['GET', 'POST'])
 def reset():
+    """View for requesting password reset.
+
+    If a non-registred email address is entered, do nothing but tell
+    user that an email has been sent. This way we do not expose what
+    email addresses are registred.
+
+    If a registred email address is entered, get the id of the user the
+    email address is registred to and create a timestamped token with
+    the id. The token is sent as a part of a link to the email of that
+    user.
+
+    The view which the link leads to checks that the token is intact and
+    has not been tampered with, checks its age, and checks if the
+    password has been changed after the token was created. This means:
+    * Tokens are time limited.
+    * Multiple tokens can be valid at the same time, which prevents
+        confusion for the user.
+    * If the password is changed, using a token or in some other way,
+        all tokens generated before that change become invalid.
+    * Tokens are therefore single use.
+    * Tokens are not stored anywhere other than in the email sent to
+        user.
+    """
     reset_flash = \
         "A password reset link valid for one hour has been sent to {}."
 
@@ -132,6 +176,16 @@ def reset():
 
 @mod.route('/reset/<token>/', methods=['GET', 'POST'])
 def reset_token(token):
+    """Verify a password reset token.
+
+    Checks if the token is intact and has not been tampered with,
+    checks its age, and checks if the password has been changed after
+    the token was created.
+
+    If the token is valid, allow user to enter a new password.
+
+    Note: itsdangerous saves the timestamp in tokens in UTC!
+    """
     expired = "Sorry, the link has expired. Please try again."
     invalid = "Sorry, the link appears to be broken. Please try again."
 

@@ -10,49 +10,65 @@ mod = Blueprint('general', __name__)
 
 @mod.route('/om-oss/')
 def om_oss():
+    """Show about page."""
     return render_template('general/om-oss.html')
 
 
-@mod.route('/boka/', methods=['GET', 'POST'])
+@mod.route('/boka/')
 def boka():
+    """Show booking page."""
     return render_template('general/boka.html')
 
 
 @mod.route('/sjung/')
 def sjung():
+    """Show audition page."""
     return render_template('general/sjung.html')
 
 
 @mod.route('/kontakt/')
 def kontakt():
+    """Show contact page.
+
+    Order of board members and their email addresses are hard coded.
+    The template iterates over the list of tags and gets the user from
+    the generated dict to display them in the same order every time.
+    """
     users = User.select()
     board = {}
-    tags = [('Ordförande', 'ordf@teknologkoren.se'),
-            ('Vice ordförande', 'vice@teknologkoren.se'),
-            ('Kassör', 'pengar@teknologkoren.se'),
-            ('Sekreterare', 'sekr@teknologkoren.se'),
-            ('PRoletär', 'pr@teknologkoren.se'),
-            ('Notfisqual', 'noter@teknologkoren.se'),
-            ('Qlubbmästare', 'qm@teknologkoren.se')]
+    board_tags = [('Ordförande', 'ordf@teknologkoren.se'),
+                  ('Vice ordförande', 'vice@teknologkoren.se'),
+                  ('Kassör', 'pengar@teknologkoren.se'),
+                  ('Sekreterare', 'sekr@teknologkoren.se'),
+                  ('PRoletär', 'pr@teknologkoren.se'),
+                  ('Notfisqual', 'noter@teknologkoren.se'),
+                  ('Qlubbmästare', 'qm@teknologkoren.se')]
 
-    tags_copy = list(tags)
+    # We cannot iterate over the same list we are remove items from
+    tags_copy = list(board_tags)
 
-    for tag in tags_copy:
+    # Create a dictionary of the board, eg:
+    # {'Ordförande': <user object>, 'Vice ordförande': <user object>}
+    for tag_tuple in tags_copy:
+        tag, email = tag_tuple
         try:
-            board[tag[0]] = (users
-                             .join(UserTag)
-                             .join(Tag)
-                             .where(Tag.name == tag[0])
-                             .get())
+            board[tag] = (users
+                          .join(UserTag)
+                          .join(Tag)
+                          .where(Tag.name == tag)
+                          .get())
 
         except User.DoesNotExist:
-            tags.remove(tag)
+            # There was no user with that tag, remove it from the list
+            # the template iterates over.
+            board_tags.remove(tag_tuple)
 
-    return render_template('general/kontakt.html', board=board, tags=tags)
+    return render_template('general/kontakt.html', board=board, tags=board_tags)
 
 
 @mod.route('/feed/')
 def atom_feed():
+    """Generate and return rss-feed."""
     feed = AtomFeed("Teknologkören", feed_url=request.url,
                     url=request.url_root)
 

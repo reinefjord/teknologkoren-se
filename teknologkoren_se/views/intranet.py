@@ -19,27 +19,27 @@ app.jinja_env.add_extension('jinja2.ext.do')
 @mod.before_request
 @login_required
 def before_request():
+    """Do nothing, but make sure user is logged in."""
     pass
 
 
 @mod.route('/')
 def index():
+    """Show main intra page."""
     return render_template('intranet/intranet.html')
 
 
 @mod.route('/profile/')
 def my_profile():
+    """Redirect to profile of logged in user."""
     return redirect(url_for('.profile', id=current_user.id))
 
 
 @mod.route('/profile/<int:id>/')
 def profile(id):
+    """Show profile of user with matching id."""
     user = get_object_or_404(User, User.id == id)
-    tags = (Tag
-            .select()
-            .join(UserTag)
-            .where(UserTag.user == user)
-            ).order_by(Tag.name)
+    tags = user.tags.order_by(Tag.name)
 
     if current_user.id == id or 'Webmaster' in current_user.tag_names:
         edit = True
@@ -55,6 +55,13 @@ def profile(id):
 
 @mod.route('/profile/<int:id>/edit/', methods=['GET', 'POST'])
 def edit_user(id):
+    """Edit (own) profile.
+
+    Redirects to admin-edit if user is webmaster, redirects to viewing
+    profile if not own profile. Allows editing of email, phone number,
+    and password. Edit of email has to be confirmed by clicking a link
+    sent to the new email address.
+    """
     if 'Webmaster' in current_user.tag_names:
         return full_edit_user(id)
 
@@ -85,20 +92,30 @@ def edit_user(id):
 
 
 def full_edit_user(id):
+    """Edit all user attributes.
+
+    Allows for editing of all user attributes, including name and tags.
+    Tags are in an encapsulated form generated dynamically in this view.
+    """
     user = get_object_or_404(User, User.id == id)
 
+    # Class to become tag form
     class F(FlaskForm):
         pass
 
     for tag in Tag.select().order_by(Tag.name):
+        # If a user has this tag, set its value to checked
         if tag.name in user.tag_names:
             field = BooleanField(tag.name, default=True)
         else:
             field = BooleanField(tag.name)
 
+        # Add the field to class F with the name of the tag
         setattr(F, tag.name, field)
 
+    # Add the tag form to the main form
     setattr(FullEditUserForm, 'tags', FormField(F))
+
     form = FullEditUserForm(user, request.form)
 
     if form.validate_on_submit():
@@ -119,9 +136,13 @@ def full_edit_user(id):
         for tag in Tag.select():
             tag_field = getattr(tag_form, tag.name)
 
+            # If tag field is checked and the user did not already
+            # have that tag, give user tag
             if tag_field.data and tag.name not in user.tag_names:
                 UserTag.create(user=user, tag=tag)
 
+            # If tag field isn't checked but the user has that tag,
+            # remove it.
             elif not tag_field.data and tag.name in user.tag_names:
                 user_tag = UserTag.get((UserTag.user == user) &
                                        (UserTag.tag == tag))
@@ -139,6 +160,7 @@ def full_edit_user(id):
 
 @mod.route('/members/all/')
 def all_members():
+    """Show all registred members."""
     tag_dict = {'All': User.select().order_by(User.first_name)}
     tag_list = ['All']
 
@@ -149,6 +171,7 @@ def all_members():
 
 
 def members_by_tags(tag_list):
+    """Show active members sorted by the tags in tag_list."""
     active_users = User.has_tag('Aktiv')
 
     tag_dict = {}
@@ -164,6 +187,7 @@ def members_by_tags(tag_list):
 
 @mod.route('/members/')
 def voices():
+    """Show members by voice."""
     tag_list = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
                 'Tenor 2', 'Bas 1', 'Bas 2']
     return(members_by_tags(tag_list))
@@ -171,6 +195,7 @@ def voices():
 
 @mod.route('/members/groups/')
 def groups():
+    """Show members by group."""
     tag_list = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
     return(members_by_tags(tag_list))
 
@@ -178,12 +203,14 @@ def groups():
 @mod.route('/admin/')
 @tag_required('Webmaster')
 def admin():
+    """Show administration page."""
     return(render_template('intranet/admin.html'))
 
 
 @mod.route('/view-posts/')
 @tag_required('Webmaster')
 def view_posts():
+    """Show links to all post's edit mode."""
     posts = Post.select().order_by(Post.timestamp.desc())
 
     return(render_template('intranet/view-posts.html', posts=posts))
@@ -192,6 +219,7 @@ def view_posts():
 @mod.route('/view-events/')
 @tag_required('Webmaster')
 def view_events():
+    """Show links to all event's edit mode."""
     events = Event.select().order_by(Event.timestamp.desc())
 
     return(render_template('intranet/view-events.html', events=events))
@@ -201,6 +229,7 @@ def view_events():
 @login_required
 @tag_required('Webmaster')
 def new_post():
+    """Create a new post."""
     form = EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
         if form.upload.data:
@@ -226,6 +255,7 @@ def new_post():
 @mod.route('/edit-post/<int:post_id>/<slug>/', methods=['GET', 'POST'])
 @tag_required('Webmaster')
 def edit_post(post_id, slug=None):
+    """Edit an existing post."""
     post = get_object_or_404(Post, Post.id == post_id)
 
     if slug != post.slug:
@@ -250,6 +280,7 @@ def edit_post(post_id, slug=None):
 @mod.route('/remove-post/<int:post_id>/<slug>/')
 @tag_required('Webmaster')
 def remove_post(post_id, slug=None):
+    """Remove a post."""
     post = get_object_or_404(Post, Post.id == post_id)
     post.delete_instance()
     return redirect(url_for('.view_posts'))
@@ -258,6 +289,7 @@ def remove_post(post_id, slug=None):
 @mod.route('/new-event/', methods=['GET', 'POST'])
 @tag_required('Webmaster')
 def new_event():
+    """Create a new event."""
     form = EditEventForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
         if form.upload.data:
@@ -287,6 +319,7 @@ def new_event():
 @mod.route('/edit-event/<int:event_id>/<slug>/', methods=['GET', 'POST'])
 @tag_required('Webmaster')
 def edit_event(event_id, slug=None):
+    """Edit an existing event."""
     event = get_object_or_404(Event, Event.id == event_id)
 
     if slug != event.slug:
@@ -317,6 +350,7 @@ def edit_event(event_id, slug=None):
 @mod.route('/remove-event/<int:event_id>/<slug>/')
 @tag_required('Webmaster')
 def remove_event(event_id, slug=None):
+    """Remove an event."""
     event = get_object_or_404(Event, Event.id == event_id)
     event.delete_instance()
     return redirect(url_for('.view-events'))

@@ -5,6 +5,7 @@ from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
 from teknologkoren_se import app
 
+
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
 
 
@@ -13,7 +14,19 @@ def send_email(address, body):
     print(body)
 
 
+def url_for_other_page(page):
+    """Return url for a page number."""
+    args = request.view_args.copy()
+    args['page'] = page
+    return url_for(request.endpoint, **args)
+
+
 def is_safe_url(target):
+    """Tests if the url is a safe target for redirection.
+
+    Does so by checking that the url is still using http or https and
+    and that the url is still our site.
+    """
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
     return test_url.scheme in ('http', 'https') and \
@@ -21,6 +34,12 @@ def is_safe_url(target):
 
 
 def get_redirect_target():
+    """Get where we want to redirect to.
+
+    Checks the 'next' argument in the request and if nothing there, use
+    the http referrer. Also checks whether the target is safe to
+    redirect to (no 'open redirects').
+    """
     for target in (request.values.get('next'), request.referrer):
         if not target:
             continue
@@ -29,6 +48,7 @@ def get_redirect_target():
 
 
 def tag_required(tag):
+    """Decorator preventing access based on user tags."""
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
