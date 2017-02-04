@@ -1,3 +1,20 @@
 .member-list, .member-list ul {
     list-style: none;
 }
+
+ul.member-matrix {
+    padding: 0;
+}
+
+.member-matrix {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.member-matrix > li {
+    background-color: #f3f3f3;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}

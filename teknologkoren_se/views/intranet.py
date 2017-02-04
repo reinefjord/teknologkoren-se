@@ -164,10 +164,10 @@ def all_members():
     tag_dict = {'All': User.select().order_by(User.first_name)}
     tag_list = ['All']
 
-    return(render_template(
+    return render_template(
         'intranet/members.html',
         tag_list=tag_list,
-        tag_dict=tag_dict))
+        tag_dict=tag_dict)
 
 
 def members_by_tags(tag_list):
@@ -179,10 +179,10 @@ def members_by_tags(tag_list):
         tag_dict[tag] = (active_users & User.has_tag(tag)
                          ).order_by(User.first_name)
 
-    return(render_template(
+    return render_template(
         'intranet/members.html',
         tag_list=tag_list,
-        tag_dict=tag_dict))
+        tag_dict=tag_dict)
 
 
 @mod.route('/members/')
@@ -190,21 +190,44 @@ def voices():
     """Show members by voice."""
     tag_list = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1',
                 'Tenor 2', 'Bas 1', 'Bas 2']
-    return(members_by_tags(tag_list))
+    return members_by_tags(tag_list)
 
 
 @mod.route('/members/groups/')
 def groups():
     """Show members by group."""
-    tag_list = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
-    return(members_by_tags(tag_list))
+    columns = ['Sånggrupp 1', 'Sånggrupp 2', 'Sånggrupp 3']
+    rows = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1', 'Tenor 2',
+            'Bas 1', 'Bas 2']
+    return member_matrix(columns, rows)
+
+
+@mod.route('/members/<list:tags>/')
+def custom_tags(tags):
+    """Show members by any list of tags."""
+    return members_by_tags(tags)
+
+
+@mod.route('/members/<list:columns>/<list:rows>/')
+def member_matrix(columns, rows):
+    """Show a matrice of members based on their tags."""
+    tag_dict = {}
+    for column in columns:
+        tag_dict[column] = {}
+        for row in rows:
+            tag_dict[column][row] = (User.has_tag(column) & User.has_tag(row))
+
+    return render_template('intranet/member_matrix.html',
+                           columns=columns,
+                           rows=rows,
+                           tag_dict=tag_dict)
 
 
 @mod.route('/admin/')
 @tag_required('Webmaster')
 def admin():
     """Show administration page."""
-    return(render_template('intranet/admin.html'))
+    return render_template('intranet/admin.html')
 
 
 @mod.route('/view-posts/')
@@ -213,7 +236,7 @@ def view_posts():
     """Show links to all post's edit mode."""
     posts = Post.select().order_by(Post.timestamp.desc())
 
-    return(render_template('intranet/view-posts.html', posts=posts))
+    return render_template('intranet/view-posts.html', posts=posts)
 
 
 @mod.route('/view-events/')
@@ -222,7 +245,7 @@ def view_events():
     """Show links to all event's edit mode."""
     events = Event.select().order_by(Event.timestamp.desc())
 
-    return(render_template('intranet/view-events.html', events=events))
+    return render_template('intranet/view-events.html', events=events)
 
 
 @mod.route('/new-post/', methods=['GET', 'POST'])

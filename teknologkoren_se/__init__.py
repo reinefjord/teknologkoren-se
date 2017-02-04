@@ -37,6 +37,10 @@ images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
 
+from .util import ListConverter
+app.url_map.converters['list'] = ListConverter
+
+
 from teknologkoren_se.models import User, Post, Event, Tag, UserTag
 
 

@@ -3,10 +3,24 @@ from urllib.parse import urlparse, urljoin
 from flask import flash, url_for, request, redirect
 from flask_login import current_user
 from itsdangerous import URLSafeTimedSerializer
+from werkzeug.routing import BaseConverter
 from teknologkoren_se import app
 
 
 ts = URLSafeTimedSerializer(app.config["SECRET_KEY"])
+
+
+class ListConverter(BaseConverter):
+    """A converter that takes an arbitrary amount of arguments.
+
+    Can be used in routes to take an arbitrary amount of arguments by
+    separating them with '+', e.g. http://<...>/arg1+arg2+arg3
+    """
+    def to_python(self, value):
+        return value.split('+')
+
+    def to_url(self, values):
+        return '+'.join(BaseConverter.to_url(value) for value in values)
 
 
 def send_email(address, body):
