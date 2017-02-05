@@ -170,6 +170,7 @@ def all_members():
         tag_dict=tag_dict)
 
 
+@mod.route('/members/<list:tag_list>/')
 def members_by_tags(tag_list):
     """Show active members sorted by the tags in tag_list."""
     active_users = User.has_tag('Aktiv')
@@ -183,6 +184,21 @@ def members_by_tags(tag_list):
         'intranet/members.html',
         tag_list=tag_list,
         tag_dict=tag_dict)
+
+
+@mod.route('/members/<list:columns>/<list:rows>/')
+def member_matrix(columns, rows):
+    """Show a matrice of members based on their tags."""
+    tag_dict = {}
+    for column in columns:
+        tag_dict[column] = {}
+        for row in rows:
+            tag_dict[column][row] = (User.has_tag(column) & User.has_tag(row))
+
+    return render_template('intranet/member_matrix.html',
+                           columns=columns,
+                           rows=rows,
+                           tag_dict=tag_dict)
 
 
 @mod.route('/members/')
@@ -200,27 +216,6 @@ def groups():
     rows = ['Sopran 1', 'Sopran 2', 'Alt 1', 'Alt 2', 'Tenor 1', 'Tenor 2',
             'Bas 1', 'Bas 2']
     return member_matrix(columns, rows)
-
-
-@mod.route('/members/<list:tags>/')
-def custom_tags(tags):
-    """Show members by any list of tags."""
-    return members_by_tags(tags)
-
-
-@mod.route('/members/<list:columns>/<list:rows>/')
-def member_matrix(columns, rows):
-    """Show a matrice of members based on their tags."""
-    tag_dict = {}
-    for column in columns:
-        tag_dict[column] = {}
-        for row in rows:
-            tag_dict[column][row] = (User.has_tag(column) & User.has_tag(row))
-
-    return render_template('intranet/member_matrix.html',
-                           columns=columns,
-                           rows=rows,
-                           tag_dict=tag_dict)
 
 
 @mod.route('/admin/')
