@@ -1,8 +1,8 @@
 from flask import url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import (StringField, PasswordField, BooleanField,
-                     HiddenField, DateTimeField, FileField)
+from wtforms import (StringField, PasswordField, BooleanField, HiddenField,
+                     DateTimeField, FileField, TextAreaField)
 from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
@@ -138,7 +138,7 @@ class UploadForm(FlaskForm):
 
 
 class EditPostForm(UploadForm):
-    content = HiddenField(validators=[InputRequired()])
+    content = TextAreaField(validators=[InputRequired()])
     title = StringField('Title', validators=[InputRequired()])
     published = BooleanField('Publish')
 
