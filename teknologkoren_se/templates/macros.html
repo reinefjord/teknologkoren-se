@@ -12,7 +12,7 @@
   </div>
   {% endif %}
   <div class="post-text">
-    {{ post.content|safe }}
+    {{ post.content_to_html()|safe }}
   </div>
 </article>
 {% endmacro %}
@@ -24,7 +24,7 @@
   </header>
   <div class="event-container">
     <div class="event-text">
-      {{ event.content|safe }}
+      {{ event.content_to_html()|safe }}
       <dl class="event-detail">
         <dt>Tid:</dt>
         <dd>

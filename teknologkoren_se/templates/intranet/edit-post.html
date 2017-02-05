@@ -4,8 +4,8 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.css">
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/trix/0.9.7/trix.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
 {% endblock %}
 {% block body %}
 <section class="boxed constrain-width">
@@ -14,17 +14,16 @@
     {{ form.csrf_token }}
     <div class="field">
       {{ form.title.label }}
-      {{ form.title(class="form-input") }}
+      {{ form.title }}
     </div>
     <div class="field">
-      {{ form.content(id="trix") }}
-      <trix-editor input="trix" class="trix-content"></trix-editor>
+      {{ form.content }}
     </div>
     <div class="field">
-      {{ form.upload(class="form-input") }}
+      {{ form.upload }}
     </div>
     <div class="field">
-      {{ form.published(class="form-input") }}
+      {{ form.published }}
       {{ form.published.label }}
     </div>
     <div class="field">
@@ -45,6 +44,12 @@ document.getElementById("remove").addEventListener("click", function (event) {
     event.preventDefault();
   }
 }, false)
+</script>
+<script>
+var simplemde = new SimpleMDE({
+  element: document.getElementById("content"),
+  spellChecker: false,
+});
 </script>
 {% endif %}
 {% endblock %}

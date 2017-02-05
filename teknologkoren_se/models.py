@@ -5,6 +5,7 @@ from peewee import (CharField, TextField, BooleanField, DateTimeField,
                     ForeignKeyField, FixedCharField)
 from playhouse.hybrid import hybrid_property
 from slugify import slugify
+from markdown import markdown
 
 
 class User(UserMixin, flask_db.Model):
@@ -123,6 +124,10 @@ class Post(flask_db.Model):
         """
         self.slug = slugify(self.title)
         super(Post, self).save(*args, **kwargs)
+
+    def content_to_html(self):
+        """Return content formatted for html."""
+        return markdown(self.content)
 
     def __str__(self):
         """String representation of the post."""
