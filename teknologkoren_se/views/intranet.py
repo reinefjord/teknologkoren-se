@@ -3,7 +3,6 @@ import random
 import string
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
-from playhouse.flask_utils import get_object_or_404
 from werkzeug.datastructures import CombinedMultiDict
 from teknologkoren_se import app, images, forms
 from teknologkoren_se.views.auth import verify_email
@@ -37,7 +36,7 @@ def my_profile():
 @mod.route('/profile/<int:id>/')
 def profile(id):
     """Show profile of user with matching id."""
-    user = get_object_or_404(User, User.id == id)
+    user = User.query.get_or_404(id)
     tags = user.tags.order_by(Tag.name)
 
     return render_template('intranet/profile.html',
@@ -64,7 +63,8 @@ def edit_user():
 
         current_user.phone = form.phone.data
 
-        current_user.save()
+        db.session.add(current_user)
+        db.session.commit()
 
         return redirect(url_for('.profile', id=current_user.id))
     else:
@@ -83,7 +83,7 @@ def full_edit_user(id):
     Allows for editing of all user attributes, including name and tags.
     Tags are in an encapsulated form generated dynamically in this view.
     """
-    user = get_object_or_404(User, User.id == id)
+    user = User.query.get_or_404(id)
 
     tags = Tag.select().order_by(Tag.name)
     form = forms.TagForm.extend_form(forms.FullEditUserForm, tags, user)
@@ -103,7 +103,8 @@ def full_edit_user(id):
 
         form.set_user_tags()
 
-        user.save()
+        db.session.add(user)
+        db.session.commit()
 
         return redirect(url_for('.profile', id=id))
     else:
@@ -138,11 +139,14 @@ def adduser():
         password = ''.join(random.choice(string.ascii_letters + string.digits)
                            for _ in range(30))
 
-        user = User.create(email=form.email.data,
-                           first_name=form.first_name.data,
-                           last_name=form.last_name.data,
-                           phone=form.phone.data,
-                           password=password)
+        user = User(email=form.email.data,
+                    first_name=form.first_name.data,
+                    last_name=form.last_name.data,
+                    phone=form.phone.data,
+                    password=password)
+
+        db.session.add(user)
+        db.session.commit()
 
         form = forms.AddUserForm()
 
@@ -160,7 +164,7 @@ def adduser():
 @mod.route('/members/all/')
 def all_members():
     """Show all registred members."""
-    tag_dict = {'All': User.select().order_by(User.first_name)}
+    tag_dict = {'All': User.query.order_by(User.first_name)}
     tag_list = ['All']
 
     return render_template(
@@ -228,7 +232,7 @@ def admin():
 @tag_required('Webmaster')
 def view_posts():
     """Show links to all post's edit mode."""
-    posts = Post.select().order_by(Post.timestamp.desc())
+    posts = Post.query.order_by(Post.timestamp.desc())
 
     return render_template('intranet/view-posts.html', posts=posts)
 
@@ -237,7 +241,7 @@ def view_posts():
 @tag_required('Webmaster')
 def view_events():
     """Show links to all event's edit mode."""
-    events = Event.select().order_by(Event.timestamp.desc())
+    events = Event.query.order_by(Event.timestamp.desc())
 
     return render_template('intranet/view-events.html', events=events)
 
@@ -253,7 +257,7 @@ def new_post():
         else:
             image = None
 
-        post = Post.create(
+        post = Post(
             title=form.title.data,
             path=url_for('.index'),
             content=form.content.data,
@@ -262,6 +266,9 @@ def new_post():
             author=current_user.id,
             image=image
             )
+        db.session.add(post)
+        db.session.commit()
+
         return redirect(url_for('blog.view_post',
                                 post_id=post.id,
                                 slug=post.slug))
@@ -276,7 +283,7 @@ def new_post():
 @tag_required('Webmaster')
 def edit_post(post_id, slug=None):
     """Edit an existing post."""
-    post = get_object_or_404(Post, Post.id == post_id)
+    post = Post.query.get_or_404(post_id)
 
     if slug != post.slug:
         return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
@@ -290,10 +297,9 @@ def edit_post(post_id, slug=None):
         post.title = form.title.data
         post.content = form.content.data
         post.published = form.published.data
-        post.save()
-        return redirect(url_for('blog.view_post',
-                                post_id=post.id,
-                                slug=post.slug))
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
     else:
         forms.flash_errors(form)
 
@@ -305,8 +311,9 @@ def edit_post(post_id, slug=None):
 @tag_required('Webmaster')
 def remove_post(post_id, slug=None):
     """Remove a post."""
-    post = get_object_or_404(Post, Post.id == post_id)
-    post.delete_instance()
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
     return redirect(url_for('.view_posts'))
 
 
@@ -323,7 +330,7 @@ def new_event():
         else:
             image = None
 
-        event = Event.create(
+        event = Event(
             title=form.title.data,
             path='/konserter/',
             content=form.content.data,
@@ -334,6 +341,9 @@ def new_event():
             author=current_user.id,
             image=image
             )
+        db.session.add(event)
+        db.session.commit()
+
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
@@ -348,7 +358,7 @@ def new_event():
 @tag_required('Webmaster')
 def edit_event(event_id, slug=None):
     """Edit an existing event."""
-    event = get_object_or_404(Event, Event.id == event_id)
+    event = Event.query.get_or_404(event_id)
 
     if slug != event.slug:
         return redirect(url_for('.edit_event',
@@ -368,7 +378,8 @@ def edit_event(event_id, slug=None):
         event.location = form.location.data
         if form.upload.data:
             event.image = images.save(form.upload.data)
-        event.save()
+        db.session.add(event)
+        db.session.commit()
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
@@ -383,6 +394,7 @@ def edit_event(event_id, slug=None):
 @tag_required('Webmaster')
 def remove_event(event_id, slug=None):
     """Remove an event."""
-    event = get_object_or_404(Event, Event.id == event_id)
-    event.delete_instance()
+    event = Event.query.get_or_404(event_id)
+    db.session.delete(event)
+    db.session.commit()
     return redirect(url_for('.view-events'))

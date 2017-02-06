@@ -7,7 +7,8 @@ SERVER_NAME = 'local.dev'
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
-DATABASE = 'sqliteext:///' + os.path.join(BASEDIR, 'app.db')
+SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASEDIR, 'app.db')
+SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 TEMPLATES_AUTO_RELOAD = True
 

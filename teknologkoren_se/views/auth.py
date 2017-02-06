@@ -2,7 +2,7 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
                    abort, flash)
 
 from flask_login import current_user, login_user, logout_user
-from playhouse.flask_utils import get_object_or_404
+from itsdangerous import SignatureExpired
 from itsdangerous import SignatureExpired
 from teknologkoren_se import login_manager, forms
 from teknologkoren_se.models import User
@@ -15,7 +15,7 @@ mod = Blueprint('auth', __name__)
 @login_manager.user_loader
 def load_user(userid):
     """Tell flask-login how to get logged in user."""
-    return User.get(User.id == userid)
+    return User.query.get(userid)
 
 
 @mod.route('/login/', methods=['GET', 'POST'])
@@ -85,10 +85,10 @@ def verify_token(token):
     except:
         abort(404)
 
-    user = get_object_or_404(User, User.id == user_id)
-
+    user = User.query.get_or_404(user_id)
     user.email = email
-    user.save()
+    db.session.add(user)
+    db.session.commit()
 
     flash("{} is now verified!".format(email), 'success')
     return redirect(url_for('blog.index'))
@@ -125,7 +125,7 @@ def reset():
     form = forms.ExistingEmailForm()
 
     if form.validate_on_submit():
-        user = User.get(User.email == form.email.data)
+        user = User.query.filter_by(email=form.email.data).first()
         token = ts.dumps(user.id, salt='recover-key')
 
         recover_url = url_for('.reset_token', token=token, _external=True)
@@ -170,7 +170,7 @@ def reset_token(token):
     try:
         data, timestamp = ts.loads(token, salt='recover-key', max_age=3600,
                                    return_timestamp=True)
-        user = User.get(User.id == data)
+        user = User.query.get(data)
     except SignatureExpired:
         flash(expired, 'error')
         return redirect(url_for('.login'))
@@ -185,8 +185,9 @@ def reset_token(token):
     form = forms.NewPasswordForm()
 
     if form.validate_on_submit():
-        user.password = form.new_password.data
-        user.save()
+        user.password = form.password.data
+        db.session.add(user)
+        db.session.commit()
         flash("Your password has been reset!", 'success')
         return redirect(url_for('.login'))
     else:

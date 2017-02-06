@@ -52,10 +52,10 @@ def index(page):
     joined which would make it difficult for templates to determine
     which objects are posts and which are events.
     """
-    blogposts = Post.select().where(Post.published == True)
-    events = Event.select().where(Event.published == True)
+    blogposts = Post.query.filter_by(published=True).all()
+    events = Event.query.filter_by(published=True).all()
 
-    posts = list(blogposts) + list(events)
+    posts = blogposts #+ events
     posts.sort(key=attrgetter('timestamp'), reverse=True)
 
     pagination = paginate(posts, page, 5)
@@ -82,7 +82,7 @@ def index(page):
 @mod.route('/<int:post_id>/<slug>/')
 def view_post(post_id, slug=None):
     """View a single blogpost."""
-    post = get_object_or_404(Post, Post.id == post_id)
+    post = Post.query.get_or_404(post_id)
 
     if not post.published and not current_user.is_authenticated:
         return abort(404)

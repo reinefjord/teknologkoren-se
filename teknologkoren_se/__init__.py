@@ -3,45 +3,30 @@ from flask import Flask, abort
 from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin, AdminIndexView
-from flask_admin.contrib.peewee import ModelView
+from flask_admin.contrib.sqla import ModelView
 from flask_uploads import configure_uploads, IMAGES, UploadSet
-from playhouse.flask_utils import FlaskDB
+from flask_sqlalchemy import SQLAlchemy
 
 locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
 app = Flask(__name__)
 app.config.from_object('config')
 
-
-@app.before_request
-def _db_connect():
-    db.connect()
-
-
-@app.teardown_request
-def _db_close(exc):
-    if not db.is_closed():
-        db.close()
-
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
 
-flask_db = FlaskDB(app)
-db = flask_db.database
+db = SQLAlchemy(app)
 
 bcrypt = Bcrypt(app)
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
-
 from .util import ListConverter
 app.url_map.converters['list'] = ListConverter
 
-
-from teknologkoren_se.models import User, Post, Event, Tag, UserTag
+from teknologkoren_se.models import User, Post, Event, Tag, user_tags
 
 
 class AdminHomeView(AdminIndexView):
@@ -55,11 +40,10 @@ class AdminHomeView(AdminIndexView):
 
 
 admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
-admin.add_view(ModelView(User, name='User'))
-admin.add_view(ModelView(Post, name='Post'))
-admin.add_view(ModelView(Event, name='Event'))
-admin.add_view(ModelView(Tag, name='Tag'))
-admin.add_view(ModelView(UserTag, name='UserTag'))
+admin.add_view(ModelView(User, db.session, name='User'))
+admin.add_view(ModelView(Post, db.session, name='Post'))
+admin.add_view(ModelView(Event, db.session, name='Event'))
+admin.add_view(ModelView(Tag, db.session, name='Tag'))
 
 from teknologkoren_se.views import (
     auth,

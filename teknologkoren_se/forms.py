@@ -9,6 +9,11 @@ from teknologkoren_se.models import User, UserTag
 from teknologkoren_se.util import get_redirect_target, is_safe_url
 
 
+from teknologkoren_se import images
+from teknologkoren_se.models import User, UserTag
+from teknologkoren_se.util import get_redirect_target, is_safe_url
+
+
 def flash_errors(form):
     """Flash all errors in a form."""
     for field in form:
@@ -97,7 +102,7 @@ class Unique:
         self.message = message
 
     def __call__(self, form, field):
-        if self.model.select().where(self.field == field.data).exists():
+        if self.model.query.filter(self.field == field.data).exists():
             raise validators.ValidationError(self.message)
 
 
@@ -109,7 +114,7 @@ class Exists:
         self.message = message
 
     def __call__(self, form, field):
-        if not self.model.select().where(self.field == field.data).exists():
+        if not self.model.query.filter(self.field == field.data).exists():
             raise validators.ValidationError(self.message)
 
 

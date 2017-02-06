@@ -2,7 +2,7 @@ from operator import attrgetter
 from urllib.parse import urljoin
 from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
-from teknologkoren_se.models import User, Tag, UserTag, Post, Event
+from teknologkoren_se.models import User, Tag, Post, Event
 
 
 mod = Blueprint('general', __name__)
@@ -34,7 +34,6 @@ def kontakt():
     The template iterates over the list of tags and gets the user from
     the generated dict to display them in the same order every time.
     """
-    users = User.select()
     board = {}
     board_tags = [('Ordförande', 'ordf@teknologkoren.se'),
                   ('Vice ordförande', 'vice@teknologkoren.se'),
@@ -51,14 +50,15 @@ def kontakt():
     # {'Ordförande': <user object>, 'Vice ordförande': <user object>}
     for tag_tuple in tags_copy:
         tag, email = tag_tuple
-        try:
-            board[tag] = (users
-                          .join(UserTag)
-                          .join(Tag)
-                          .where(Tag.name == tag)
-                          .get())
+        board_member = (User.query
+                        .join(User.tags)
+                        .filter(Tag.name == tag)
+                        .first())
 
-        except User.DoesNotExist:
+        if board_member:
+            board[tag] = board_member
+
+        else:
             # There was no user with that tag, remove it from the list
             # the template iterates over.
             board_tags.remove(tag_tuple)
@@ -75,10 +75,10 @@ def atom_feed():
     feed = AtomFeed("Teknologkören", feed_url=request.url,
                     url=request.url_root)
 
-    blogposts = (Post.select()
-                 .where(Post.published == True).order_by(Post.timestamp.desc()))
-    events = (Event.select()
-              .where(Event.published == True).order_by(Event.timestamp.desc()))
+    blogposts = (Post.query
+                 .filter_by(published=True).order_by(Post.timestamp.desc()))
+    events = (Event.query
+              .filter_by(published=True).order_by(Event.timestamp.desc()))
 
     posts = list(blogposts) + list(events)
 

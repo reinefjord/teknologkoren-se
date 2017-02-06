@@ -21,9 +21,9 @@ def index(template, events, page):
     code duplication. Only events are shown so we can use peewee's
     built in pagination, unlike in blog.index.
     """
-    events = events.where(Event.published == True)
+    events = events.filter_by(published=True)
 
-    pagination = events.paginate(page, 5)
+    pagination = events.paginate(page, 5, error_out=False)
 
     # If there are events in the database, but the pagination is empty
     # (too high page number)
@@ -35,7 +35,7 @@ def index(template, events, page):
         return redirect(url_for('.konserter', page=last_page))
 
     # True if next page has content, else False
-    has_next = True if events.paginate(page+1, 5) else False
+    has_next = True if events.paginate(page+1, 5, error_out=False) else False
 
     return render_template(template,
                            pagination=pagination,
@@ -53,8 +53,8 @@ def coming(page):
     event.
     """
     old = datetime.now() - timedelta(hours=3)
-    events = Event.select(
-        ).where(Event.start_time > old).order_by(Event.start_time.desc())
+    events = (Event.query.filter(Event.start_time > old)
+              .order_by(Event.start_time.desc()))
     return index('events/coming.html', events, page)
 
 
@@ -67,8 +67,8 @@ def archive(page):
     3 hours since the start time of the event.
     """
     old = datetime.now() - timedelta(hours=3)
-    events = Event.select(
-        ).where(Event.start_time < old).order_by(Event.start_time.desc())
+    events = (Event.query.filter(Event.start_time < old)
+              .order_by(Event.start_time.desc()))
     return index('events/archive.html', events, page)
 
 
@@ -76,7 +76,7 @@ def archive(page):
 @mod.route('/<int:event_id>/<slug>/')
 def view_event(event_id, slug=None):
     """View a single event."""
-    event = get_object_or_404(Event, Event.id == event_id)
+    event = Event.query.get_or_404(event_id)
 
     if not event.published and not current_user.is_authenticated:
         return abort(404)
