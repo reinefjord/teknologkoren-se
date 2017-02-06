@@ -11,19 +11,6 @@ img {
     max-width: 100%;
 }
 
-h1, h2, h3 {
-    line-height: 1.2;
-}
-h1 {
-    font-size: 1.7em;
-}
-h2 {
-    font-size: 1.5em;
-}
-h3 {
-    font-size: 1.3em;
-}
-
 a {
     color: #000;
 }
@@ -33,7 +20,7 @@ article h1 {
 }
 
 article header {
-    margin: 20px 0;
+    margin-bottom: 15px;
 }
 
 .boxed {
@@ -60,15 +47,16 @@ article header {
     justify-content: space-between;
 }
 
+.event-text p:first-child {
+    margin-top: 0;
+}
+
 .event-text {
-    margin-right: 15px;
     flex: 2;
 }
 .event-image {
     flex: 1;
-}
-
-.post-image img {
+    margin-left: 15px;
 }
 
 .truncate {
@@ -140,7 +128,12 @@ article header {
 }
 
 .overview article {
-    margin-bottom: 50px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.overview article~article {
+    border-top: 1px solid #ddd;
 }
 
 .pager {
