@@ -6,11 +6,11 @@
 
 {% block content %}
 <h2>Posts</h2>
-<p><a href="/intranet/new-post/">Create a new post</a></p>
+<p><a href="/intranet/admin/post/new/">Create a new post</a></p>
 <ul>
   {% for post in posts %}
   <li>
-    <a href="/intranet/edit-post/{{ post.id }}/">{{ post.title }}</a>
+    <a href="/intranet/admin/post/edit/{{ post.id }}/">{{ post.title }}</a>
   </li>
   {% endfor %}
 </ul>
