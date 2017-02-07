@@ -91,7 +91,9 @@ def verify_email(user, email):
             'users/email_verification.jinja2',
             link=verify_link)
 
-    send_email(email, email_body)
+    subject = "Verify your email at teknologkoren.se"
+
+    send_email(email, subject, email_body)
 
 
 @mod.route('/verify/<token>/')
@@ -159,7 +161,9 @@ def reset():
             name=user.first_name,
             link=recover_url)
 
-        send_email(user.email, email_body)
+        subject = "Reset your password at teknologkoren.se"
+
+        send_email(user.email, subject, email_body)
 
         flash(reset_flash.format(form.email.data), 'info')
         return redirect(url_for('.login'))

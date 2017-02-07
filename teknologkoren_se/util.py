@@ -1,3 +1,6 @@
+import ssl
+import smtplib
+from email.message import EmailMessage
 from functools import wraps
 from urllib.parse import urlparse, urljoin
 from flask import flash, url_for, request, redirect
@@ -23,9 +26,31 @@ class ListConverter(BaseConverter):
         return '+'.join(BaseConverter.to_url(value) for value in values)
 
 
-def send_email(address, body):
-    # TODO: make send_email send emails
-    print(body)
+def send_email(toaddr, subject, body):
+    """Send an email with SMTP & STARTTLS.
+
+    Uses the best security defaults according to the python documentation at
+    the time of writing:
+    https://docs.python.org/3/library/ssl.html#ssl-security
+
+    "[ssl.create_default_context()] will load the system’s trusted CA
+    certificates, enable certificate validation and hostname checking, and try
+    to choose reasonably secure protocol and cipher settings."
+    """
+
+    msg = EmailMessage()
+    msg.set_content(body)
+
+    msg['Subject'] = subject
+    msg['From'] = app.config['SMTP_SENDADDR']
+    msg['To'] = toaddr
+
+    with smtplib.SMTP(app.config['SMTP_MAILSERVER'],
+                      port=app.config['SMTP_STARTTLS_PORT']) as smtp:
+        context = ssl.create_default_context()
+        smtp.starttls(context=context)
+        smtp.login(app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
+        smtp.send_message(msg)
 
 
 def url_for_other_page(page):

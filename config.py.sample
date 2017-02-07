@@ -12,3 +12,9 @@ TEMPLATES_AUTO_RELOAD = True
 
 UPLOADS_DEFAULT_DEST = 'app/static/uploads/'
 UPLOADS_DEFAULT_URL = '/static/uploads/'
+
+SMTP_MAILSERVER = 'smtp.example.com'
+SMTP_STARTTLS_PORT = 587
+SMTP_USERNAME = 'webmaster@example.com'
+SMTP_PASSWORD = 'smtpsecretpassword'
+SMTP_SENDADDR = 'webmaster@example.com'
