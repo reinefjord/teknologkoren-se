@@ -1,15 +1,13 @@
 import datetime
 import random
 import string
-import flask_wtf
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
-from wtforms import BooleanField, FormField
 from werkzeug.datastructures import CombinedMultiDict
 from teknologkoren_se import app, images, forms
 from teknologkoren_se.views.auth import verify_email
-from teknologkoren_se.models import User, Tag, UserTag, Post, Event
+from teknologkoren_se.models import User, Tag, Post, Event
 from teknologkoren_se.util import tag_required
 
 mod = Blueprint('intranet', __name__, url_prefix='/intranet')
@@ -100,24 +98,10 @@ def full_edit_user(id):
     """
     user = get_object_or_404(User, User.id == id)
 
-    # Class to become tag form
-    class F(flask_wtf.FlaskForm):
-        pass
+    tags = Tag.select().order_by(Tag.name)
+    form = forms.TagForm.extend_form(forms.FullEditUserForm, tags, user)
 
-    for tag in Tag.select().order_by(Tag.name):
-        # If a user has this tag, set its value to checked
-        if tag.name in user.tag_names:
-            field = BooleanField(tag.name, default=True)
-        else:
-            field = BooleanField(tag.name)
-
-        # Add the field to class F with the name of the tag
-        setattr(F, tag.name, field)
-
-    # Add the tag form to the main form
-    setattr(forms.FullEditUserForm, 'tags', FormField(F))
-
-    form = forms.FullEditUserForm(user, request.form)
+    form = form(user)
 
     if form.validate_on_submit():
         if form.email.data != user.email:
@@ -133,21 +117,7 @@ def full_edit_user(id):
         user.first_name = form.first_name.data
         user.last_name = form.last_name.data
 
-        tag_form = form.tags
-        for tag in Tag.select():
-            tag_field = getattr(tag_form, tag.name)
-
-            # If tag field is checked and the user did not already
-            # have that tag, give user tag
-            if tag_field.data and tag.name not in user.tag_names:
-                UserTag.create(user=user, tag=tag)
-
-            # If tag field isn't checked but the user has that tag,
-            # remove it.
-            elif not tag_field.data and tag.name in user.tag_names:
-                user_tag = UserTag.get((UserTag.user == user) &
-                                       (UserTag.tag == tag))
-                user_tag.delete_instance()
+        form.set_user_tags()
 
         user.save()
 

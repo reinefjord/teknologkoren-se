@@ -1,14 +1,87 @@
+from functools import partialmethod
 from flask import url_for, redirect
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from wtforms import (StringField, PasswordField, BooleanField, HiddenField,
-                     DateTimeField, FileField, TextAreaField)
+                     DateTimeField, FileField, TextAreaField, FormField)
 from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
                                 ValidationError)
 from teknologkoren_se import images
-from .models import User
-from .util import is_safe_url, get_redirect_target
+from teknologkoren_se.models import User, UserTag
+from teknologkoren_se.util import is_safe_url, get_redirect_target
+
+
+class TagForm:
+    """Namespace for tag forms.
+
+    Do not use this as an object, it is only the methods that are
+    interesting.
+
+    WTForms does not allow adding fields after initialization, so we
+    use a method to extend a form with a FormField that contains the
+    tag fields, checked and ready to go.
+
+    We make sure not to setattr the base as this will modify it
+    process wide, instead we let a new class inherit from the base.
+    """
+    @classmethod
+    def extend_form(cls, base, tags, user=None):
+        """Return an extended form with tag fields and user modifying method.
+
+        Arguments:
+            base: the form to extend
+            tags: the tags to extend the form with
+            user: a user to check tags against (optional)
+
+        If a user is passed, check the fields of the tags that the user
+        has, and set set_user_tags as a method with arguments attached.
+        Also set user as an attribute of the extended form.
+        """
+        class ExtendedBase(base):
+            pass
+
+        class Tags(FlaskForm):
+            pass
+
+        for tag in tags:
+            # If user has this tag, set its value to checked
+            if user and tag in user.tags:
+                field = BooleanField(tag.name, default=True)
+            else:
+                field = BooleanField(tag.name)
+
+            # Add the field to this class with the name of the tag
+            setattr(Tags, tag.name, field)
+
+        Tags.tags = tags
+        ExtendedBase.tags = FormField(Tags)
+
+        if user:
+            ExtendedBase.user = user
+            # Add TagForm.set_user_tags to Tags together with arguments.
+            ExtendedBase.set_user_tags = partialmethod(cls.set_user_tags, user)
+
+        return ExtendedBase
+
+    @staticmethod
+    def set_user_tags(form, user):
+        """Update user with new and removed tags."""
+        tag_form = form.tags
+        for tag in tag_form.tags:
+            tag_field = getattr(tag_form, tag.name)
+
+            # If tag field is checked and the user did not already
+            # have that tag, give user tag
+            if tag_field.data and tag not in user.tags:
+                UserTag.create(user=user, tag=tag)
+
+            # If tag field isn't checked but the user has that tag,
+            # remove it.
+            elif not tag_field.data and tag in user.tags:
+                user_tag = UserTag.get(UserTag.user == user,
+                                       UserTag.tag == tag)
+                user_tag.delete_instance()
 
 
 class Unique:
