@@ -1,13 +1,14 @@
 import datetime
+import random
+import string
+import flask_wtf
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from playhouse.flask_utils import get_object_or_404
 from wtforms import BooleanField, FormField
 from werkzeug.datastructures import CombinedMultiDict
-from teknologkoren_se import app, images
-from teknologkoren_se.views.users import verify_email
-from teknologkoren_se.forms import (EditUserForm, FullEditUserForm, FlaskForm, EditPostForm,
-                       EditEventForm)
+from teknologkoren_se import app, images, forms
+from teknologkoren_se.views.auth import verify_email
 from teknologkoren_se.models import User, Tag, UserTag, Post, Event
 from teknologkoren_se.util import tag_required
 
@@ -68,7 +69,7 @@ def edit_user(id):
     elif current_user.id != id:
         return redirect(url_for('.profile', id=id))
 
-    form = EditUserForm(current_user, request.form)
+    form = forms.EditUserForm(current_user, request.form)
 
     if form.validate_on_submit():
         if form.email.data != current_user.email:
@@ -100,7 +101,7 @@ def full_edit_user(id):
     user = get_object_or_404(User, User.id == id)
 
     # Class to become tag form
-    class F(FlaskForm):
+    class F(flask_wtf.FlaskForm):
         pass
 
     for tag in Tag.select().order_by(Tag.name):
@@ -114,9 +115,9 @@ def full_edit_user(id):
         setattr(F, tag.name, field)
 
     # Add the tag form to the main form
-    setattr(FullEditUserForm, 'tags', FormField(F))
+    setattr(forms.FullEditUserForm, 'tags', FormField(F))
 
-    form = FullEditUserForm(user, request.form)
+    form = forms.FullEditUserForm(user, request.form)
 
     if form.validate_on_submit():
         if form.email.data != user.email:
@@ -156,6 +157,34 @@ def full_edit_user(id):
                            user=user,
                            form=form,
                            full_form=True)
+
+
+@mod.route('/adduser/', methods=['GET', 'POST'])
+@tag_required('Webmaster')
+def adduser():
+    """Add a user."""
+    form = forms.AddUserForm()
+    if form.validate_on_submit():
+        password = ''.join(random.choice(string.ascii_letters + string.digits)
+                           for _ in range(30))
+
+        user = User.create(email=form.email.data,
+                           first_name=form.first_name.data,
+                           last_name=form.last_name.data,
+                           phone=form.phone.data,
+                           password=password)
+
+        form = forms.AddUserForm()
+
+        flash("User {} added!".format(user.email), 'success')
+
+        return redirect(url_for('.adduser'))
+
+    else:
+        if form.errors:
+            flash(form.errors, 'error')
+
+    return render_template('intranet/adduser.html', form=form)
 
 
 @mod.route('/members/all/')
@@ -244,11 +273,10 @@ def view_events():
 
 
 @mod.route('/new-post/', methods=['GET', 'POST'])
-@login_required
 @tag_required('Webmaster')
 def new_post():
     """Create a new post."""
-    form = EditPostForm(CombinedMultiDict((request.form, request.files)))
+    form = forms.EditPostForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
         if form.upload.data:
             image = images.save(form.upload.data)
@@ -279,8 +307,8 @@ def edit_post(post_id, slug=None):
     if slug != post.slug:
         return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
 
-    form = EditPostForm(CombinedMultiDict((request.form, request.files)),
-                        obj=post)
+    form = forms.EditPostForm(CombinedMultiDict((request.form, request.files)),
+                              obj=post)
 
     if form.validate_on_submit():
         if form.upload.data:
@@ -308,7 +336,7 @@ def remove_post(post_id, slug=None):
 @tag_required('Webmaster')
 def new_event():
     """Create a new event."""
-    form = EditEventForm(CombinedMultiDict((request.form, request.files)))
+    form = forms.EditEventForm(CombinedMultiDict((request.form, request.files)))
     if form.validate_on_submit():
         if form.upload.data:
             image = images.save(form.upload.data)
@@ -345,7 +373,7 @@ def edit_event(event_id, slug=None):
                         event_id=event.id,
                         slug=event.slug))
 
-    form = EditEventForm(CombinedMultiDict((request.form, request.files)),
+    form = forms.EditEventForm(CombinedMultiDict((request.form, request.files)),
                          obj=event)
 
     if form.validate_on_submit():

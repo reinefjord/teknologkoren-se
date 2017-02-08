@@ -52,28 +52,6 @@ def logout():
     return redirect(url_for('blog.index'))
 
 
-@mod.route('/adduser/', methods=['GET', 'POST'])
-@login_required
-def adduser():
-    """Add a user."""
-    form = AddUserForm(request.form)
-    if form.validate_on_submit():
-        password = ''.join(
-                random.choice(ascii_letters + digits) for _ in range(30))
-
-        User.create(
-                email=form.email.data,
-                first_name=form.first_name.data,
-                last_name=form.last_name.data,
-                phone=form.phone.data,
-                password=password,
-                )
-
-        return redirect('intranet.index')
-
-    return render_template('users/adduser.html', form=form)
-
-
 def verify_email(user, email):
     """Create an email verification email.
 
