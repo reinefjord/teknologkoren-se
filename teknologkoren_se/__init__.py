@@ -54,22 +54,21 @@ class AdminHomeView(AdminIndexView):
         return abort(403)
 
 
-flask_admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
-flask_admin.add_view(ModelView(User, name='User'))
-flask_admin.add_view(ModelView(Post, name='Post'))
-flask_admin.add_view(ModelView(Event, name='Event'))
-flask_admin.add_view(ModelView(Tag, name='Tag'))
-flask_admin.add_view(ModelView(UserTag, name='UserTag'))
+admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
+admin.add_view(ModelView(User, name='User'))
+admin.add_view(ModelView(Post, name='Post'))
+admin.add_view(ModelView(Event, name='Event'))
+admin.add_view(ModelView(Tag, name='Tag'))
+admin.add_view(ModelView(UserTag, name='UserTag'))
 
-from teknologkoren_se.views.public import general, users, blog, events
-from teknologkoren_se.views.intranet import (intranet, administration,
-                                             edit_post, edit_event)
+from teknologkoren_se.views import (general,
+                       users,
+                       blog,
+                       events,
+                       intranet)
 
 app.register_blueprint(general.mod)
 app.register_blueprint(users.mod)
 app.register_blueprint(blog.mod)
 app.register_blueprint(events.mod)
 app.register_blueprint(intranet.mod)
-app.register_blueprint(administration.mod)
-app.register_blueprint(edit_post.mod)
-app.register_blueprint(edit_event.mod)
