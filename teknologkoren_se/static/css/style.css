@@ -44,6 +44,27 @@ article header {
     max-width: 34em;
 }
 
+.content {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.secondary {
+    border-left: 1px solid #ddd;
+    padding-left: 30px;
+    margin-left: 30px;
+}
+
+.secondary ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.secondary h1 {
+    font-size: 1.7em;
+}
+
 .cover-image {
     width: 100%;
 }
@@ -235,6 +256,21 @@ article header {
         margin-left: auto;
         margin-right: auto;
         border-radius: 10px;
+    }
+}
+
+@media screen and (max-width: 50em) {
+    .content {
+        flex-direction: column;
+    }
+
+    .secondary {
+        border-left: none;
+        padding-left: 0;
+        margin-left: 0;
+        border-top: 1px solid #ddd;
+        margin-top: 30px;
+        text-align: center;
     }
 }
 

@@ -6,17 +6,32 @@
 
 {% block body %}
 <img src="/static/images/img1600/ktk.jpg" class="cover-image">
-<section class="overview">
-  {% for post in pagination %}
-  {% if post is event %}
-  {{ event_article(post) }}
-  {% else %}
-  {{ post_article(post, True) }}
-  {% endif %}
-  {% endfor %}
-</section>
+<div class="content">
+  <div class="primary">
+    <section class="overview">
+      {% for post in pagination %}
+      {% if post is event %}
+      {{ event_article(post, True) }}
+      {% else %}
+      {{ post_article(post, True) }}
+      {% endif %}
+      {% endfor %}
+    </section>
 
-{% if has_next or page > 1 %}
-{{ pager(has_next, page) }}
-{% endif %}
+    {% if has_next or page > 1 %}
+    {{ pager(has_next, page) }}
+    {% endif %}
+  </div>
+
+  <div class="secondary">
+    <h1>Länkar</h1>
+    <ul>
+      <li><a href="https://www.facebook.com/teknologkoren">KTK på Facebook</a></li>
+      <li><a href="https://open.spotify.com/artist/1nTbx8aaAqaK513pOGLjZ4">KTK på Spotify</a></li>
+      <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">KTK på YouTube</a></li>
+      <li><a href="https://github.com/teknologkoren">KTK på GitHub</a></li>
+      <li><a href="/feed">RSS-flöde</a></li>
+    </ul>
+  </div>
+</div>
 {% endblock %}
