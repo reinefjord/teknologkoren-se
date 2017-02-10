@@ -212,6 +212,10 @@ article header {
     margin: 20px 0;
 }
 
+.text-field input {
+    display: block;
+}
+
 .flashes {
     list-style: none;
     padding: 0;

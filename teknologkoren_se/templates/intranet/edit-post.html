@@ -12,11 +12,11 @@
   <h2>Edit post</h2>
   <form class="edit-post" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
-    <div class="field">
+    <div class="field text-field">
       {{ form.title.label }}
       {{ form.title }}
     </div>
-    <div class="field">
+    <div class="field text-field">
       {{ form.content }}
     </div>
     <div class="field">

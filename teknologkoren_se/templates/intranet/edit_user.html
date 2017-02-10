@@ -10,17 +10,17 @@
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <div class="field">
+    <div class="field text-field">
       {{ form.email.label }}
       {{ form.email }}
     </div>
 
-    <div class="field">
+    <div class="field text-field">
       {{ form.phone.label }}
       {{ form.phone }}
     </div>
 
-    <div class="field">
+    <div class="field text-field">
       {{ form.password.label }}
       {{ form.password }}
     </div>

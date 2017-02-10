@@ -7,10 +7,10 @@
   <form method='POST'>
     {{ form.csrf_token }}
     <h1>Sign in</h1>
-    <div class="field">
+    <div class="field text-field">
       {{ form.email(placeholder='Email address') }}
     </div>
-    <div class="field">
+    <div class="field text-field">
       {{ form.password(placeholder='Password') }}
     </div>
     <p><a href="/reset/">Forgot password?</a></p>
