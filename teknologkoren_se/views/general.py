@@ -83,7 +83,7 @@ def atom_feed():
     posts = posts[:15]
 
     for post in posts:
-        feed.add(post.title, post.content, content_type='html',
+        feed.add(post.title, post.content_to_html(), content_type='html',
                  author=post.author, url=urljoin(request.url_root, post.url),
                  updated=post.timestamp)
 
