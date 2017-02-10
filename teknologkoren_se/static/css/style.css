@@ -12,7 +12,18 @@ img {
 }
 
 a {
+    color: #316bb1;
+    text-decoration:  none;
+}
+a:hover {
     color: #000;
+}
+
+.inverted-link {
+    color: #000
+}
+.inverted-link:hover {
+    color: #316bb1;
 }
 
 article h1 {
@@ -96,10 +107,6 @@ article header {
     vertical-align: middle;
 }
 
-.logo a {
-    text-decoration: none;
-}
-
 .nav {
     margin-top: 30px;
 }
@@ -116,11 +123,13 @@ article header {
 .nav li {
     margin: 0;
 }
-.nav a {
-    text-decoration: none;
-}
 .nav .active {
+    cursor: pointer;
     text-decoration: underline;
+    color: #316bb1;
+    font-size: 1em;
+    margin: 0;
+    font-weight: normal;
 }
 
 .sub-nav ul {

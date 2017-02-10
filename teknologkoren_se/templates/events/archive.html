@@ -7,7 +7,7 @@
 {% block overview %}
 {% if pagination %}
 {% for event in pagination %}
-{{ event_article(event) }}
+{{ event_article(event, True) }}
 {% endfor %}
 {% else %}
 <div class="boxed constrain-width">

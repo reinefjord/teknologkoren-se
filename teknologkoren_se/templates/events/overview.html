@@ -7,11 +7,19 @@
 {% block body %}
 <nav class="nav sub-nav boxed constrain-width">
   <ul>
-    <li{% if active_sub == "kommande"  %} class="active"{% endif %}>
-      <a href="/konserter/">Kommande konserter</a>
+    <li>
+      {% if active_sub == "kommande"  %}
+      <span class="active">Kommande konserter</span>
+      {% else %}
+      <a href="/konserter/" class="inverted-link">Kommande konserter</a>
+      {% endif %}
     </li>
-    <li{% if active_sub == "arkiv" %} class="active"{% endif %}>
-      <a href="/konserter/arkiv/">Konsertarkiv</a>
+    <li>
+      {% if active_sub == "arkiv"  %}
+      <span class="active">Konsertarkiv</span>
+      {% else %}
+      <a href="/konserter/arkiv/" class="inverted-link">Konsertarkiv</a>
+      {% endif %}
     </li>
   </ul>
 </nav>

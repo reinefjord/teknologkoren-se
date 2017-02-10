@@ -1,7 +1,13 @@
 {% macro post_article(post, overview) %}
 <article class="boxed constrain-width">
   <header>
-    <h1><a href="/{{ post.id }}/{{ post.slug }}/">{{ post.title }}</a></h1>
+    <h1>
+      {% if overview %}
+      <a href="/{{ post.id }}/{{ post.slug }}/" class="inverted-link">{{ post.title }}</a></h1>
+    {% else %}
+    {{ post.title }}
+    {% endif %}
+    </h1>
     <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
       {{ post.timestamp.strftime("%d %B %Y") }}
     </time>
@@ -17,10 +23,16 @@
 </article>
 {% endmacro %}
 
-{% macro event_article(event) %}
+{% macro event_article(event, overview) %}
 <article class="boxed constrain-width">
   <header>
-    <h1><a href="/konserter/{{ event.id }}/{{ event.slug }}/">{{ event.title }}</a></h1>
+    <h1>
+      {% if overview %}
+      <a href="/konserter/{{ event.id }}/{{ event.slug }}/" class="inverted-link">{{ event.title }}</a></h1>
+    {% else %}
+    {{ event.title }}
+    {% endif %}
+    </h1>
   </header>
   <div class="event-container">
     <div class="event-text">
@@ -50,11 +62,11 @@
 {% macro pager(has_next, page) %}
 <nav class="pager constrain-width boxed">
   {% if has_next %}
-  <a class="older" href="{{ url_for_other_page(page + 1) }}">
+  <a class="older inverted-link" href="{{ url_for_other_page(page + 1) }}">
     &larr; Older</a>
   {% endif %}
   {% if page > 1 %}
-  <a class="newer" href="{{ url_for_other_page(page - 1) }}">
+  <a class="newer inverted-link" href="{{ url_for_other_page(page - 1) }}">
     Newer &rarr;</a>
   {% endif %}
 </nav>
