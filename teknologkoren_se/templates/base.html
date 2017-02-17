@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }} | Kongl. Teknologkören</title>
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" >
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock %}
@@ -32,19 +32,22 @@
     </header>
     {% if get_flashed_messages() %}
     <div class="constrain-width boxed">
-    {% for type in ['success', 'info', 'error'] %}
-    {% with messages = get_flashed_messages(category_filter=[type]) %}
-    {% if messages %}
+      {% for type in ['success', 'info', 'error'] %}
+      {% with messages = get_flashed_messages(category_filter=[type]) %}
+      {% if messages %}
       <ul class="flashes">
         {% for message in messages %}
         <li class="flash {{ type }}">{{ message }}</li>
         {% endfor %}
       </ul>
-    {% endif %}
-    {% endwith %}
-    {% endfor %}
+      {% endif %}
+      {% endwith %}
+      {% endfor %}
     </div>
     {% endif %}
     {% block body %}{% endblock %}
+    <footer>
+      <img id="footer-img" src="{{ url_for('static', filename='images/logo_grey.svg') }}">
+    </footer>
   </body>
 </html>
