@@ -26,7 +26,7 @@ def _db_close(exc):
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = 'users.login'
+login_manager.login_view = 'auth.login'
 
 flask_db = FlaskDB(app)
 db = flask_db.database

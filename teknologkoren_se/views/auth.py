@@ -12,7 +12,7 @@ from teknologkoren_se.models import User
 from teknologkoren_se.util import send_email, ts
 
 
-mod = Blueprint('users', __name__)
+mod = Blueprint('auth', __name__)
 
 
 @login_manager.user_loader
@@ -41,7 +41,7 @@ def login():
     elif form.is_submitted():
         flash("Sorry, your email address or password was incorrect.", 'error')
 
-    return render_template('users/login.html', form=form)
+    return render_template('auth/login.html', form=form)
 
 
 @mod.route('/logout/')
@@ -66,7 +66,7 @@ def verify_email(user, email):
     verify_link = url_for('users.verify_token', token=token, _external=True)
 
     email_body = render_template(
-            'users/email_verification.jinja2',
+            'auth/email_verification.jinja2',
             link=verify_link)
 
     subject = "Verify your email at teknologkoren.se"
@@ -135,7 +135,7 @@ def reset():
         recover_url = url_for('.reset_token', token=token, _external=True)
 
         email_body = render_template(
-            'users/password_reset_email.jinja2',
+            'auth/password_reset_email.jinja2',
             name=user.first_name,
             link=recover_url)
 
@@ -153,7 +153,7 @@ def reset():
     elif form.errors:
         flash("Please enter your email.", 'error')
 
-    return render_template('users/reset.html', form=form)
+    return render_template('auth/reset.html', form=form)
 
 
 @mod.route('/reset/<token>/', methods=['GET', 'POST'])
@@ -194,4 +194,4 @@ def reset_token(token):
         flash("Your password has been reset!", 'success')
         return redirect(url_for('.login'))
 
-    return render_template('users/reset_token.html', form=form)
+    return render_template('auth/reset_token.html', form=form)
