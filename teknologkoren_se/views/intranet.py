@@ -52,8 +52,8 @@ def profile(id):
             edit=edit)
 
 
-@mod.route('/profile/<int:id>/edit/', methods=['GET', 'POST'])
-def edit_user(id):
+@mod.route('/profile/edit/', methods=['GET', 'POST'])
+def edit_user():
     """Edit (own) profile.
 
     Redirects to admin-edit if user is webmaster, redirects to viewing
@@ -61,12 +61,6 @@ def edit_user(id):
     and password. Edit of email has to be confirmed by clicking a link
     sent to the new email address.
     """
-    if 'Webmaster' in current_user.tag_names:
-        return full_edit_user(id)
-
-    elif current_user.id != id:
-        return redirect(url_for('.profile', id=id))
-
     form = forms.EditUserForm(current_user, request.form)
 
     if form.validate_on_submit():
@@ -76,9 +70,6 @@ def edit_user(id):
                   .format(form.email.data), 'info')
 
         current_user.phone = form.phone.data
-
-        if form.password.data:
-            current_user.password = form.password.data
 
         current_user.save()
 
@@ -90,6 +81,8 @@ def edit_user(id):
                            full_form=False)
 
 
+@mod.route('/profile/edit/<int:id>/', methods=['GET', 'POST'])
+@tag_required('Webmaster')
 def full_edit_user(id):
     """Edit all user attributes.
 
@@ -111,9 +104,6 @@ def full_edit_user(id):
 
         user.phone = form.phone.data
 
-        if form.password.data:
-            user.password = form.password.data
-
         user.first_name = form.first_name.data
         user.last_name = form.last_name.data
 
@@ -127,6 +117,18 @@ def full_edit_user(id):
                            user=user,
                            form=form,
                            full_form=True)
+
+
+@mod.route('/profile/edit/password/', methods=['GET', 'POST'])
+def change_password():
+    """Change current users password."""
+    form = forms.ChangePasswordForm(current_user)
+    if form.validate_on_submit():
+        current_user.password = form.new_password.data
+        current_user.save()
+        flash('Your password has been changed!', 'success')
+        return redirect(url_for('.my_profile'))
+    return render_template('intranet/change_password.html', form=form)
 
 
 @mod.route('/adduser/', methods=['GET', 'POST'])

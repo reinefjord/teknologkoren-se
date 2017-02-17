@@ -6,7 +6,7 @@ from wtforms import (StringField, PasswordField, BooleanField, HiddenField,
                      DateTimeField, FileField, TextAreaField, FormField)
 from wtforms.fields.html5 import EmailField, TelField
 from wtforms.validators import (Email, InputRequired, Regexp, Optional,
-                                ValidationError)
+                                ValidationError, Length)
 from teknologkoren_se import images
 from teknologkoren_se.models import User, UserTag
 from teknologkoren_se.util import is_safe_url, get_redirect_target
@@ -141,6 +141,26 @@ class PasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
 
 
+class NewPasswordForm(FlaskForm):
+    new_password = PasswordField('New password',
+                                 validators=[InputRequired(), Length(min=8)])
+
+
+class ChangePasswordForm(PasswordForm, NewPasswordForm):
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+
+    def validate(self):
+        if not FlaskForm.validate(self):
+            return False
+
+        if not self.user.verify_password(self.password.data):
+            return False
+
+        return True
+
+
 class LoginForm(RedirectForm, EmailForm, PasswordForm):
     """Get login details."""
     remember = BooleanField('Remember me')
@@ -181,7 +201,6 @@ class EditUserForm(FlaskForm):
     phone = TelField('Phone', validators=[
         InputRequired(),
         Regexp(r'^\+?[0-9]*$')])
-    password = PasswordField('Password', validators=[Optional()])
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
