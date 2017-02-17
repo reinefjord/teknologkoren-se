@@ -6,11 +6,11 @@
 
 {% block content %}
 <h2>Events</h2>
-<p><a href="/intranet/new-event/">Create a new event</a></p>
+<p><a href="{{ url_for('.new_event') }}">Create a new event</a></p>
 <ul>
   {% for event in events %}
   <li>
-    <a href="/intranet/edit-event/{{ event.id }}/">{{ event.title }}</a>
+    <a href="{{ url_for('.edit_event', event_id=event.id, slug=event.slug) }}">{{ event.title }}</a>
   </li>
   {% endfor %}
 </ul>

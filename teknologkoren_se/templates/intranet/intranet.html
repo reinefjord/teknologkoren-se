@@ -4,6 +4,6 @@
 {% block body %}
 <div class="boxed constrain-width">
   <p>Intranät - {{ current_user.email }}</p>
-  <p><a href="/logout/">Logout</a></p>
+  <p><a href="{{ url_for('users.logout') }}">Logout</a></p>
 </div>
 {%- endblock %}

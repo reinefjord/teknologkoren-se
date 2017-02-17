@@ -32,7 +32,7 @@
   </form>
   {% if post %}
   <p>
-    <a id="remove" href="/intranet/remove-post/{{ post.id }}/{{ post.slug }}/">Remove</a>
+  <a id="remove" href="{{ url_for('.remove_post', post_id=post.id, slug=post.slug) }}">Remove</a>
   </p>
   {% endif %}
 </section>

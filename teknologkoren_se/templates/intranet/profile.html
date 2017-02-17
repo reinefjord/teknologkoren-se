@@ -15,7 +15,7 @@
   <p>Number: {{ user.phone }}</p>
   <p>Tags: {% for tag in tags %}{{ tag.name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</p>
   {% if edit %}
-  <p><a href="edit/">Edit</a></p>
+  <p><a href="{{ url_for('.edit_user') }}">Edit</a></p>
   {% endif %}
 </div>
 {%- endblock %}

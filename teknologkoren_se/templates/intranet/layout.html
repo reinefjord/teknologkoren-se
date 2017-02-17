@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% set navigation_bar = [
-('/intranet/', 'intranet', 'Intranät'),
-('/intranet/members/', 'members', 'Medlemmar'),
-('/intranet/profile/', 'profile', 'Profil'),
+(url_for('.index'), 'intranet', 'Intranät'),
+(url_for('.voices'), 'members', 'Medlemmar'),
+(url_for('.my_profile'), 'profile', 'Profil'),
 ] -%}
 
 {% if 'Webmaster' in current_user.tag_names %}
-{% do navigation_bar.append(('/intranet/admin/', 'admin', 'Administration')) %}
+{% do navigation_bar.append((url_for('.admin'), 'admin', 'Administration')) %}
 {% endif %}
 
 {% block head %}
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block logo %}
-<a href="/intranet" class="inverted-link">
+<a href="{{ url_for('.index') }}" class="inverted-link">
   <img src="{{ url_for('static', filename='images/logo.svg') }}">
   <h1>
     Kongl. Intranätet

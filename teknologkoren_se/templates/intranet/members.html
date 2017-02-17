@@ -11,7 +11,7 @@
     <li><h2>{{ tag }}</h2>
       <ul>
         {% for member in tag_dict[tag] %}
-        <li><a href="/intranet/profile/{{ member.id }}">{{ member.first_name }} {{ member.last_name }}</a></li>
+        <li><a href="{{ url_for('.profile', id=member.id) }}">{{ member.first_name }} {{ member.last_name }}</a></li>
         {% endfor %}
       </ul>
     </li>

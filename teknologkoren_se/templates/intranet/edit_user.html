@@ -20,16 +20,11 @@
       {{ form.phone }}
     </div>
 
-    <div class="field text-field">
-      {{ form.password.label }}
-      {{ form.password }}
-    </div>
-
     <div class="field">
       <input type=submit value="Submit">
     </div>
 
-    <a href="/intranet/profile/{{ user.id }}/">Cancel</a>
+    <a href="{{ url_for('.profile', id=user.id) }}">Cancel</a>
   </form>
 </div>
 {%- endblock %}

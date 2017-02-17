@@ -10,7 +10,7 @@ from teknologkoren_se.views.auth import verify_email
 from teknologkoren_se.models import User, Tag, Post, Event
 from teknologkoren_se.util import tag_required
 
-mod = Blueprint('intranet', __name__, url_prefix='/intranet')
+mod = Blueprint('intranet', __name__, subdomain='intranet')
 
 app.jinja_env.add_extension('jinja2.ext.do')
 

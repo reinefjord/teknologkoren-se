@@ -60,7 +60,7 @@
       <input type=submit value="Submit">
     </div>
 
-    <a href="/intranet/profile/{{ user.id }}/">Cancel</a>
+    <a href="{{ url_for('.profile', id=user.id) }}">Cancel</a>
   </form>
 </div>
 
