@@ -190,18 +190,27 @@ article header {
     height: 13em;
 }
 
+address {
+    font-style: normal;
+}
+
+.postal-address {
+    text-align: center;
+    font-style: italic;
+}
+
 .table {
     overflow-x: auto;
     border-radius: 7px;
-}
-
-.contacts {
-    width: 100%;
-    border-collapse: collapse;
     background-color: #f3f3f3;
 }
 
-.contacts td {
+.table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table td {
     white-space: nowrap;
     height: 2em;
     padding: 0 10px 0 10px;

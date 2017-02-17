@@ -6,19 +6,33 @@
 {% block body %}
 
 <section class="boxed constrain-width">
-  <p>E-postadresser till våra styrelsemedlemmar finnes nedan.</p>
-  <div class="table">
-    <table class="contacts">
-      {% for tag, email in tags %}
-      {% set person = board[tag] %}
-      <tr>
-        <td>{{ tag }}</td>
-        <td>{{ person.first_name }} {{ person.last_name }}</td>
-        <td><a href="mailto:{{ email }}">{{ email }}</a></td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
+  <address>
+    {% if 'Ordförande' in board %}{% set ordf = board['Ordförande'] %}
+    <p>Kontakta gärna vår ordförande
+    {{ ordf.first_name }} {{ ordf.last_name }} (telefon: {{ ordf.phone }})
+    om du undrar över något!</p>
+    {% endif %}
+    <p>E-postadresser till alla våra styrelsemedlemmar finnes nedan:</p>
+    <div class="table contacts">
+      <table>
+        {% for tag, email in tags %}
+        {% set person = board[tag] %}
+        <tr>
+          <td>{{ tag }}</td>
+          <td>{{ person.first_name }} {{ person.last_name }}</td>
+          <td><a href="mailto:{{ email }}">{{ email }}</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+
+    <p>Vi nås även per snigelpost:</p>
+    <p translate="no" class="postal-address">
+    Kongl. Teknologkören<br>
+    Fack vid THS<br>
+    100 44 Stockholm
+    </p>
+  </address>
 </section>
 
 {% endblock %}
