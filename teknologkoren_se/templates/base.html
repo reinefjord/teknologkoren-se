@@ -20,11 +20,7 @@
         <ul>
           {% for href, id, caption in navigation_bar -%}
           <li class="nowrap">
-            {% if id == active_page %}
-            <span class="active">{{ caption|e }}</span>
-            {% else %}
-            <a href="{{ href|e }}" class="inverted-link">{{ caption|e }}</a>
-            {% endif %}
+            <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
           </li>
           {% endfor %}
         </ul>
