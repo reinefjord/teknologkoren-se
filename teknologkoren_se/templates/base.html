@@ -46,8 +46,6 @@
     </div>
     {% endif %}
     {% block body %}{% endblock %}
-    <footer>
-      <img id="footer-img" src="{{ url_for('static', filename='images/logo_grey.svg') }}">
-    </footer>
+    {% block footer %}{% endblock %}
   </body>
 </html>
