@@ -1,15 +1,12 @@
 from functools import partialmethod
 from flask import url_for, redirect
+from wtforms import fields, validators
+import wtforms.fields.html5 as html5_fields
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from wtforms import (StringField, PasswordField, BooleanField, HiddenField,
-                     DateTimeField, FileField, TextAreaField, FormField)
-from wtforms.fields.html5 import EmailField, TelField
-from wtforms.validators import (Email, InputRequired, Regexp, Optional,
-                                ValidationError, Length)
 from teknologkoren_se import images
 from teknologkoren_se.models import User, UserTag
-from teknologkoren_se.util import is_safe_url, get_redirect_target
+from teknologkoren_se.util import get_redirect_target, is_safe_url
 
 
 class TagForm:
@@ -47,15 +44,15 @@ class TagForm:
         for tag in tags:
             # If user has this tag, set its value to checked
             if user and tag in user.tags:
-                field = BooleanField(tag.name, default=True)
+                field = fields.BooleanField(tag.name, default=True)
             else:
-                field = BooleanField(tag.name)
+                field = fields.BooleanField(tag.name)
 
             # Add the field to this class with the name of the tag
             setattr(Tags, tag.name, field)
 
         Tags.tags = tags
-        ExtendedBase.tags = FormField(Tags)
+        ExtendedBase.tags = fields.FormField(Tags)
 
         if user:
             ExtendedBase.user = user
@@ -79,8 +76,7 @@ class TagForm:
             # If tag field isn't checked but the user has that tag,
             # remove it.
             elif not tag_field.data and tag in user.tags:
-                user_tag = UserTag.get(UserTag.user == user,
-                                       UserTag.tag == tag)
+                user_tag = UserTag.get(UserTag.user == user, UserTag.tag == tag)
                 user_tag.delete_instance()
 
 
@@ -93,7 +89,7 @@ class Unique:
 
     def __call__(self, form, field):
         if self.model.select().where(self.field == field.data).exists():
-            raise ValidationError(self.message)
+            raise validators.ValidationError(self.message)
 
 
 class Exists:
@@ -104,12 +100,12 @@ class Exists:
         self.message = message
 
     def __call__(self, form, field):
-        if not(self.model.select().where(self.field == field.data).exists()):
-            raise ValidationError(self.message)
+        if not self.model.select().where(self.field == field.data).exists():
+            raise validators.ValidationError(self.message)
 
 
 class RedirectForm(FlaskForm):
-    next = HiddenField()
+    next = fields.HiddenField()
 
     def __init__(self, *args, **kwargs):
         FlaskForm.__init__(self, *args, **kwargs)
@@ -124,26 +120,34 @@ class RedirectForm(FlaskForm):
 
 
 class EmailForm(FlaskForm):
-    email = EmailField('Email', validators=[InputRequired(), Email()])
+    email = html5_fields.EmailField('Email', validators=[
+        validators.InputRequired(),
+        validators.Email()
+        ])
 
 
 class ExistingEmailForm(FlaskForm):
-    email = EmailField('Email', validators=[
-        InputRequired(),
-        Email(),
+    email = html5_fields.EmailField('Email', validators=[
+        validators.InputRequired(),
+        validators.Email(),
         Exists(
             User,
             User.email,
-            message='Unknown email')])
+            message='Unknown email')
+        ])
 
 
 class PasswordForm(FlaskForm):
-    password = PasswordField('Password', validators=[InputRequired()])
+    password = fields.PasswordField('Password', validators=[
+        validators.InputRequired()
+        ])
 
 
 class NewPasswordForm(FlaskForm):
-    new_password = PasswordField('New password',
-                                 validators=[InputRequired(), Length(min=8)])
+    new_password = fields.PasswordField('New password', validators=[
+        validators.InputRequired(),
+        validators.Length(min=8)
+        ])
 
 
 class ChangePasswordForm(PasswordForm, NewPasswordForm):
@@ -163,7 +167,7 @@ class ChangePasswordForm(PasswordForm, NewPasswordForm):
 
 class LoginForm(RedirectForm, EmailForm, PasswordForm):
     """Get login details."""
-    remember = BooleanField('Remember me')
+    remember = fields.BooleanField('Remember me')
 
     def __init__(self, *args, **kwargs):
         self.user = None
@@ -182,25 +186,38 @@ class LoginForm(RedirectForm, EmailForm, PasswordForm):
 
 
 class AddUserForm(FlaskForm):
-    first_name = StringField('First Name', validators=[InputRequired()])
-    last_name = StringField('First Name', validators=[InputRequired()])
+    first_name = fields.StringField('First Name', validators=[
+        validators.InputRequired()
+        ])
 
-    email = EmailField('Email', validators=[
-        InputRequired(),
-        Email(),
+    last_name = fields.StringField('First Name', validators=[
+        validators.InputRequired()
+        ])
+
+    email = html5_fields.EmailField('Email', validators=[
+        validators.InputRequired(),
+        validators.Email(),
         Unique(
             User,
             User.email,
-            message="This email is already in use")])
+            message="This email is already in use")
+        ])
 
-    phone = TelField('Phone', validators=[Regexp(r'^\+?[0-9]*$')])
+    phone = html5_fields.TelField('Phone', validators=[
+        validators.Regexp(r'^\+?[0-9]*$')
+        ])
 
 
 class EditUserForm(FlaskForm):
-    email = EmailField('Email', validators=[InputRequired(), Email()])
-    phone = TelField('Phone', validators=[
-        InputRequired(),
-        Regexp(r'^\+?[0-9]*$')])
+    email = html5_fields.EmailField('Email', validators=[
+        validators.InputRequired(),
+        validators.Email()
+        ])
+
+    phone = html5_fields.TelField('Phone', validators=[
+        validators.InputRequired(),
+        validators.Regexp(r'^\+?[0-9]*$')
+        ])
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
@@ -219,22 +236,33 @@ class EditUserForm(FlaskForm):
 
 
 class FullEditUserForm(EditUserForm):
-    first_name = StringField('First Name', validators=[InputRequired()])
-    last_name = StringField('Last Name', validators=[InputRequired()])
+    first_name = fields.StringField('First Name', validators=[
+        validators.InputRequired()
+        ])
+
+    last_name = fields.StringField('Last Name', validators=[
+        validators.InputRequired()
+        ])
 
 
 class UploadForm(FlaskForm):
-    upload = FileField('image', validators=[
+    upload = fields.FileField('image', validators=[
         FileAllowed(images, 'Images only!')
         ])
 
 
 class EditPostForm(UploadForm):
-    content = TextAreaField(validators=[InputRequired()])
-    title = StringField('Title', validators=[InputRequired()])
-    published = BooleanField('Publish')
+    content = fields.TextAreaField(validators=[
+        validators.InputRequired()
+        ])
+
+    title = fields.StringField('Title', validators=[
+        validators.InputRequired()
+        ])
+
+    published = fields.BooleanField('Publish')
 
 
 class EditEventForm(EditPostForm):
-    start_time = DateTimeField(format='%Y-%m-%d %H:%M')
-    location = StringField('Location')
+    start_time = fields.DateTimeField(format='%Y-%m-%d %H:%M')
+    location = fields.StringField('Location')

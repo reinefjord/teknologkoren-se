@@ -1,5 +1,5 @@
 from operator import attrgetter
-from flask import abort, Blueprint, redirect, request, render_template, url_for
+from flask import abort, Blueprint, redirect, render_template, url_for
 from flask_login import current_user
 from playhouse.flask_utils import get_object_or_404
 from teknologkoren_se import app, images

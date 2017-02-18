@@ -63,7 +63,10 @@ def kontakt():
             # the template iterates over.
             board_tags.remove(tag_tuple)
 
-    return render_template('general/kontakt.html', board=board, tags=board_tags)
+    return render_template(
+        'general/kontakt.html',
+        board=board,
+        tags=board_tags)
 
 
 @mod.route('/feed/')

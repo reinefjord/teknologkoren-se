@@ -61,14 +61,16 @@ admin.add_view(ModelView(Event, name='Event'))
 admin.add_view(ModelView(Tag, name='Tag'))
 admin.add_view(ModelView(UserTag, name='UserTag'))
 
-from teknologkoren_se.views import (general,
-                       auth,
-                       blog,
-                       events,
-                       intranet)
+from teknologkoren_se.views import (
+    auth,
+    blog,
+    events,
+    general,
+    intranet
+    )
 
-app.register_blueprint(general.mod)
 app.register_blueprint(auth.mod)
 app.register_blueprint(blog.mod)
 app.register_blueprint(events.mod)
+app.register_blueprint(general.mod)
 app.register_blueprint(intranet.mod)

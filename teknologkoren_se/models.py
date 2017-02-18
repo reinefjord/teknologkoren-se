@@ -1,11 +1,11 @@
 from datetime import datetime
-from flask_login import UserMixin
-from teknologkoren_se import flask_db, bcrypt
 from peewee import (CharField, TextField, BooleanField, DateTimeField,
-                    ForeignKeyField, FixedCharField)
+                    ForeignKeyField)
 from playhouse.hybrid import hybrid_property
+from flask_login import UserMixin
 from slugify import slugify
 from markdown import markdown
+from teknologkoren_se import flask_db, bcrypt
 
 
 class User(UserMixin, flask_db.Model):
@@ -38,12 +38,11 @@ class User(UserMixin, flask_db.Model):
     @hybrid_property
     def tags(self):
         """Return a SelectQuery with the tags of this user."""
-        return (
-            Tag
-            .select()
-            .join(UserTag)
-            .join(User)
-            .where(User.id == self.id))
+        return (Tag
+                .select()
+                .join(UserTag)
+                .join(User)
+                .where(User.id == self.id))
 
     @hybrid_property
     def tag_names(self):
@@ -59,7 +58,6 @@ class User(UserMixin, flask_db.Model):
                 .join(Tag)
                 .where(Tag.name << User.tag_names,
                        Tag.name == tag_name))
-
 
     @staticmethod
     def authenticate(email, password):

@@ -45,11 +45,10 @@ def profile(id):
     else:
         edit = False
 
-    return render_template(
-            'intranet/profile.html',
-            user=user,
-            tags=tags,
-            edit=edit)
+    return render_template('intranet/profile.html',
+                           user=user,
+                           tags=tags,
+                           edit=edit)
 
 
 @mod.route('/profile/edit/', methods=['GET', 'POST'])
@@ -179,7 +178,7 @@ def members_by_tags(tag_list):
     tag_dict = {}
     for tag in tag_list:
         tag_dict[tag] = (active_users & User.has_tag(tag)
-                         ).order_by(User.first_name)
+                        ).order_by(User.first_name)
 
     return render_template(
         'intranet/members.html',
@@ -256,15 +255,17 @@ def new_post():
             image = None
 
         post = Post.create(
-                title=form.title.data,
-                path=url_for('.index'),
-                content=form.content.data,
-                published=form.published.data,
-                timestamp=datetime.datetime.now(),
-                author=current_user.id,
-                image=image
-                )
-        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
+            title=form.title.data,
+            path=url_for('.index'),
+            content=form.content.data,
+            published=form.published.data,
+            timestamp=datetime.datetime.now(),
+            author=current_user.id,
+            image=image
+            )
+        return redirect(url_for('blog.view_post',
+                                post_id=post.id,
+                                slug=post.slug))
 
     return render_template('intranet/edit-post.html', form=form, post=None)
 
@@ -289,7 +290,9 @@ def edit_post(post_id, slug=None):
         post.content = form.content.data
         post.published = form.published.data
         post.save()
-        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
+        return redirect(url_for('blog.view_post',
+                                post_id=post.id,
+                                slug=post.slug))
 
     return render_template('intranet/edit-post.html', form=form, post=post)
 
@@ -308,7 +311,9 @@ def remove_post(post_id, slug=None):
 @tag_required('Webmaster')
 def new_event():
     """Create a new event."""
-    form = forms.EditEventForm(CombinedMultiDict((request.form, request.files)))
+    form = forms.EditEventForm(
+        CombinedMultiDict((request.form, request.files))
+        )
     if form.validate_on_submit():
         if form.upload.data:
             image = images.save(form.upload.data)
@@ -316,16 +321,16 @@ def new_event():
             image = None
 
         event = Event.create(
-                title=form.title.data,
-                path='/konserter/',
-                content=form.content.data,
-                published=form.published.data,
-                start_time=form.start_time.data,
-                location=form.location.data,
-                timestamp=datetime.now(),
-                author=current_user.id,
-                image=image
-                )
+            title=form.title.data,
+            path='/konserter/',
+            content=form.content.data,
+            published=form.published.data,
+            start_time=form.start_time.data,
+            location=form.location.data,
+            timestamp=datetime.now(),
+            author=current_user.id,
+            image=image
+            )
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
@@ -342,11 +347,13 @@ def edit_event(event_id, slug=None):
 
     if slug != event.slug:
         return redirect(url_for('.edit_event',
-                        event_id=event.id,
-                        slug=event.slug))
+                                event_id=event.id,
+                                slug=event.slug))
 
-    form = forms.EditEventForm(CombinedMultiDict((request.form, request.files)),
-                         obj=event)
+    form = forms.EditEventForm(
+        CombinedMultiDict((request.form, request.files)),
+        obj=event
+        )
 
     if form.validate_on_submit():
         event.title = form.title.data

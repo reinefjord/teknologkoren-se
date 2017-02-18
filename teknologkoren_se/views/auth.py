@@ -1,13 +1,11 @@
-import random
-from string import ascii_letters, digits
 from flask import (Blueprint, request, redirect, render_template, url_for,
                    abort, flash)
-from flask_login import current_user, login_user, logout_user, login_required
+
+from flask_login import current_user, login_user, logout_user
 from playhouse.flask_utils import get_object_or_404
 from itsdangerous import SignatureExpired
 from teknologkoren_se import login_manager
-from teknologkoren_se.forms import (LoginForm, AddUserForm, PasswordForm,
-                                    ExistingEmailForm)
+from teknologkoren_se.forms import LoginForm, PasswordForm, ExistingEmailForm
 from teknologkoren_se.models import User
 from teknologkoren_se.util import send_email, ts
 
@@ -65,9 +63,8 @@ def verify_email(user, email):
 
     verify_link = url_for('users.verify_token', token=token, _external=True)
 
-    email_body = render_template(
-            'auth/email_verification.jinja2',
-            link=verify_link)
+    email_body = render_template('auth/email_verification.jinja2',
+                                 link=verify_link)
 
     subject = "Verify your email at teknologkoren.se"
 
