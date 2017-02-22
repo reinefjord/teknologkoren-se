@@ -84,6 +84,15 @@ article header {
     margin-top: 10px;
 }
 
+.post-image {
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.post-image img {
+    vertical-align: middle;
+}
+
 .event-container {
     display: -webkit-flex;
     display: flex;
@@ -232,8 +241,12 @@ address {
     margin: 20px 0;
 }
 
-.text-field input {
-    display: block;
+.text-field {
+    display: flex;
+}
+
+.field-description {
+    padding-left: 10px;
 }
 
 .flashes {
@@ -352,5 +365,18 @@ address {
     .event-image {
         align-self: center;
         max-width: 15em;
+    }
+}
+
+@media screen and (max-width: 28em) {
+    .text-field {
+        flex-direction: column-reverse;
+    }
+
+    .field-description {
+        padding-left: 0;
+    }
+    .field-description:before {
+        content: "- ";
     }
 }

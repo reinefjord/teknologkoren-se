@@ -1,5 +1,5 @@
 from functools import partialmethod
-from flask import url_for, redirect
+from flask import flash, url_for, redirect
 from wtforms import fields, validators
 import wtforms.fields.html5 as html5_fields
 from flask_wtf import FlaskForm
@@ -7,6 +7,15 @@ from flask_wtf.file import FileAllowed
 from teknologkoren_se import images
 from teknologkoren_se.models import User, UserTag
 from teknologkoren_se.util import get_redirect_target, is_safe_url
+
+
+def flash_errors(form):
+    """Flash all errors in a form."""
+    for field in form:
+        for error in field.errors:
+            flash(("Error in {} field: {}"
+                   .format(field.label.text, error)),
+                  'error')
 
 
 class TagForm:
@@ -138,16 +147,19 @@ class ExistingEmailForm(FlaskForm):
 
 
 class PasswordForm(FlaskForm):
-    password = fields.PasswordField('Password', validators=[
-        validators.InputRequired()
-        ])
+    password = fields.PasswordField(
+        'Password',
+        validators=[validators.InputRequired()],
+        description="Required, your current password"
+        )
 
 
 class NewPasswordForm(FlaskForm):
-    new_password = fields.PasswordField('New password', validators=[
-        validators.InputRequired(),
-        validators.Length(min=8)
-        ])
+    new_password = fields.PasswordField(
+        'New password',
+        validators=[validators.InputRequired(), validators.Length(min=8)],
+        description="Required, your new password. At least 8 characters long."
+        )
 
 
 class ChangePasswordForm(PasswordForm, NewPasswordForm):
@@ -160,6 +172,7 @@ class ChangePasswordForm(PasswordForm, NewPasswordForm):
             return False
 
         if not self.user.verify_password(self.password.data):
+            self.password.errors.append("Wrong password.")
             return False
 
         return True
@@ -209,15 +222,23 @@ class AddUserForm(FlaskForm):
 
 
 class EditUserForm(FlaskForm):
-    email = html5_fields.EmailField('Email', validators=[
-        validators.InputRequired(),
-        validators.Email()
-        ])
+    email = html5_fields.EmailField(
+        'Email',
+        validators=[
+            validators.InputRequired(),
+            validators.Email()
+        ],
+        description="Required, a valid email address"
+        )
 
-    phone = html5_fields.TelField('Phone', validators=[
-        validators.InputRequired(),
-        validators.Regexp(r'^\+?[0-9]*$')
-        ])
+    phone = html5_fields.TelField(
+        'Phone',
+        validators=[
+            validators.InputRequired(),
+            validators.Regexp(r'^\+?[0-9]*$')
+        ],
+        description="Required, a phone number like 0701234567"
+        )
 
     def __init__(self, user, *args, **kwargs):
         self.user = user
@@ -236,13 +257,17 @@ class EditUserForm(FlaskForm):
 
 
 class FullEditUserForm(EditUserForm):
-    first_name = fields.StringField('First Name', validators=[
-        validators.InputRequired()
-        ])
+    first_name = fields.StringField(
+        'First Name',
+        validators=[validators.InputRequired()],
+        description="Required, user's first name"
+        )
 
-    last_name = fields.StringField('Last Name', validators=[
-        validators.InputRequired()
-        ])
+    last_name = fields.StringField(
+        'Last Name',
+        validators=[validators.InputRequired()],
+        description="Required, user's last/family name"
+        )
 
 
 class UploadForm(FlaskForm):

@@ -1,4 +1,5 @@
 {% extends "intranet/layout.html" %}
+{% from "macros.html" import text_field %}
 
 {% set active_page = "profile" %}
 
@@ -13,15 +14,9 @@
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <div class="field text-field">
-      {{ form.email.label }}
-      {{ form.email }}
-    </div>
+    {{ text_field(form.email) }}
 
-    <div class="field text-field">
-      {{ form.phone.label }}
-      {{ form.phone }}
-    </div>
+    {{ text_field(form.phone) }}
 
     <div class="field">
       <input type=submit value="Submit">

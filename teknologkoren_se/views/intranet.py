@@ -72,7 +72,9 @@ def edit_user():
 
         current_user.save()
 
-        return redirect(url_for('.profile', id=id))
+        return redirect(url_for('.profile', id=current_user.id))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/edit_user.html',
                            user=current_user,
@@ -111,6 +113,8 @@ def full_edit_user(id):
         user.save()
 
         return redirect(url_for('.profile', id=id))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/full_edit_user.html',
                            user=user,
@@ -127,6 +131,9 @@ def change_password():
         current_user.save()
         flash('Your password has been changed!', 'success')
         return redirect(url_for('.my_profile'))
+    else:
+        forms.flash_errors(form)
+
     return render_template('intranet/change_password.html', form=form)
 
 
@@ -266,6 +273,8 @@ def new_post():
         return redirect(url_for('blog.view_post',
                                 post_id=post.id,
                                 slug=post.slug))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/edit-post.html', form=form, post=None)
 
@@ -293,6 +302,8 @@ def edit_post(post_id, slug=None):
         return redirect(url_for('blog.view_post',
                                 post_id=post.id,
                                 slug=post.slug))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/edit-post.html', form=form, post=post)
 
@@ -334,6 +345,8 @@ def new_event():
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/edit-event.html', form=form)
 
@@ -367,6 +380,8 @@ def edit_event(event_id, slug=None):
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
                                 slug=event.slug))
+    else:
+        forms.flash_errors(form)
 
     return render_template('intranet/edit-event.html', form=form)
 

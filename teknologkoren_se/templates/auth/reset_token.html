@@ -1,15 +1,17 @@
 {% extends "main.html" %}
 
+{% from "macros.html" import text_field %}
+
 {% set title = "Reset password" %}
 
 {% block body %}
 <div class="boxed constrain-width">
   <form method='POST'>
     {{ form.csrf_token }}
-    <h2>Reset password</h2>
-    <div class="field text-field">
-      {{ form.password(placeholder='New password') }}
-    </div>
+    <h1>Reset password</h1>
+
+    {{ text_field(form.new_password) }}
+
     <div class="field">
       <input type=submit value="Submit">
     </div>

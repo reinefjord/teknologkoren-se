@@ -4,8 +4,7 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
 from flask_login import current_user, login_user, logout_user
 from playhouse.flask_utils import get_object_or_404
 from itsdangerous import SignatureExpired
-from teknologkoren_se import login_manager
-from teknologkoren_se.forms import LoginForm, PasswordForm, ExistingEmailForm
+from teknologkoren_se import login_manager, forms
 from teknologkoren_se.models import User
 from teknologkoren_se.util import send_email, ts
 
@@ -27,7 +26,7 @@ def login():
     and passwords only represent anything when used in combination
     (http://ux.stackexchange.com/a/13523).
     """
-    form = LoginForm(request.form)
+    form = forms.LoginForm(request.form)
 
     if current_user.is_authenticated:
         return form.redirect('intranet.index')
@@ -123,7 +122,7 @@ def reset():
     reset_flash = \
         "A password reset link valid for one hour has been sent to {}."
 
-    form = ExistingEmailForm()
+    form = forms.ExistingEmailForm()
 
     if form.validate_on_submit():
         user = User.get(User.email == form.email.data)
@@ -183,12 +182,14 @@ def reset_token(token):
         flash(expired, 'error')
         return redirect(url_for('.login'))
 
-    form = PasswordForm()
+    form = forms.NewPasswordForm()
 
     if form.validate_on_submit():
-        user.password = form.password.data
+        user.password = form.new_password.data
         user.save()
         flash("Your password has been reset!", 'success')
         return redirect(url_for('.login'))
+    else:
+        forms.flash_errors(form)
 
     return render_template('auth/reset_token.html', form=form)

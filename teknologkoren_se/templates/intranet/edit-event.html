@@ -1,5 +1,7 @@
 {% extends "intranet/layout.html" %}
 
+{% from "macros.html" import text_field %}
+
 {% set title = "Edit event" %}
 
 {% block head %}
@@ -13,28 +15,26 @@
   <h2>Edit post</h2>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
-    <div class="field text-field">
-      {{ form.title.label }}
-      {{ form.title }}
-    </div>
-    <div class="field text-field">
+
+    {{ text_field(form.title) }}
+
+    <div class="field">
       {{ form.content }}
     </div>
-    <div class="field text-field">
-      {{ form.start_time.label }}
-      {{ form.start_time(placeholder='YYYY-MM-DD hh:mm') }}
-    </div>
-    <div class="field text-field">
-      {{ form.location.label }}
-      {{ form.location }}
-    </div>
+
+    {{ text_field(form.start_time, placeholder='YYYY-MM-DD hh:mm') }}
+
+    {{ text_field(form.location) }}
+
     <div class="field">
       {{ form.upload }}
     </div>
+
     <div class="field">
       {{ form.published }}
       {{ form.published.label }}
     </div>
+
     <div class="field">
       <input type=submit value="Submit">
     </div>

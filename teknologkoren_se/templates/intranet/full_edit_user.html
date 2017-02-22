@@ -1,5 +1,7 @@
 {% extends "intranet/layout.html" %}
 
+{% from "macros.html" import text_field %}
+
 {% if current_user.id == user.id %}
 {% set active_page = "profile" %}
 {% else %}
@@ -14,25 +16,13 @@
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
-    <div class="field text-field">
-      {{ form.first_name.label }}
-      {{ form.first_name }}
-    </div>
+    {{ text_field(form.first_name) }}
 
-    <div class="field text-field">
-      {{ form.last_name.label }}
-      {{ form.last_name }}
-    </div>
+    {{ text_field(form.last_name) }}
 
-    <div class="field text-field">
-      {{ form.email.label }}
-      {{ form.email }}
-    </div>
+    {{ text_field(form.email) }}
 
-    <div class="field text-field">
-      {{ form.phone.label }}
-      {{ form.phone }}
-    </div>
+    {{ text_field(form.phone) }}
 
     <fieldset class="tag-set">
       {{ form.tags.csrf_token }}
