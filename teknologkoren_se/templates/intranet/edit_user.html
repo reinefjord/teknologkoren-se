@@ -7,7 +7,7 @@
 
 {% block body %}
 <div class="boxed constrain-width">
-  <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+  <h2>{{ current_user.first_name }} {{ current_user.last_name }}</h2>
 
   <a href="{{ url_for('.change_password') }}">Change password</a>
 
@@ -22,7 +22,7 @@
       <input type=submit value="Submit">
     </div>
 
-    <a href="{{ url_for('.profile', id=user.id) }}">Cancel</a>
+    <a href="{{ url_for('.profile', id=current_user.id) }}">Cancel</a>
   </form>
 </div>
 {%- endblock %}

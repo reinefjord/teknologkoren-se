@@ -40,15 +40,9 @@ def profile(id):
     user = get_object_or_404(User, User.id == id)
     tags = user.tags.order_by(Tag.name)
 
-    if current_user.id == id or 'Webmaster' in current_user.tag_names:
-        edit = True
-    else:
-        edit = False
-
     return render_template('intranet/profile.html',
                            user=user,
-                           tags=tags,
-                           edit=edit)
+                           tags=tags)
 
 
 @mod.route('/profile/edit/', methods=['GET', 'POST'])
@@ -78,11 +72,10 @@ def edit_user():
 
     return render_template('intranet/edit_user.html',
                            user=current_user,
-                           form=form,
-                           full_form=False)
+                           form=form)
 
 
-@mod.route('/profile/edit/<int:id>/', methods=['GET', 'POST'])
+@mod.route('/admin/edit-user/<int:id>/', methods=['GET', 'POST'])
 @tag_required('Webmaster')
 def full_edit_user(id):
     """Edit all user attributes.
@@ -118,8 +111,7 @@ def full_edit_user(id):
 
     return render_template('intranet/full_edit_user.html',
                            user=user,
-                           form=form,
-                           full_form=True)
+                           form=form)
 
 
 @mod.route('/profile/edit/password/', methods=['GET', 'POST'])
