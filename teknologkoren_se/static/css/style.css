@@ -91,6 +91,7 @@ article header {
 
 .post-image img {
     vertical-align: middle;
+    width: 100%
 }
 
 .event-container {
@@ -112,7 +113,7 @@ article header {
 }
 
 .truncate {
-    max-height: 300px;
+    max-height: 20em;
     overflow: hidden;
 }
 
