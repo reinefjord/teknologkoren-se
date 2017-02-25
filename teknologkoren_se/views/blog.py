@@ -46,8 +46,8 @@ def index(page):
                            page=page)
 
 
-@mod.route('/<int:post_id>/')
-@mod.route('/<int:post_id>/<slug>/')
+@mod.route('/blog/<int:post_id>/')
+@mod.route('/blog/<int:post_id>/<slug>/')
 def view_post(post_id, slug=None):
     """View a single blogpost."""
     post = Post.query.get_or_404(post_id)
