@@ -14,34 +14,9 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 app.jinja_env.globals['image_url'] = images.url
 
 
-def index(template, events, page):
-    """Show published events.
-
-    This code is the same for both coming and old events, minimizing
-    code duplication. Only events are shown so we can use peewee's
-    built in pagination, unlike in blog.index.
-    """
-    events = events.filter_by(published=True)
-
-    pagination = events.paginate(page, 5, error_out=False)
-
-    # If there are events in the database, but the pagination is empty
-    # (too high page number)
-    if not pagination and events:
-        # Get the last page that contains events and redirect there
-        last_page = (len(events) // 5) + 1
-        if len(events) % 5:
-            last_page += 1
-        return redirect(url_for('.konserter', page=last_page))
-
-    return render_template(template,
-                           pagination=pagination,
-                           page=page)
-
-
 @mod.route('/', defaults={'page': 1})
 @mod.route('/page/<int:page>/')
-def coming(page):
+def index(page):
     """Show upcoming events.
 
     An event is still considered 'coming' if it is less than 3 hours
@@ -49,9 +24,15 @@ def coming(page):
     event.
     """
     old = datetime.now() - timedelta(hours=3)
-    events = (Event.query.filter(Event.start_time > old)
+    events = (Event.query
+              .filter(Event.start_time > old, Event.published == True)
               .order_by(Event.start_time.desc()))
-    return index('events/coming.html', events, page)
+
+    pagination = events.paginate(page, 5)
+
+    return render_template('events/coming.html',
+                           pagination=pagination,
+                           page=page)
 
 
 @mod.route('/arkiv/', defaults={'page': 1})
@@ -63,9 +44,15 @@ def archive(page):
     3 hours since the start time of the event.
     """
     old = datetime.now() - timedelta(hours=3)
-    events = (Event.query.filter(Event.start_time < old)
+    events = (Event.query
+              .filter(Event.start_time < old, Event.published == True)
               .order_by(Event.start_time.desc()))
-    return index('events/archive.html', events, page)
+
+    pagination = events.paginate(page, 5)
+
+    return render_template('events/archive.html',
+                           pagination=pagination,
+                           page=page)
 
 
 @mod.route('/<int:event_id>/')

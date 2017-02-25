@@ -33,24 +33,13 @@ app.jinja_env.tests['event'] = is_event
 def index(page):
     """Show blogposts and events, main page.
 
-    Selects all published posts and events and sorts them outside orm.
-    Sorting with database query would require posts and events to be
-    joined which would make it difficult for templates to determine
-    which objects are posts and which are events.
+    Event is a subclass of Post, querying Post returns both events and
+    posts.
     """
     posts = (Post.query.filter_by(published=True)
              .order_by(Post.timestamp.desc()))
 
     pagination = posts.paginate(page, 5)
-
-    # If there are posts in the database, but the pagination is empty
-    # (too high page number)
-    if not pagination and posts:
-        # Get the last page that contains posts and redirect there
-        last_page = len(posts) // 5
-        if len(posts) % 5:
-            last_page += 1
-        return redirect(url_for('.index', page=last_page))
 
     return render_template('blog/overview.html',
                            pagination=pagination,
