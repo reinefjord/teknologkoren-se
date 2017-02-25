@@ -4,7 +4,7 @@ import string
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from werkzeug.datastructures import CombinedMultiDict
-from teknologkoren_se import app, images, forms
+from teknologkoren_se import app, db, images, forms
 from teknologkoren_se.views.auth import verify_email
 from teknologkoren_se.models import User, Tag, Post, Event
 from teknologkoren_se.util import tag_required
@@ -37,7 +37,7 @@ def my_profile():
 def profile(id):
     """Show profile of user with matching id."""
     user = User.query.get_or_404(id)
-    tags = user.tags.order_by(Tag.name)
+    tags = user.tags
 
     return render_template('intranet/profile.html',
                            user=user,
@@ -85,7 +85,7 @@ def full_edit_user(id):
     """
     user = User.query.get_or_404(id)
 
-    tags = Tag.select().order_by(Tag.name)
+    tags = Tag.query.order_by(Tag.name).all()
     form = forms.TagForm.extend_form(forms.FullEditUserForm, tags, user)
 
     form = form(user)
@@ -180,8 +180,8 @@ def members_by_tags(tag_list):
 
     tag_dict = {}
     for tag in tag_list:
-        tag_dict[tag] = (active_users & User.has_tag(tag)
-                        ).order_by(User.first_name)
+        tag_dict[tag] = active_users.filter(
+            User.tags.any(name=tag)).order_by(User.first_name)
 
     return render_template(
         'intranet/members.html',
@@ -196,7 +196,8 @@ def member_matrix(columns, rows):
     for column in columns:
         tag_dict[column] = {}
         for row in rows:
-            tag_dict[column][row] = (User.has_tag(column) & User.has_tag(row))
+            tag_dict[column][row] = User.has_tag(column).filter(
+                User.tags.any(name=row))
 
     return render_template('intranet/member_matrix.html',
                            columns=columns,
@@ -232,7 +233,7 @@ def admin():
 @tag_required('Webmaster')
 def view_posts():
     """Show links to all post's edit mode."""
-    posts = Post.query.order_by(Post.timestamp.desc())
+    posts = Post.query.filter_by(type='post').order_by(Post.timestamp.desc())
 
     return render_template('intranet/view-posts.html', posts=posts)
 
@@ -259,11 +260,10 @@ def new_post():
 
         post = Post(
             title=form.title.data,
-            path=url_for('.index'),
             content=form.content.data,
             published=form.published.data,
             timestamp=datetime.datetime.now(),
-            author=current_user.id,
+            author=current_user,
             image=image
             )
         db.session.add(post)
@@ -332,13 +332,12 @@ def new_event():
 
         event = Event(
             title=form.title.data,
-            path='/konserter/',
             content=form.content.data,
             published=form.published.data,
             start_time=form.start_time.data,
             location=form.location.data,
-            timestamp=datetime.now(),
-            author=current_user.id,
+            timestamp=datetime.datetime.now(),
+            author=current_user,
             image=image
             )
         db.session.add(event)

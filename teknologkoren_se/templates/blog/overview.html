@@ -9,7 +9,7 @@
 <div class="content">
   <div class="primary">
     <section class="overview">
-      {% for post in pagination %}
+      {% for post in pagination.items %}
       {% if post is event %}
       {{ event_article(post, True) }}
       {% else %}
@@ -18,7 +18,7 @@
       {% endfor %}
     </section>
 
-    {% if has_next or page > 1 %}
+    {% if pagination.has_next or page > 1 %}
     {{ pager(has_next, page) }}
     {% endif %}
   </div>

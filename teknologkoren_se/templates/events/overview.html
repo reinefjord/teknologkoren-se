@@ -26,7 +26,7 @@
 <section class="overview">
   {% block overview %}{% endblock %}
 </section>
-{% if has_next or page > 1 %}
+{% if pagination.has_next or page > 1 %}
 {{ pager(has_next, page) }}
 {% endif %}
 {% endblock %}

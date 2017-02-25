@@ -1,8 +1,7 @@
-from operator import attrgetter
 from urllib.parse import urljoin
 from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
-from teknologkoren_se.models import User, Tag, Post, Event
+from teknologkoren_se.models import User, Tag, Post
 
 
 mod = Blueprint('general', __name__)
@@ -75,15 +74,10 @@ def atom_feed():
     feed = AtomFeed("Teknologkören", feed_url=request.url,
                     url=request.url_root)
 
-    blogposts = (Post.query
-                 .filter_by(published=True).order_by(Post.timestamp.desc()))
-    events = (Event.query
-              .filter_by(published=True).order_by(Event.timestamp.desc()))
-
-    posts = list(blogposts) + list(events)
-
-    posts.sort(key=attrgetter('timestamp'), reverse=True)
-    posts = posts[:15]
+    posts = (Post.query
+             .filter_by(published=True)
+             .order_by(Post.timestamp.desc())
+             .limit(15))
 
     for post in posts:
         feed.add(post.title, post.content_to_html(), content_type='html',

@@ -34,13 +34,9 @@ def index(template, events, page):
             last_page += 1
         return redirect(url_for('.konserter', page=last_page))
 
-    # True if next page has content, else False
-    has_next = True if events.paginate(page+1, 5, error_out=False) else False
-
     return render_template(template,
                            pagination=pagination,
-                           page=page,
-                           has_next=has_next)
+                           page=page)
 
 
 @mod.route('/', defaults={'page': 1})

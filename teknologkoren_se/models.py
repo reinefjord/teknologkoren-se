@@ -18,18 +18,23 @@ class User(UserMixin, db.Model):
     """A representation of a user.
 
     An email address cannot be longer than 254 characters:
-    http://www.rfc-editor.org/errata_search.php?rfc=3696
+    http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690
     """
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(254), unique=True)
     first_name = db.Column(db.String(50))
     last_name = db.Column(db.String(50))
     phone = db.Column(db.String(20), nullable=True)
+
     # Do not change the following directly, use User.password
     _password = db.Column(db.String(128))
     _password_timestamp = db.Column(db.DateTime)
-    tags = db.relationship('Tag', secondary=user_tags,
-                           backref=db.backref('users'))
+
+    tags = db.relationship('Tag',
+                           secondary=user_tags,
+                           backref=db.backref('users'),
+                           order_by='Tag.name'
+                           )
 
     @hybrid_property
     def password(self):
@@ -56,7 +61,7 @@ class User(UserMixin, db.Model):
     @staticmethod
     def has_tag(tag_name):
         """Return users that have a matching tag."""
-        return Tag.query.filter_by(name=tag_name).first().users
+        return User.query.filter(User.tags.any(name=tag_name))
 
     @staticmethod
     def authenticate(email, password):
@@ -101,7 +106,13 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime)
     author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     author = db.relationship('User', backref=db.backref('posts'))
-    image = db.Column(nullable=True)
+    image = db.Column(db.String(300), nullable=True)
+    type = db.Column(db.String(50))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'post',
+        'polymorphic_on': type
+    }
 
     def __init__(self, *args, **kwargs):
         """Initialize object and generate slug if not set."""
@@ -125,5 +136,10 @@ class Post(db.Model):
 
 class Event(Post):
     """Representation of an event."""
+    id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
     start_time = db.Column(db.DateTime)
     location = db.Column(db.String(100))
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'event'
+    }

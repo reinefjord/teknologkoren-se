@@ -6,7 +6,7 @@
 
 {% block overview %}
 {% if pagination %}
-{% for event in pagination %}
+{% for event in pagination.items %}
 {{ event_article(event, True) }}
 {% endfor %}
 {% else %}

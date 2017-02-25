@@ -26,6 +26,18 @@ class ListConverter(BaseConverter):
         return '+'.join(BaseConverter.to_url(value) for value in values)
 
 
+def paginate(content, page, page_size):
+    """Return a page of content.
+
+    Calculates which posts to have on a specific page based on which
+    page they're on and how many objects there are per page.
+    """
+    start_index = (page-1) * page_size
+    end_index = start_index + page_size
+    pagination = content[start_index:end_index]
+    return pagination
+
+
 def send_email(toaddr, subject, body):
     """Send an email with SMTP & STARTTLS.
 

@@ -6,6 +6,7 @@ from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
@@ -17,6 +18,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
 
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 bcrypt = Bcrypt(app)
 

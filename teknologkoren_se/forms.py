@@ -4,13 +4,8 @@ from wtforms import fields, validators
 import wtforms.fields.html5 as html5_fields
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
-from teknologkoren_se import images
-from teknologkoren_se.models import User, UserTag
-from teknologkoren_se.util import get_redirect_target, is_safe_url
-
-
-from teknologkoren_se import images
-from teknologkoren_se.models import User, UserTag
+from teknologkoren_se import db, images
+from teknologkoren_se.models import User
 from teknologkoren_se.util import get_redirect_target, is_safe_url
 
 
@@ -85,13 +80,12 @@ class TagForm:
             # If tag field is checked and the user did not already
             # have that tag, give user tag
             if tag_field.data and tag not in user.tags:
-                UserTag.create(user=user, tag=tag)
+                user.tags.append(tag)
 
             # If tag field isn't checked but the user has that tag,
             # remove it.
             elif not tag_field.data and tag in user.tags:
-                user_tag = UserTag.get(UserTag.user == user, UserTag.tag == tag)
-                user_tag.delete_instance()
+                user.tags.remove(tag)
 
 
 class Unique:
@@ -253,7 +247,7 @@ class EditUserForm(FlaskForm):
         if not FlaskForm.validate(self):
             return False
 
-        if User.select().where(User.email == self.email.data).exists():
+        if db.session.query(User.id).filter_by(email=self.email.data).scalar():
             if self.email.data != self.user.email:
                 self.email.errors.append("This email is already in use")
                 return False
