@@ -385,7 +385,7 @@ def edit_event(event_id, slug=None):
     else:
         forms.flash_errors(form)
 
-    return render_template('intranet/edit-event.html', form=form)
+    return render_template('intranet/edit-event.html', form=form, event=event)
 
 
 @mod.route('/remove-event/<int:event_id>/')

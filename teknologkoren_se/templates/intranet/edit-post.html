@@ -1,6 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% from "macros.html" import text_field %}
+{% from "macros.html" import img, text_field %}
 
 {% set title = "Edit post" %}
 
@@ -20,6 +20,13 @@
     <div class="field">
       {{ form.content }}
     </div>
+
+    {% if post and post.image %}
+    Current image:
+    <div>
+      {{ img(post.image, 400) }}
+    </div>
+    {% endif %}
 
     <div class="field">
       {{ form.upload }}

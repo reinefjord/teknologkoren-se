@@ -1,6 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% from "macros.html" import text_field %}
+{% from "macros.html" import img, text_field %}
 
 {% set title = "Edit event" %}
 
@@ -25,6 +25,13 @@
     {{ text_field(form.start_time, placeholder='YYYY-MM-DD hh:mm') }}
 
     {{ text_field(form.location) }}
+
+    {% if event and event.image %}
+    Current image:
+    <div>
+      {{ img(event.image, 400) }}
+    </div>
+    {% endif %}
 
     <div class="field">
       {{ form.upload }}
