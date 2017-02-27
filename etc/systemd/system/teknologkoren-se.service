@@ -1,0 +1,14 @@
+[Unit]
+Description=teknologkoren.se gunicorn daemon
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/teknologkoren-se
+RuntimeDirectory=teknologkoren-se
+Environment="PATH=/var/www/teknologkoren-se/venv/bin"
+ExecStart=/var/www/teknologkoren-se/venv/bin/gunicorn -w 5 -b unix:/run/teknologkoren-se/teknologkoren-se.sock teknologkoren_se:app
+
+[Install]
+WantedBy=multi-user.target
