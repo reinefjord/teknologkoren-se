@@ -6,7 +6,7 @@
 (url_for('.my_profile'), 'profile', 'Profil'),
 ] -%}
 
-{% if 'Webmaster' in current_user.tag_names %}
+{% if current_user.has_tag('Webmaster') %}
 {% do navigation_bar.append((url_for('.admin'), 'admin', 'Administration')) %}
 {% endif %}
 

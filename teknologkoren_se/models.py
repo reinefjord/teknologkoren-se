@@ -4,7 +4,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from slugify import slugify
 from markdown import markdown
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from teknologkoren_se import db, bcrypt
 
 
@@ -64,15 +64,16 @@ class User(UserMixin, db.Model):
         """Return True if plaintext matches password, else return False."""
         return bcrypt.check_password_hash(self._password, plaintext)
 
-    @hybrid_property
-    def tag_names(self):
-        """Return a list of the names of this user's tags."""
-        return [tag.name for tag in self.tags]
+    @hybrid_method
+    def has_tag(self, tag_name):
+        """Return True if User instance has tag with name tag_name."""
+        tag = Tag.query.filter_by(name=tag_name).first()
+        return tag in self.tags
 
-    @staticmethod
-    def has_tag(tag_name):
-        """Return users that have a matching tag."""
-        return User.query.filter(User.tags.any(name=tag_name))
+    @has_tag.expression
+    def has_tag(self, tag_name):
+        """Return query with all Users that has tag with name tag_name."""
+        return self.tags.any(name=tag_name)
 
     @staticmethod
     def authenticate(email, password):

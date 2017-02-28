@@ -34,7 +34,7 @@ from teknologkoren_se.models import User, Post, Event, Tag
 class AdminHomeView(AdminIndexView):
     def is_accessible(self):
         if current_user.is_authenticated:
-            return 'Webmaster' in current_user.tag_names
+            return current_user.has_tag('Webmaster')
         return False
 
     def inaccessible_callback(self, name, **kwargs):

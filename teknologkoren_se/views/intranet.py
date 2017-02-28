@@ -174,12 +174,12 @@ def all_members():
 @mod.route('/members/<list:tag_list>/')
 def members_by_tags(tag_list):
     """Show active members sorted by the tags in tag_list."""
-    active_users = User.has_tag('Aktiv')
+    active_users = User.query.filter(User.has_tag('Aktiv'))
 
     tag_dict = {}
     for tag in tag_list:
         tag_dict[tag] = active_users.filter(
-            User.tags.any(name=tag)).order_by(User.first_name)
+            User.has_tag(tag)).order_by(User.first_name)
 
     return render_template(
         'intranet/members.html',
@@ -194,8 +194,9 @@ def member_matrix(columns, rows):
     for column in columns:
         tag_dict[column] = {}
         for row in rows:
-            tag_dict[column][row] = User.has_tag(column).filter(
-                User.tags.any(name=row))
+            tag_dict[column][row] = User.query.filter(
+                    User.has_tag(column),
+                    User.has_tag(row))
 
     return render_template('intranet/member_matrix.html',
                            columns=columns,

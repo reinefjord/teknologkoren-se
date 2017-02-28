@@ -105,7 +105,7 @@ def tag_required(tag):
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
-            if tag not in current_user.tag_names:
+            if not current_user.has_tag(tag):
                 flash("You need to be {} to access that.".format(tag), 'error')
                 return redirect(request.referrer or url_for('index'))
             return func(*args, **kwargs)
