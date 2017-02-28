@@ -5,7 +5,7 @@
       {% if overview %}
       <a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}" class="inverted-link">{{ post.title }}</a>
       {% else %}
-      {{ post.title }}
+      {% if not post.published %}[Not published] {% endif %}{{ post.title }}
       {% endif %}
     </h1>
     <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
@@ -30,7 +30,7 @@
       {% if overview %}
       <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
       {% else %}
-      {{ event.title }}
+      {% if not event.published %}[Not published] {% endif %}{{ event.title }}
       {% endif %}
     </h1>
   </header>
