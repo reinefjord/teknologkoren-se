@@ -96,7 +96,8 @@ class Unique:
         self.message = message
 
     def __call__(self, form, field):
-        if self.model.query.filter(self.field == field.data).exists():
+        if (db.session.query(self.model)
+                .filter(self.field == field.data).scalar()):
             raise validators.ValidationError(self.message)
 
 
@@ -108,7 +109,8 @@ class Exists:
         self.message = message
 
     def __call__(self, form, field):
-        if not self.model.query.filter(self.field == field.data).exists():
+        if not (db.session.query(self.model)
+                .filter(self.field == field.data).scalar()):
             raise validators.ValidationError(self.message)
 
 

@@ -3,8 +3,7 @@ from flask import (Blueprint, request, redirect, render_template, url_for,
 
 from flask_login import current_user, login_user, logout_user
 from itsdangerous import SignatureExpired
-from itsdangerous import SignatureExpired
-from teknologkoren_se import login_manager, forms
+from teknologkoren_se import db, login_manager, forms
 from teknologkoren_se.models import User
 from teknologkoren_se.util import send_email, ts
 
@@ -60,7 +59,7 @@ def verify_email(user, email):
     """
     token = ts.dumps([user.id, email], 'verify-email')
 
-    verify_link = url_for('users.verify_token', token=token, _external=True)
+    verify_link = url_for('auth.verify_token', token=token, _external=True)
 
     email_body = render_template('auth/email_verification.jinja2',
                                  link=verify_link)
@@ -185,7 +184,7 @@ def reset_token(token):
     form = forms.NewPasswordForm()
 
     if form.validate_on_submit():
-        user.password = form.password.data
+        user.password = form.new_password.data
         db.session.add(user)
         db.session.commit()
         flash("Your password has been reset!", 'success')

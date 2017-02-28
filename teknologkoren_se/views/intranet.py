@@ -121,7 +121,8 @@ def change_password():
     form = forms.ChangePasswordForm(current_user)
     if form.validate_on_submit():
         current_user.password = form.new_password.data
-        current_user.save()
+        db.session.add(current_user)
+        db.session.commit()
         flash('Your password has been changed!', 'success')
         return redirect(url_for('.my_profile'))
     else:
@@ -136,9 +137,6 @@ def adduser():
     """Add a user."""
     form = forms.AddUserForm()
     if form.validate_on_submit():
-        password = ''.join(random.choice(string.ascii_letters + string.digits)
-                           for _ in range(30))
-
         user = User(email=form.email.data,
                     first_name=form.first_name.data,
                     last_name=form.last_name.data,

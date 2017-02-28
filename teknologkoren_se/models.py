@@ -1,3 +1,5 @@
+import random
+import string
 from datetime import datetime
 from flask_login import UserMixin
 from slugify import slugify
@@ -35,6 +37,15 @@ class User(UserMixin, db.Model):
                            backref=db.backref('users'),
                            order_by='Tag.name'
                            )
+
+    def __init__(self, *args, **kwargs):
+        if 'password' not in kwargs:
+            password = ''.join(random.choice(string.ascii_letters +
+                                             string.digits) for _ in range(30))
+            kwargs['password'] = password
+
+        super().__init__(*args, **kwargs)
+
 
     @hybrid_property
     def password(self):
