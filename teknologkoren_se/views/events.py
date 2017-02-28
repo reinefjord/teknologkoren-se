@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta
 from flask import abort, Blueprint, redirect, render_template, url_for
 from flask_login import current_user
-from playhouse.flask_utils import get_object_or_404
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Event
 from teknologkoren_se.util import url_for_other_page
