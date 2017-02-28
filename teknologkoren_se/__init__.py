@@ -55,6 +55,8 @@ from teknologkoren_se.views import (
     intranet
     )
 
+import teknologkoren_se.errors
+
 app.register_blueprint(auth.mod)
 app.register_blueprint(blog.mod)
 app.register_blueprint(events.mod)
