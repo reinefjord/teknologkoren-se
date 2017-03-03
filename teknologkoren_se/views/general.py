@@ -50,7 +50,7 @@ def kontakt():
     for tag_tuple in tags_copy:
         tag, email = tag_tuple
 
-        board_member = User.has_tag(tag).first()
+        board_member = User.query.filter(User.has_tag(tag)).first()
 
         if board_member:
             board[tag] = board_member
