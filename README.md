@@ -36,4 +36,4 @@ hosts-file (`/etc/hosts`):
 and add it as server name in config.py. `localhost` does not support subdomains
 and will not work.
 
-Run nginx (`systemctl start nginx`) and `run.sh` (`./run.sh`).
+Run nginx (`systemctl start nginx`) and `run.sh` (`FLASK_DEBUG=1 ./run.sh`).
