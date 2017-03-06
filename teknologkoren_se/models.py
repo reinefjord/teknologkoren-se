@@ -46,7 +46,6 @@ class User(UserMixin, db.Model):
 
         super().__init__(*args, **kwargs)
 
-
     @hybrid_property
     def password(self):
         """Return password hash."""
@@ -109,7 +108,22 @@ class Tag(db.Model):
 
 
 class Post(db.Model):
-    """Representation of a blogpost."""
+    """Representation of a blogpost.
+
+    This is the parent for "joined table inheritance". This means
+    classes can inherit from this class and get an unique table with
+    the extra attributes. The tables are joined automatically when
+    querying, and when querying the parent children are also included.
+    Querying children, however, only returns children.
+
+    To keep track of which kind of object an object is, we have created
+    the 'type' attribute and set 'polymorphic_on' to that. The 'type'
+    attribute will then contain the 'polymorphic identity', which is
+    in this class set to 'post'.
+
+    To query only the parent one simply filters the query by the parent
+    type, e.g. `Post.query.filter_by(type='post')`.
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     slug = db.Column(db.String(200))
@@ -147,7 +161,13 @@ class Post(db.Model):
 
 
 class Event(Post):
-    """Representation of an event."""
+    """Representation of an event.
+
+    This is so called "joined table inheritance". The attributes in
+    this class is in a unique table with only the attributes of this
+    class, and is joined with the parent class Post automatically when
+    queried to form the table/object with all attributes.
+    """
     id = db.Column(db.Integer, db.ForeignKey('post.id'), primary_key=True)
     start_time = db.Column(db.DateTime)
     location = db.Column(db.String(100))
