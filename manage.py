@@ -16,6 +16,7 @@ def create_db():
 def create_tags():
     """Create a set of standard tags."""
     tags = ['Webmaster',
+            'Aktiv',
             'Sopran 1',
             'Sopran 2',
             'Alt 1',
