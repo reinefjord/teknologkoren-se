@@ -86,7 +86,6 @@ def verify_token(token):
 
     user = User.query.get_or_404(user_id)
     user.email = email
-    db.session.add(user)
     db.session.commit()
 
     flash("{} is now verified!".format(email), 'success')
@@ -185,7 +184,6 @@ def reset_token(token):
 
     if form.validate_on_submit():
         user.password = form.new_password.data
-        db.session.add(user)
         db.session.commit()
         flash("Your password has been reset!", 'success')
         return redirect(url_for('.login'))

@@ -63,7 +63,6 @@ def edit_user():
 
         current_user.phone = form.phone.data
 
-        db.session.add(current_user)
         db.session.commit()
 
         return redirect(url_for('.profile', id=current_user.id))
@@ -103,7 +102,6 @@ def full_edit_user(id):
 
         form.set_user_tags()
 
-        db.session.add(user)
         db.session.commit()
 
         return redirect(url_for('.profile', id=id))
@@ -121,7 +119,6 @@ def change_password():
     form = forms.ChangePasswordForm(current_user)
     if form.validate_on_submit():
         current_user.password = form.new_password.data
-        db.session.add(current_user)
         db.session.commit()
         flash('Your password has been changed!', 'success')
         return redirect(url_for('.my_profile'))
@@ -143,7 +140,6 @@ def adduser():
                     phone=form.phone.data,
                     password=password)
 
-        db.session.add(user)
         db.session.commit()
 
         form = forms.AddUserForm()
@@ -296,7 +292,6 @@ def edit_post(post_id, slug=None):
         post.title = form.title.data
         post.content = form.content.data
         post.published = form.published.data
-        db.session.add(post)
         db.session.commit()
         return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
     else:
@@ -376,7 +371,6 @@ def edit_event(event_id, slug=None):
         event.location = form.location.data
         if form.upload.data:
             event.image = images.save(form.upload.data)
-        db.session.add(event)
         db.session.commit()
         return redirect(url_for('events.view_event',
                                 event_id=event.id,
