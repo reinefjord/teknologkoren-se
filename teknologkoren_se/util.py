@@ -57,6 +57,10 @@ def send_email(toaddr, subject, body):
     msg['From'] = app.config['SMTP_SENDADDR']
     msg['To'] = toaddr
 
+    if app.debug:
+        print(msg)
+        return
+
     with smtplib.SMTP(app.config['SMTP_MAILSERVER'],
                       port=app.config['SMTP_STARTTLS_PORT']) as smtp:
         context = ssl.create_default_context()
