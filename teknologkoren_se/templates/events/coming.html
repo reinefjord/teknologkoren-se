@@ -4,7 +4,7 @@
 {% set active_sub = "kommande" %}
 
 {% block overview %}
-{% if pagination %}
+{% if pagination.items %}
 {% for event in pagination.items %}
 {{ event_article(event, True) }}
 {% endfor %}
