@@ -5,7 +5,7 @@
 {% set active_sub = "arkiv" %}
 
 {% block overview %}
-{% if pagination %}
+{% if pagination.items %}
 {% for event in pagination.items %}
 {{ event_article(event, True) }}
 {% endfor %}
