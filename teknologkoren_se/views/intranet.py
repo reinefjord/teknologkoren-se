@@ -130,13 +130,18 @@ def change_password():
 @any_tag_required('Webmaster')
 def adduser():
     """Add a user."""
-    form = forms.AddUserForm()
+    tags = Tag.query.order_by(Tag.name).all()
+    Form = forms.TagForm.extend_form(forms.AddUserForm, tags)
+
+    form = Form()
+
     if form.validate_on_submit():
         user = User(email=form.email.data,
                     first_name=form.first_name.data,
                     last_name=form.last_name.data,
-                    phone=form.phone.data,
-                    password=password)
+                    phone=form.phone.data)
+
+        forms.TagForm.set_user_tags(form, user)
 
         db.session.commit()
 

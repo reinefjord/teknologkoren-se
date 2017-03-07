@@ -1,6 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% from "macros.html" import text_field %}
+{% from "macros.html" import text_field, tag_form %}
 
 {% if current_user.id == user.id %}
 {% set active_page = "profile" %}
@@ -24,22 +24,7 @@
 
     {{ text_field(form.phone) }}
 
-    <fieldset class="tag-set">
-      {{ form.tags.csrf_token }}
-
-      <legend>Tags</legend>
-
-      <input type="text" id="tag-filter" placeholder="Filter">
-
-      <div class="tags">
-      {% for field in form.tags if field.name != "tags-csrf_token" %}
-      <div class="field">
-        {{ field }}
-        {{ field.label }}
-      </div>
-      {% endfor %}
-      </div>
-    </fieldset>
+    {{ tag_form(form) }}
 
     <div class="field">
       <input type=submit value="Submit">
@@ -49,23 +34,5 @@
   </form>
 </div>
 
-<script>
-var filter = document.getElementById("tag-filter");
-
-filter.addEventListener("input", function ()
-    {
-      var re = new RegExp(filter.value, "i");
-
-      var tags = document.getElementsByClassName("tags")[0].getElementsByClassName("field");
-
-      for (var i = 0; i < tags.length; i++) {
-        var label = tags[i].getElementsByTagName("label")[0];
-        if (re.test(label.innerHTML)) {
-          tags[i].style.display = "block";
-        } else {
-          tags[i].style.display = "none";
-        }
-      }
-    })
-</script>
+<script src="{{ url_for('static', filename='js/tag_filter.js') }}"></script>
 {%- endblock %}
