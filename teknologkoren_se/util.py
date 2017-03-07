@@ -104,14 +104,30 @@ def get_redirect_target():
             return target
 
 
-def tag_required(tag):
+def any_tag_required(*tags):
     """Decorator preventing access based on user tags."""
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
-            if not current_user.has_tag(tag):
-                flash("You need to be {} to access that.".format(tag), 'error')
-                return redirect(request.referrer or url_for('index'))
+            for tag in tags:
+                if current_user.has_tag(tag):
+                    return func(*args, **kwargs)
+            flash("You do not have permission to access that.", 'error')
+            return redirect(request.referrer or url_for('.index'))
+        return decorated_function
+    return decorator
+
+
+def all_tags_required(*tags):
+    """Decorator preventing access based on user tags."""
+    def decorator(func):
+        @wraps(func)
+        def decorated_function(*args, **kwargs):
+            for tag in tags:
+                if not current_user.has_tag(tag):
+                    flash("You do not have permission to access that.",
+                          'error')
+                    return redirect(request.referrer or url_for('.index'))
             return func(*args, **kwargs)
         return decorated_function
     return decorator
