@@ -88,6 +88,13 @@ class TagForm:
                 user.tags.remove(tag)
 
 
+class LowercaseEmailField(html5_fields.EmailField):
+    """Custom field that lowercases input."""
+    def process_formdata(self, valuelist):
+        valuelist[0] = valuelist[0].lower()
+        super().process_formdata(valuelist)
+
+
 class Unique:
     """Validate that field is unique in model."""
     def __init__(self, model, field, message='This element already exists.'):
@@ -130,14 +137,14 @@ class RedirectForm(FlaskForm):
 
 
 class EmailForm(FlaskForm):
-    email = html5_fields.EmailField('Email', validators=[
+    email = LowercaseEmailField('Email', validators=[
         validators.InputRequired(),
         validators.Email()
         ])
 
 
 class ExistingEmailForm(FlaskForm):
-    email = html5_fields.EmailField('Email', validators=[
+    email = LowercaseEmailField('Email', validators=[
         validators.InputRequired(),
         validators.Email(),
         Exists(
@@ -208,7 +215,7 @@ class AddUserForm(FlaskForm):
         validators.InputRequired()
         ])
 
-    email = html5_fields.EmailField('Email', validators=[
+    email = LowercaseEmailField('Email', validators=[
         validators.InputRequired(),
         validators.Email(),
         Unique(
@@ -223,7 +230,7 @@ class AddUserForm(FlaskForm):
 
 
 class EditUserForm(FlaskForm):
-    email = html5_fields.EmailField(
+    email = LowercaseEmailField(
         'Email',
         validators=[
             validators.InputRequired(),
