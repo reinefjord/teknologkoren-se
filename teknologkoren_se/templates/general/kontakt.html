@@ -23,7 +23,8 @@
 
     {% if 'Ordförande' in board %}{% set ordf = board['Ordförande'] %}
     <p>Kontakta gärna vår ordförande
-    {{ ordf.first_name }} {{ ordf.last_name }} (telefon: {{ ordf.phone }})
+    {{ ordf.first_name }} {{ ordf.last_name }},
+    telefon: <a href="tel:{{ ordf.phone }}">{{ ordf.phone }}</a>,
     om du undrar över något!</p>
     {% endif %}
 

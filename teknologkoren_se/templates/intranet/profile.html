@@ -12,7 +12,7 @@
 <div class="boxed constrain-width">
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
-  <p>Number: {{ user.phone }}</p>
+  <p>Number: <a href="tel:{{ user.phone }}">{{ user.phone }}</a></p>
   <p>Tags: {% for tag in tags %}{{ tag.name }}{% if loop.last %}{% else %}, {% endif %}{% endfor %}</p>
   {% if current_user.has_tag('Webmaster') %}
   <p><a href="{{ url_for('.full_edit_user', id=user.id) }}">Edit</a></p>
