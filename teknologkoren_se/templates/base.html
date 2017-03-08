@@ -12,7 +12,8 @@
   </head>
   <body>
     {% set active_page = active_page -%}
-    <header class="pageheader boxed">
+    <div class="pageheader">
+    <header class="boxed">
       <div class="logo">
         {% block logo %}{% endblock %}
       </div>
@@ -39,9 +40,11 @@
       {% endif %}
       {% endwith %}
       {% endfor %}
-    </div>
     {% endif %}
-    {% block body %}{% endblock %}
+    </div>
+    <div id="main-content">
+      {% block body %}{% endblock %}
+    </div>
     {% block footer %}{% endblock %}
   </body>
 </html>

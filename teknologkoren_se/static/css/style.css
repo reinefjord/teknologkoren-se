@@ -1,10 +1,16 @@
 /* palette: http://paletton.com/palette.php?uid=73C2b0kpczF5YXuhyJVv-q5G7dw */
 
 body {
-    margin-top: 15px;
     line-height: 1.6;
     overflow-y: scroll;
     font-family: sans-serif;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+#main-content {
+    flex: 1;
 }
 
 img {
@@ -13,6 +19,8 @@ img {
 
 footer {
     margin: 55px 15px 20px 15px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
 }
 
 #footer-img {
@@ -95,7 +103,6 @@ article header {
 }
 
 .event-container {
-    display: -webkit-flex;
     display: flex;
     justify-content: space-between;
 }
@@ -118,8 +125,11 @@ article header {
 }
 
 .pageheader {
+    align-self: center;
     text-align: center;
+    margin-top: 15px;
     margin-bottom: 30px;
+    width: 100%;
     max-width: 36em;
     font-size: 1.1em;
 }
@@ -158,7 +168,6 @@ article header {
     list-style: none;
     padding: 0;
     margin: 0;
-    display: -webkit-flex;
     display: flex;
     justify-content: space-between;
 }
@@ -172,6 +181,10 @@ article header {
     font-size: 1em;
     margin: 0;
     font-weight: normal;
+}
+
+.sub-nav {
+    margin-top: 0;
 }
 
 .sub-nav ul {
@@ -188,7 +201,6 @@ article header {
 }
 
 .pager {
-    display: -webkit-flex;
     display: flex;
 }
 .pager a {
@@ -321,10 +333,6 @@ address {
         padding: 0 7px 0 7px;
     }
 
-    .pageheader {
-        margin-bottom: 30px;
-    }
-
     .logo img {
         margin: 0;
     }
@@ -342,9 +350,7 @@ address {
 
     .nav ul {
         padding: 5px;
-        -webkit-flex-wrap: wrap;
         flex-wrap: wrap;
-        -webkit-justify-content: center;
         justify-content: center;
     }
 
@@ -357,7 +363,6 @@ address {
     }
 
     .event-container {
-        -webkit-flex-direction: column-reverse;
         flex-direction: column-reverse;
     }
     .event-text {
