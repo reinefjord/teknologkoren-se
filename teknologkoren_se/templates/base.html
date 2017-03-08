@@ -13,34 +13,35 @@
   <body>
     {% set active_page = active_page -%}
     <div class="pageheader">
-    <header class="boxed">
-      <div class="logo">
-        {% block logo %}{% endblock %}
-      </div>
-      <nav class="nav">
-        <ul>
-          {% for href, id, caption in navigation_bar -%}
-          <li class="nowrap">
-            <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
-          </li>
+      <header class="boxed">
+        <div class="logo">
+          {% block logo %}{% endblock %}
+        </div>
+        <nav class="nav">
+          <ul>
+            {% for href, id, caption in navigation_bar -%}
+            <li class="nowrap">
+              <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </header>
+      {% if get_flashed_messages() %}
+      <div class="constrain-width boxed">
+        {% for type in ['success', 'info', 'error'] %}
+        {% with messages = get_flashed_messages(category_filter=[type]) %}
+        {% if messages %}
+        <ul class="flashes">
+          {% for message in messages %}
+          <li class="flash {{ type }}">{{ message }}</li>
           {% endfor %}
         </ul>
-      </nav>
-    </header>
-    {% if get_flashed_messages() %}
-    <div class="constrain-width boxed">
-      {% for type in ['success', 'info', 'error'] %}
-      {% with messages = get_flashed_messages(category_filter=[type]) %}
-      {% if messages %}
-      <ul class="flashes">
-        {% for message in messages %}
-        <li class="flash {{ type }}">{{ message }}</li>
+        {% endif %}
+        {% endwith %}
         {% endfor %}
-      </ul>
+      </div>
       {% endif %}
-      {% endwith %}
-      {% endfor %}
-    {% endif %}
     </div>
     <div id="main-content">
       {% block body %}{% endblock %}
