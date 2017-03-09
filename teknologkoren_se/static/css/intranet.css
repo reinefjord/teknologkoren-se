@@ -18,3 +18,21 @@ ul.member-matrix {
     margin: 5px;
     border-radius: 5px;
 }
+
+.tag-set {
+    border-radius: 5px;
+    padding: 10px 0 0 15px;
+}
+#tag-filter {
+    margin-bottom: 10px;
+}
+.tags {
+    overflow: auto;
+    height: 15em;
+}
+
+#content {
+    width: 100%;
+    height: 13em;
+}
+
