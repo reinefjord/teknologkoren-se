@@ -126,12 +126,15 @@ article header {
 
 .pageheader {
     align-self: center;
-    text-align: center;
     margin-top: 15px;
     margin-bottom: 30px;
     width: 100%;
     max-width: 36em;
     font-size: 1.1em;
+}
+
+.logo {
+    text-align: center;
 }
 
 .logo img {

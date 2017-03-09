@@ -27,6 +27,8 @@
           </ul>
         </nav>
       </header>
+    </div>
+    <div id="main-content">
       {% if get_flashed_messages() %}
       <div class="constrain-width boxed">
         {% for type in ['success', 'info', 'error'] %}
@@ -42,8 +44,6 @@
         {% endfor %}
       </div>
       {% endif %}
-    </div>
-    <div id="main-content">
       {% block body %}{% endblock %}
     </div>
     {% block footer %}{% endblock %}

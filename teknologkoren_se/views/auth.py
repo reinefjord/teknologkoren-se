@@ -117,8 +117,8 @@ def reset():
     * Tokens are not stored anywhere other than in the email sent to
         user.
     """
-    reset_flash = \
-        "A password reset link valid for one hour has been sent to {}."
+    reset_flash = ("If {} exists in our system, we've sent a password reset "
+                   "link to it.")
 
     form = forms.ExistingEmailForm()
 
