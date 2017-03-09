@@ -102,21 +102,15 @@ article header {
     width: 100%
 }
 
-.event-container {
-    display: flex;
-    justify-content: space-between;
-}
-
 .event-text p:first-child {
     margin-top: 0;
 }
 
-.event-text {
-    flex: 2;
-}
 .event-image {
-    flex: 1;
+    float: right;
+    width: 25%;
     margin-left: 15px;
+    min-width: 5em;
 }
 
 .truncate {
@@ -363,19 +357,6 @@ address {
 
     .post-image {
         text-align: center;
-    }
-
-    .event-container {
-        flex-direction: column-reverse;
-    }
-    .event-text {
-        margin: 0;
-    }
-    .event-image {
-        align-self: center;
-        max-width: 12em;
-        margin-left: 0;
-        margin-bottom: 10px;
     }
 }
 

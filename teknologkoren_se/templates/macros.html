@@ -35,6 +35,13 @@
     </h1>
   </header>
   <div class="event-container">
+    {% if event.image %}
+    <div class="event-image">
+      <a href="{{ image_url(event.image) }}">
+        {{ img(event.image, 400) }}
+      </a>
+    </div>
+    {% endif %}
     <div class="event-text">
       {{ event.content_to_html()|safe }}
       <dl class="event-detail">
@@ -48,13 +55,6 @@
         <dd>{{ event.location }}</dd>
       </dl>
     </div>
-    {% if event.image %}
-    <div class="event-image">
-      <a href="{{ image_url(event.image) }}">
-        {{ img(event.image, 400) }}
-      </a>
-    </div>
-    {% endif %}
   </div>
 </article>
 {% endmacro %}
