@@ -6,19 +6,19 @@
 {% set admin_nav = [
 (url_for('.view_posts'), 'posts', 'Posts'),
 (url_for('.view_events'), 'events', 'Events'),
-] -%}
+] %}
 
 {% block body %}
 <div class="boxed constrain-width">
   <nav class="nav sub-nav">
     <ul>
-      {% for href, id, caption in admin_nav -%}
+      {% for href, id, caption in admin_nav %}
       <li{% if id == active_sub %} class="active"{% endif %}>
         <a href="{{ href|e }}">{{ caption|e }}</a>
       </li>
-      {% endfor -%}
+      {% endfor %}
     </ul>
   </nav>
   {% block content %}{% endblock %}
 </div>
-{%- endblock %}
+{% endblock %}

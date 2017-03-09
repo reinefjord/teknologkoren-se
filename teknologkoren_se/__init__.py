@@ -13,6 +13,9 @@ locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 app = Flask(__name__)
 app.config.from_object('config')
 
+app.jinja_env.lstrip_blocks = True
+app.jinja_env.trim_blocks = True
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'auth.login'
