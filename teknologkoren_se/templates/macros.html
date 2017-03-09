@@ -17,9 +17,7 @@
     {{ img(post.image, 800) }}
   </div>
   {% endif %}
-  <div class="post-text">
-    {{ post.content_to_html()|safe }}
-  </div>
+  {{ post.content_to_html()|safe }}
 </article>
 {% endmacro %}
 
@@ -34,28 +32,22 @@
       {% endif %}
     </h1>
   </header>
-  <div class="event-container">
-    {% if event.image %}
-    <div class="event-image">
-      <a href="{{ image_url(event.image) }}">
-        {{ img(event.image, 400) }}
-      </a>
-    </div>
-    {% endif %}
-    <div class="event-text">
-      {{ event.content_to_html()|safe }}
-      <dl class="event-detail">
-        <dt>Tid:</dt>
-        <dd>
-        <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
-          {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
-        </time>
-        </dd>
-        <dt>Plats:</dt>
-        <dd>{{ event.location }}</dd>
-      </dl>
-    </div>
-  </div>
+  {% if event.image %}
+  <a href="{{ image_url(event.image) }}">
+    {{ img(event.image, 400, 'event-image') }}
+  </a>
+  {% endif %}
+  {{ event.content_to_html()|safe }}
+  <dl class="event-detail">
+    <dt>Tid:</dt>
+    <dd>
+    <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
+      {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
+    </time>
+    </dd>
+    <dt>Plats:</dt>
+    <dd>{{ event.location }}</dd>
+  </dl>
 </article>
 {% endmacro %}
 
@@ -72,8 +64,8 @@
 </nav>
 {% endmacro %}
 
-{% macro img(image, size) %}
-<img src="{{ image_dest() }}img{{ size }}/{{ image }}">
+{% macro img(image, size, class) %}
+<img class="{{ class }}" src="{{ image_dest() }}img{{ size }}/{{ image }}">
 {% endmacro %}
 
 {% macro text_field(field, description=True) %}
@@ -99,12 +91,12 @@
   <input type="text" id="tag-filter" placeholder="Filter">
 
   <div class="tags">
-  {% for field in form.tags if field.name != "tags-csrf_token" %}
-  <div class="field">
-    {{ field }}
-    {{ field.label }}
-  </div>
-  {% endfor %}
+    {% for field in form.tags if field.name != "tags-csrf_token" %}
+    <div class="field">
+      {{ field }}
+      {{ field.label }}
+    </div>
+    {% endfor %}
   </div>
 </fieldset>
 {% endmacro %}

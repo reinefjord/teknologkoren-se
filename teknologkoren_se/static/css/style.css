@@ -88,10 +88,6 @@ article header {
     width: 100%;
 }
 
-.post-text {
-    margin-top: 10px;
-}
-
 .post-image {
     border-radius: 7px;
     overflow: hidden;
@@ -100,10 +96,6 @@ article header {
 .post-image img {
     vertical-align: middle;
     width: 100%
-}
-
-.event-text p:first-child {
-    margin-top: 0;
 }
 
 .event-image {
