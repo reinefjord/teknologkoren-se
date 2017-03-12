@@ -11,7 +11,7 @@
 
 {% block logo %}
 <a href="/" class="inverted-link">
-  <img src="{{ url_for('static', filename='images/logo.svg') }}">
+  <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Kongl. Teknolokörens logotyp">
   <h1>
     Kongl. Teknologkören
     <div class="tagline">
@@ -23,6 +23,6 @@
 {% endblock %}
 {% block footer %}
 <footer>
-  <img id="footer-img" src="{{ url_for('static', filename='images/logo_grey.svg') }}">
+  <img id="footer-img" src="{{ url_for('static', filename='images/logo_grey.svg') }}" alt="Kongl. Teknologkörens logotyp">
 </footer>
 {% endblock %}

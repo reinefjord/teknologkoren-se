@@ -65,7 +65,7 @@
 {% endmacro %}
 
 {% macro img(image, size, class) %}
-<img class="{{ class }}" src="{{ image_dest() }}img{{ size }}/{{ image }}">
+<img class="{{ class }}" src="{{ image_dest() }}img{{ size }}/{{ image }}" alt="">
 {% endmacro %}
 
 {% macro text_field(field, description=True) %}
