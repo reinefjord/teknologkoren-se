@@ -12,13 +12,14 @@
 {% block logo %}
 <a href="/" class="inverted-link">
   <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Kongl. Teknolokörens logotyp">
-  <h1>
-    Kongl. Teknologkören
+  <div class="logo-text">
+    <h1>
+      Kongl. Teknologkören
+    </h1>
     <div class="tagline">
-      I takt med tiden
-      <span class="nowrap">- sedan 1930</span>
+      I takt med tiden <span class="nowrap">- sedan 1930</span>
     </div>
-  </h1>
+  </div>
 </a>
 {% endblock %}
 {% block footer %}

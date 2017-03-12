@@ -128,7 +128,13 @@ article header {
     margin-right: 20px;
 }
 
-.logo h1 {
+.logo img,
+.logo-text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.logo-text h1 {
     margin: 0;
     font-family: serif;
     font-size: 2.1em;
@@ -137,21 +143,12 @@ article header {
 }
 
 .logo .tagline {
-    font-weight: normal;
-    font-size: 0.5em;
     text-align: left;
-}
-
-.logo img,
-.logo h1 {
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .nav {
     margin-top: 30px;
 }
-
 
 .nav ul {
     list-style: none;
