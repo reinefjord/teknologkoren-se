@@ -7,19 +7,19 @@
 {% block body %}
 <img src="/static/images/img1600/ktk.jpg" class="cover-image" alt="Teknologkören i Adolf Fredriks kyrka">
 <div class="content">
-    <section class="primary overview">
-      {% for post in pagination.items %}
-      {% if post is event %}
-      {{ event_article(post, True) }}
-      {% else %}
-      {{ post_article(post, True) }}
-      {% endif %}
-      {% endfor %}
+  <section class="primary overview">
+    {% for post in pagination.items %}
+    {% if post is event %}
+    {{ event_article(post, True) }}
+    {% else %}
+    {{ post_article(post, True) }}
+    {% endif %}
+    {% endfor %}
 
-      {% if pagination.has_next or page > 1 %}
-      {{ pager(pagination.has_next, page) }}
-      {% endif %}
-    </section>
+    {% if pagination.has_next or page > 1 %}
+    {{ pager(pagination.has_next, page) }}
+    {% endif %}
+  </section>
 
   <section class="secondary">
     <h1>Länkar</h1>
