@@ -306,14 +306,13 @@ address {
         margin: 0;
     }
 
-    .logo h1 {
+    .logo-text {
         display: block;
         margin: 20px auto;
     }
 
     .logo h1,
     .logo .tagline {
-        clear;
         text-align: center;
     }
 
