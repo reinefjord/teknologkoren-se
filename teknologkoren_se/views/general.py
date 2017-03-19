@@ -4,7 +4,7 @@ from werkzeug.contrib.atom import AtomFeed
 from teknologkoren_se.models import User, Tag, Post
 
 
-mod = Blueprint('general', __name__)
+mod = Blueprint('general', __name__, subdomain='www')
 
 
 @mod.route('/om-oss/')

@@ -8,7 +8,7 @@ from teknologkoren_se.models import User
 from teknologkoren_se.util import send_email, ts
 
 
-mod = Blueprint('auth', __name__)
+mod = Blueprint('auth', __name__, subdomain='www')
 
 
 @login_manager.user_loader
