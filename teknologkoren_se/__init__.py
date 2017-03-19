@@ -45,11 +45,7 @@ class AdminHomeView(AdminIndexView):
         return abort(403)
 
 
-admin = Admin(app,
-              name='teknologkoren.se',
-              subdomain='www',
-              index_view=AdminHomeView())
-
+admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
 admin.add_view(ModelView(User, db.session, name='User'))
 admin.add_view(ModelView(Post, db.session, name='Post'))
 admin.add_view(ModelView(Event, db.session, name='Event'))
