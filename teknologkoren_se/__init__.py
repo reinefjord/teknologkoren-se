@@ -32,10 +32,8 @@ configure_uploads(app, (images,))
 from .util import ListConverter
 app.url_map.converters['list'] = ListConverter
 
-from teknologkoren_se.models import User, Post, Event, Tag
 
-
-class AdminHomeView(AdminIndexView):
+class AdminLoginMixin:
     def is_accessible(self):
         if current_user.is_authenticated:
             return current_user.has_tag('Webmaster')
@@ -45,11 +43,22 @@ class AdminHomeView(AdminIndexView):
         return abort(403)
 
 
-admin = Admin(app, index_view=AdminHomeView(), name='teknologkoren.se')
-admin.add_view(ModelView(User, db.session, name='User'))
-admin.add_view(ModelView(Post, db.session, name='Post'))
-admin.add_view(ModelView(Event, db.session, name='Event'))
-admin.add_view(ModelView(Tag, db.session, name='Tag'))
+class LoginIndexView(AdminLoginMixin, AdminIndexView):
+    pass
+
+
+class LoginModelView(AdminLoginMixin, ModelView):
+    pass
+
+
+from teknologkoren_se.models import User, Post, Event, Tag, UserTag
+
+admin = Admin(app, index_view=LoginIndexView(), name='teknologkoren.se')
+admin.add_view(LoginModelView(User, db.session, name='User'))
+admin.add_view(LoginModelView(Post, db.session, name='Post'))
+admin.add_view(LoginModelView(Event, db.session, name='Event'))
+admin.add_view(LoginModelView(Tag, db.session, name='Tag'))
+admin.add_view(LoginModelView(UserTag, db.session, name='UserTag'))
 
 from teknologkoren_se.views import (
     auth,
