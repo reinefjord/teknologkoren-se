@@ -51,14 +51,13 @@ class LoginModelView(AdminLoginMixin, ModelView):
     pass
 
 
-from teknologkoren_se.models import User, Post, Event, Tag, UserTag
+from teknologkoren_se.models import User, Post, Event, Tag
 
 admin = Admin(app, index_view=LoginIndexView(), name='teknologkoren.se')
 admin.add_view(LoginModelView(User, db.session, name='User'))
 admin.add_view(LoginModelView(Post, db.session, name='Post'))
 admin.add_view(LoginModelView(Event, db.session, name='Event'))
 admin.add_view(LoginModelView(Tag, db.session, name='Tag'))
-admin.add_view(LoginModelView(UserTag, db.session, name='UserTag'))
 
 from teknologkoren_se.views import (
     auth,
