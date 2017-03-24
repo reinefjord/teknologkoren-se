@@ -10,8 +10,14 @@ from flask_migrate import Migrate
 
 locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder=None)
 app.config.from_object('config')
+
+app.static_folder = 'static'
+app.add_url_rule('/static/<path:filename>',
+                 endpoint='static',
+                 subdomain='www',
+                 view_func=app.send_static_file)
 
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.trim_blocks = True
@@ -68,8 +74,8 @@ from teknologkoren_se.views import (
     intranet
     )
 
-app.register_blueprint(auth.mod)
-app.register_blueprint(blog.mod)
-app.register_blueprint(events.mod)
-app.register_blueprint(general.mod)
-app.register_blueprint(intranet.mod)
+app.register_blueprint(auth.mod, subdomain='www')
+app.register_blueprint(blog.mod, subdomain='www')
+app.register_blueprint(events.mod, subdomain='www')
+app.register_blueprint(general.mod, subdomain='www')
+app.register_blueprint(intranet.mod, subdomain='intranet')
