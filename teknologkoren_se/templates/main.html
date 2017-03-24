@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
 {% set navigation_bar = [
-('/', 'index', 'Hem'),
-('/om-oss/', 'om-oss', 'Om oss'),
-('/konserter/', 'konserter', 'Konserter'),
-('/boka/', 'boka', 'Boka'),
-('/sjung/', 'sjung', 'Sjung med'),
-('/kontakt/', 'kontakt', 'Kontakt'),
+(url_for('blog.index'), 'index', 'Hem'),
+(url_for('general.om_oss'), 'om-oss', 'Om oss'),
+(url_for('events.index'), 'konserter', 'Konserter'),
+(url_for('general.boka'), 'boka', 'Boka'),
+(url_for('general.sjung'), 'sjung', 'Sjung med'),
+(url_for('general.kontakt'), 'kontakt', 'Kontakt'),
 ] %}
 
 {% block logo %}
