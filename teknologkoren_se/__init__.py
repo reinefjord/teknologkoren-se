@@ -63,7 +63,7 @@ admin = Admin(app,
               name='teknologkoren.se',
               subdomain='intranet',
               static_url_path='/flask-admin/',
-              index_view=LoginIndexView(url='/flask-admin/'))
+              index_view=LoginIndexView(url='/flask-admin'))
 
 admin.add_view(LoginModelView(User, db.session, name='User'))
 admin.add_view(LoginModelView(Post, db.session, name='Post'))
