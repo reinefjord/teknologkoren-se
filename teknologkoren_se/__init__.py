@@ -59,7 +59,12 @@ class LoginModelView(AdminLoginMixin, ModelView):
 
 from teknologkoren_se.models import User, Post, Event, Tag
 
-admin = Admin(app, index_view=LoginIndexView(), name='teknologkoren.se')
+admin = Admin(app,
+              name='teknologkoren.se',
+              subdomain='intranet',
+              static_url_path='/flask-admin/',
+              index_view=LoginIndexView(url='/flask-admin/'))
+
 admin.add_view(LoginModelView(User, db.session, name='User'))
 admin.add_view(LoginModelView(Post, db.session, name='Post'))
 admin.add_view(LoginModelView(Event, db.session, name='Event'))
