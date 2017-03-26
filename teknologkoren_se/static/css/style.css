@@ -145,6 +145,7 @@ article header {
 
 .logo .tagline {
     text-align: left;
+    margin: 0;
 }
 
 .nav {
