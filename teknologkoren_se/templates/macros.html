@@ -13,37 +13,42 @@
     </time>
   </header>
   {% if post.image %}
-  <div class="post-image{% if overview %} truncate{% endif %}">
-    {{ img(post.image, 800) }}
-  </div>
+
+  {% set img_class='post-image' %}
+
+  {% if overview %}
+  {% set img_class = img_class + ' truncate' %}
   {% endif %}
+
+  {{ img(post.image, 800, img_class) }}
+
+  {% endif %}
+
   {{ post.content_to_html()|safe }}
 </article>
 {% endmacro %}
 
 {% macro event_article(event, overview) %}
 <article class="boxed constrain-width">
-  <header>
-    <h1>
-      {% if overview %}
-      <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
-      {% else %}
-      {% if not event.published %}[Not published] {% endif %}{{ event.title }}
-      {% endif %}
-    </h1>
-  </header>
+  <h1>
+    {% if overview %}
+    <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
+    {% else %}
+    {% if not event.published %}[Not published] {% endif %}{{ event.title }}
+    {% endif %}
+  </h1>
   {% if event.image %}
-  <a href="{{ image_url(event.image) }}">
-    {{ img(event.image, 400, 'event-image') }}
+  <a class="event-image" href="{{ image_url(event.image) }}">
+    {{ img(event.image, 400) }}
   </a>
   {% endif %}
   {{ event.content_to_html()|safe }}
   <dl class="event-detail">
     <dt>Tid:</dt>
     <dd>
-    <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
-      {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
-    </time>
+      <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
+        {{ event.start_time.strftime("%d %B %Y, klockan %H:%M") }}
+      </time>
     </dd>
     <dt>Plats:</dt>
     <dd>{{ event.location }}</dd>
@@ -65,7 +70,7 @@
 {% endmacro %}
 
 {% macro img(image, size, class) %}
-<img class="{{ class }}" src="{{ image_dest() }}img{{ size }}/{{ image }}" alt="">
+<img {% if class %}class="{{ class }}"{% endif %} src="{{ image_dest() }}img{{ size }}/{{ image }}" alt="">
 {% endmacro %}
 
 {% macro text_field(field, description=True) %}

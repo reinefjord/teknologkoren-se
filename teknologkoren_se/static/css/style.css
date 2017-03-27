@@ -50,7 +50,7 @@ article h1 {
     margin: 0;
 }
 
-article header {
+article > header, article > h1 {
     margin-bottom: 15px;
 }
 
@@ -94,7 +94,7 @@ article header {
     overflow: hidden;
 }
 
-.post-image img {
+.post-image {
     vertical-align: middle;
     width: 100%
 }
@@ -108,7 +108,7 @@ article header {
 
 .truncate {
     max-height: 20em;
-    overflow: hidden;
+    object-fit: cover;
 }
 
 .pageheader {
