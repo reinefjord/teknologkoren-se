@@ -3,7 +3,10 @@ import os
 
 # flask secret key
 SECRET_KEY = 'super secret string'
+
 SERVER_NAME = 'local.dev'
+ALLOWED_HOSTS = ['local.dev', 'www.local.dev', 'intranet.local.dev']
+
 
 BASEDIR = os.path.abspath(os.path.dirname(__file__))
 
