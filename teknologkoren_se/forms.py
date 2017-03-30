@@ -5,7 +5,7 @@ import wtforms.fields.html5 as html5_fields
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileAllowed
 from teknologkoren_se import db, images
-from teknologkoren_se.models import User
+from teknologkoren_se.models import User, UserTag
 from teknologkoren_se.util import get_redirect_target, is_safe_url
 
 
@@ -52,7 +52,7 @@ class TagForm:
 
         for tag in tags:
             # If user has this tag, set its value to checked
-            if user and tag in user.tags:
+            if user and user.has_tag(tag.name):
                 field = fields.BooleanField(tag.name, default=True)
             else:
                 field = fields.BooleanField(tag.name)
@@ -79,13 +79,21 @@ class TagForm:
 
             # If tag field is checked and the user did not already
             # have that tag, give user tag
-            if tag_field.data and tag not in user.tags:
-                user.tags.append(tag)
+            if tag_field.data and not user.has_tag(tag.name):
+                user_tag = UserTag()
+                user_tag.tag = tag
+                user.tags.append(user_tag)
 
             # If tag field isn't checked but the user has that tag,
             # remove it.
-            elif not tag_field.data and tag in user.tags:
-                user.tags.remove(tag)
+            elif not tag_field.data and user.has_tag(tag.name):
+                user_tag = UserTag.query.filter(UserTag.user == user,
+                                                UserTag.tag == tag,
+                                                UserTag.is_active == True
+                                                ).one()
+                user_tag.end_association()
+
+        db.session.commit()
 
 
 class LowercaseEmailField(html5_fields.EmailField):

@@ -103,30 +103,27 @@ def get_redirect_target():
             return target
 
 
-def any_tag_required(*tags):
-    """Decorator preventing access based on user tags."""
+def tag_required(*tags):
+    """Decorator to requiring the user to have at least one of the tags.
+
+    To require multiple tags ('and' instead of 'or'), use multiple
+    decorators.
+
+    E.g., user is Tenor 1 or Tenor 2, and in Sånggrupp 2:
+    ```
+    @app.route('/my-route')
+    @tag_required('Tenor 1', 'Tenor 2')
+    @tag_required('Sånggrupp 2')
+    def my_view():
+        ...
+    ```
+    """
     def decorator(func):
         @wraps(func)
         def decorated_function(*args, **kwargs):
-            for tag in tags:
-                if current_user.has_tag(tag):
-                    return func(*args, **kwargs)
+            if current_user.has_tag(*tags):
+                return func(*args, **kwargs)
             flash("You do not have permission to access that.", 'error')
             return redirect(request.referrer or url_for('.index'))
-        return decorated_function
-    return decorator
-
-
-def all_tags_required(*tags):
-    """Decorator preventing access based on user tags."""
-    def decorator(func):
-        @wraps(func)
-        def decorated_function(*args, **kwargs):
-            for tag in tags:
-                if not current_user.has_tag(tag):
-                    flash("You do not have permission to access that.",
-                          'error')
-                    return redirect(request.referrer or url_for('.index'))
-            return func(*args, **kwargs)
         return decorated_function
     return decorator

@@ -8,12 +8,37 @@ from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from teknologkoren_se import db, bcrypt
 
 
-# Many-to-many relationship between User and Tag
-user_tags = db.Table(
-    'user_tags',
-    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id')),
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
-)
+class UserTag(db.Model):
+    """Many to many relation between User and Tag.
+
+    Uses the 'association object pattern' to be able to save extra data
+    in the associations.
+    """
+    __tablename__ = 'user_tags'
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key=True)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id'), primary_key=True)
+
+    user = db.relationship('User', back_populates='tags')
+    tag = db.relationship('Tag', back_populates='users')
+
+    start = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    end = db.Column(db.DateTime)
+
+    @hybrid_property
+    def is_active(self):
+        now = datetime.utcnow()
+
+        has_started = (self.start <= now)
+        has_ended = (self.end.is_(None)) | (now < self.end)
+
+        return has_started & has_ended
+
+    def end_association(self):
+        self.end = datetime.utcnow()
+
+    def __str__(self):
+        return "UserTag({}/{})".format(self.user, self.tag)
 
 
 class User(UserMixin, db.Model):
@@ -32,11 +57,9 @@ class User(UserMixin, db.Model):
     _password = db.Column(db.String(128))
     _password_timestamp = db.Column(db.DateTime)
 
-    tags = db.relationship('Tag',
-                           secondary=user_tags,
-                           backref=db.backref('users'),
-                           order_by='Tag.name'
-                           )
+    tags = db.relationship('UserTag',
+                           cascade="all,delete",
+                           back_populates='user')
 
     def __init__(self, *args, **kwargs):
         if 'password' not in kwargs:
@@ -63,16 +86,30 @@ class User(UserMixin, db.Model):
         """Return True if plaintext matches password, else return False."""
         return bcrypt.check_password_hash(self._password, plaintext)
 
+    @property
+    def active_tags(self):
+        return [user_tag.tag
+                for user_tag
+                in UserTag.query.filter(UserTag.user == self,
+                                        UserTag.is_active == True
+                                        )]
+
     @hybrid_method
-    def has_tag(self, tag_name):
-        """Return True if User instance has tag with name tag_name."""
-        tag = Tag.query.filter_by(name=tag_name).first()
-        return tag in self.tags
+    def has_tag(self, *tags, active=True):
+        """Return True if User instance has at least one of tags."""
+        has_tag = UserTag.query.filter(
+            UserTag.user == self,
+            UserTag.tag.has(Tag.name.in_(tags)),
+            UserTag.is_active == active
+            ).scalar()
+
+        return has_tag
 
     @has_tag.expression
-    def has_tag(self, tag_name):
-        """Return query with all Users that has tag with name tag_name."""
-        return self.tags.any(name=tag_name)
+    def has_tag(self, *tags, active=True):
+        """Return an Exists with all Users that has at least one of tags."""
+        return self.tags.any(UserTag.tag.has(Tag.name.in_(tags)),
+                             is_active=active)
 
     @staticmethod
     def authenticate(email, password):
@@ -101,6 +138,8 @@ class Tag(db.Model):
     """Representation of a tag."""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30), unique=True)
+
+    users = db.relationship('UserTag', back_populates='tag')
 
     def __str__(self):
         """String representation of the tag."""

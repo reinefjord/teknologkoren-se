@@ -5,7 +5,7 @@ from werkzeug.datastructures import CombinedMultiDict
 from teknologkoren_se import app, db, images, forms
 from teknologkoren_se.views.auth import verify_email
 from teknologkoren_se.models import User, Tag, Post, Event
-from teknologkoren_se.util import any_tag_required
+from teknologkoren_se.util import tag_required
 
 mod = Blueprint('intranet', __name__)
 
@@ -35,7 +35,7 @@ def my_profile():
 def profile(id):
     """Show profile of user with matching id."""
     user = User.query.get_or_404(id)
-    tags = user.tags
+    tags = user.active_tags
 
     return render_template('intranet/profile.html',
                            user=user,
@@ -73,7 +73,7 @@ def edit_user():
 
 
 @mod.route('/admin/edit-user/<int:id>/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster')
+@tag_required('Webmaster')
 def full_edit_user(id):
     """Edit all user attributes.
 
@@ -127,7 +127,7 @@ def change_password():
 
 
 @mod.route('/adduser/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster')
+@tag_required('Webmaster')
 def adduser():
     """Add a user."""
     tags = Tag.query.order_by(Tag.name).all()
@@ -177,8 +177,8 @@ def members_by_tags(tag_list):
 
     tag_dict = {}
     for tag in tag_list:
-        tag_dict[tag] = active_users.filter(
-            User.has_tag(tag)).order_by(User.first_name)
+        tag_dict[tag] = active_users.filter(User.has_tag(tag)
+                                            ).order_by(User.first_name)
 
     return render_template(
         'intranet/members.html',
@@ -221,14 +221,14 @@ def groups():
 
 
 @mod.route('/admin/')
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def admin():
     """Show administration page."""
     return render_template('intranet/admin.html')
 
 
 @mod.route('/view-posts/')
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def view_posts():
     """Show links to all post's edit mode."""
     posts = Post.query.filter_by(type='post').order_by(Post.timestamp.desc())
@@ -237,7 +237,7 @@ def view_posts():
 
 
 @mod.route('/view-events/')
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def view_events():
     """Show links to all event's edit mode."""
     events = Event.query.order_by(Event.timestamp.desc())
@@ -246,7 +246,7 @@ def view_events():
 
 
 @mod.route('/new-post/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def new_post():
     """Create a new post."""
     form = forms.EditPostForm(CombinedMultiDict((request.form, request.files)))
@@ -278,7 +278,7 @@ def new_post():
 
 @mod.route('/edit-post/<int:post_id>/', methods=['GET', 'POST'])
 @mod.route('/edit-post/<int:post_id>/<slug>/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def edit_post(post_id, slug=None):
     """Edit an existing post."""
     post = Post.query.get_or_404(post_id)
@@ -305,7 +305,7 @@ def edit_post(post_id, slug=None):
 
 @mod.route('/remove-post/<int:post_id>/')
 @mod.route('/remove-post/<int:post_id>/<slug>/')
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def remove_post(post_id, slug=None):
     """Remove a post."""
     post = Post.query.get_or_404(post_id)
@@ -315,7 +315,7 @@ def remove_post(post_id, slug=None):
 
 
 @mod.route('/new-event/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def new_event():
     """Create a new event."""
     form = forms.EditEventForm(
@@ -351,7 +351,7 @@ def new_event():
 
 @mod.route('/edit-event/<int:event_id>/', methods=['GET', 'POST'])
 @mod.route('/edit-event/<int:event_id>/<slug>/', methods=['GET', 'POST'])
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def edit_event(event_id, slug=None):
     """Edit an existing event."""
     event = Event.query.get_or_404(event_id)
@@ -386,7 +386,7 @@ def edit_event(event_id, slug=None):
 
 @mod.route('/remove-event/<int:event_id>/')
 @mod.route('/remove-event/<int:event_id>/<slug>/')
-@any_tag_required('Webmaster', 'PRoletär')
+@tag_required('Webmaster', 'PRoletär')
 def remove_event(event_id, slug=None):
     """Remove an event."""
     event = Event.query.get_or_404(event_id)
