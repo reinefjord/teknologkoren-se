@@ -30,9 +30,9 @@ class UserTag(db.Model):
         now = datetime.utcnow()
 
         has_started = (self.start <= now)
-        has_ended = (self.end.is_(None)) | (now < self.end)
+        not_ended = self.end.is_(None) | (now < self.end)
 
-        return has_started & has_ended
+        return has_started & not_ended
 
     def end_association(self):
         self.end = datetime.utcnow()
