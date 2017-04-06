@@ -1,17 +1,18 @@
 /* palette: http://paletton.com/palette.php?uid=73C2b0kpczF5YXuhyJVv-q5G7dw */
-/* style.min.css is auto-prefixed and minified by http://pleeease.io/play/ */
+/* style.min.css: https://autoprefixer.github.io/ > http://mattbasta.com/crass/ */
 
 body {
     line-height: 1.6;
     overflow-y: scroll;
-    font-family: sans-serif;
-    display: flex;
     min-height: 100vh;
+    display: flex;
     flex-direction: column;
 }
 
 #main-content {
     flex: 1;
+    display: flex;
+    justify-content: center;
 }
 
 img {
@@ -55,19 +56,13 @@ article > header, article > h1 {
 }
 
 .boxed {
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0 15px 0 15px;
+    width: 100%;
+    padding: 0 1em;
+    box-sizing: border-box;
 }
 
 .constrain-width {
     max-width: 34em;
-}
-
-.content {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
 }
 
 .secondary {
@@ -87,14 +82,12 @@ article > header, article > h1 {
 
 .cover-image {
     width: 100%;
+    margin-bottom: 1em;
 }
 
 .post-image {
     border-radius: 7px;
     overflow: hidden;
-}
-
-.post-image {
     vertical-align: middle;
     width: 100%
 }
@@ -114,8 +107,7 @@ article > header, article > h1 {
 .pageheader {
     align-self: center;
     margin-top: 15px;
-    margin-bottom: 30px;
-    width: 100%;
+    margin-bottom: 1.5em;
     max-width: 36em;
     font-size: 1.1em;
 }
@@ -162,7 +154,8 @@ article > header, article > h1 {
 .nav li {
     margin: 0;
 }
-.nav .active {
+.nav .active,
+.sub-nav .active {
     cursor: pointer;
     text-decoration: underline;
     color: #316bb1;
@@ -172,11 +165,20 @@ article > header, article > h1 {
 }
 
 .sub-nav {
-    margin-top: 0;
+    margin: 1em 2em 1em 1em;
 }
 
 .sub-nav ul {
-    justify-content: space-around;
+    list-style: none;
+    padding: 1em 2em 1em 1em;
+    margin: 0;
+    border-radius: 7px;
+    border: 1px solid #ddd;
+}
+
+.overview {
+    display: flex;
+    flex-direction: column;
 }
 
 .overview article {
@@ -243,6 +245,7 @@ address {
 
 .field-description {
     padding-left: 10px;
+    font-size: 0.8em;
 }
 
 .flashes {
@@ -281,27 +284,40 @@ address {
 }
 
 @media screen and (max-width: 50em) {
-    .content {
+    #main-content {
         flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .boxed {
+        align-self: center;
     }
 
     .secondary {
         border-left: none;
-        padding-left: 0;
-        margin-left: 0;
+        margin: 0 1em;
+        padding: 0;
         border-top: 1px solid #ddd;
         margin-top: 30px;
         text-align: center;
     }
+
+    .sub-nav {
+        border: none;
+        padding: 0;
+        margin: 1em;
+        align-self: center;
+        text-align: center;
+    }
+
+    .sub-nav ul {
+        padding: 1em 2em;
+    }
 }
 
 @media screen and (max-width: 38em) {
-    body {
-        margin-bottom: 25px;
-    }
-
-    .boxed {
-        padding: 0 7px 0 7px;
+    .pageheader {
+        margin-bottom: 1em;
     }
 
     .logo img {
@@ -319,17 +335,12 @@ address {
     }
 
     .nav ul {
-        padding: 5px;
         flex-wrap: wrap;
         justify-content: center;
     }
 
     .nav li {
-        margin: 5px 15px;
-    }
-
-    .post-image {
-        text-align: center;
+        margin: 0 1em;
     }
 }
 

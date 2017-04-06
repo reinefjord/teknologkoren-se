@@ -3,34 +3,32 @@
 {% set active_page = "index" %}
 
 {% set title = "I takt med tiden" %}
+{% set cover_image = "/static/images/ktk.jpg" %}
 
 {% block body %}
-<img src="/static/images/ktk.jpg" class="cover-image" alt="">
-<div class="content">
-  <section class="primary overview">
-    {% for post in pagination.items %}
-    {% if post is event %}
-    {{ event_article(post, True) }}
-    {% else %}
-    {{ post_article(post, True) }}
-    {% endif %}
-    {% endfor %}
+<section class="overview">
+  {% for post in pagination.items %}
+  {% if post is event %}
+  {{ event_article(post, True) }}
+  {% else %}
+  {{ post_article(post, True) }}
+  {% endif %}
+  {% endfor %}
 
-    {% if pagination.has_next or page > 1 %}
-    {{ pager(pagination.has_next, page) }}
-    {% endif %}
-  </section>
+  {% if pagination.has_next or page > 1 %}
+  {{ pager(pagination.has_next, page) }}
+  {% endif %}
+</section>
 
-  <section class="secondary">
-    <h1>Länkar</h1>
-    <ul>
-      <li><a href="https://www.facebook.com/teknologkoren">KTK på Facebook</a></li>
-      <li><a href="https://open.spotify.com/artist/1nTbx8aaAqaK513pOGLjZ4">KTK på Spotify</a></li>
-      <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">KTK på YouTube</a></li>
-      <li><a href="https://soundcloud.com/kongl-teknologk-ren">KTK på SoundCloud</a></li>
-      <li><a href="https://github.com/teknologkoren">KTK på GitHub</a></li>
-      <li><a href="/feed">RSS-flöde</a></li>
-    </ul>
-  </section>
-</div>
+<section class="secondary">
+  <h1>Länkar</h1>
+  <ul>
+    <li><a href="https://www.facebook.com/teknologkoren">KTK på Facebook</a></li>
+    <li><a href="https://open.spotify.com/artist/1nTbx8aaAqaK513pOGLjZ4">KTK på Spotify</a></li>
+    <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">KTK på YouTube</a></li>
+    <li><a href="https://soundcloud.com/kongl-teknologk-ren">KTK på SoundCloud</a></li>
+    <li><a href="https://github.com/teknologkoren">KTK på GitHub</a></li>
+    <li><a href="/feed">RSS-flöde</a></li>
+  </ul>
+</section>
 {% endblock %}

@@ -4,6 +4,10 @@
 
 {% set title = "Medlemmar" %}
 
+{% set subnav = [
+(url_for('.filter_members'), 'filter', 'Filter members'),
+] %}
+
 {% block body %}
 <div class="boxed constrain-width">
   <ul class="member-list">

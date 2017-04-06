@@ -4,29 +4,16 @@
 {% set title = "Konserter" %}
 {% set active_page = "konserter" %}
 
+{% set subnav = [
+(url_for('events.index'), 'kommande', 'Kommande konserter'),
+(url_for('events.archive'), 'arkiv', 'Konsertarkiv'),
+] %}
+
 {% block body %}
-<nav class="nav sub-nav boxed constrain-width">
-  <ul>
-    <li>
-      {% if active_sub == "kommande"  %}
-      <span class="active">Kommande konserter</span>
-      {% else %}
-      <a href="/konserter/" class="inverted-link">Kommande konserter</a>
-      {% endif %}
-    </li>
-    <li>
-      {% if active_sub == "arkiv"  %}
-      <span class="active">Konsertarkiv</span>
-      {% else %}
-      <a href="/konserter/arkiv/" class="inverted-link">Konsertarkiv</a>
-      {% endif %}
-    </li>
-  </ul>
-</nav>
 <section class="overview">
   {% block overview %}{% endblock %}
+  {% if pagination.has_next or page > 1 %}
+  {{ pager(pagination.has_next, page) }}
+  {% endif %}
 </section>
-{% if pagination.has_next or page > 1 %}
-{{ pager(pagination.has_next, page) }}
-{% endif %}
 {% endblock %}

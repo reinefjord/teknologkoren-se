@@ -2,6 +2,7 @@ import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from werkzeug.datastructures import CombinedMultiDict
+from flask_wtf import FlaskForm
 from teknologkoren_se import app, db, images, forms
 from teknologkoren_se.views.auth import verify_email
 from teknologkoren_se.models import User, Tag, Post, Event
@@ -202,6 +203,15 @@ def member_matrix(columns, rows):
                            rows=rows,
                            tag_dict=tag_dict)
 
+
+@mod.route('/members/filter/', methods=['GET', 'POST'])
+def filter_members():
+    class F(FlaskForm):
+        pass
+
+    TagForm = form.TagForm.extend_form(F, Tag.query.all())
+
+    return
 
 @mod.route('/members/')
 def voices():
