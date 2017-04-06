@@ -7,7 +7,7 @@
     <title>{{ title }} | Kongl. Teknologkören</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock %}
   </head>
   <body>
@@ -27,12 +27,10 @@
       </nav>
       </div>
     </header>
-    {% if get_flashed_messages() %}
-    <div class="constrain-width boxed">
       {% for type in ['success', 'info', 'error'] %}
       {% with messages = get_flashed_messages(category_filter=[type]) %}
       {% if messages %}
-      <ul class="flashes">
+      <ul class="flashes boxed constrain-width">
         {% for message in messages %}
         <li class="flash {{ type }}">{{ message }}</li>
         {% endfor %}
@@ -40,8 +38,6 @@
       {% endif %}
       {% endwith %}
       {% endfor %}
-    </div>
-    {% endif %}
     {% if cover_image %}
     <img src="{{ cover_image }}" class="cover-image" alt="">
     {% endif %}

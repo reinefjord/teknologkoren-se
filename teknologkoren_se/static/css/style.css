@@ -250,7 +250,7 @@ address {
 
 .flashes {
     list-style: none;
-    padding: 0;
+    align-self: center;
 }
 .flash {
     padding: 5px 10px;
