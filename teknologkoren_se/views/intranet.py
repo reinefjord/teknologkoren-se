@@ -26,29 +26,23 @@ def index():
     return render_template('intranet/intranet.html')
 
 
-@mod.route('/profile/')
-def my_profile():
-    """Redirect to profile of logged in user."""
-    return redirect(url_for('.profile', id=current_user.id))
-
-
-@mod.route('/profile/<int:id>/')
-def profile(id):
-    """Show profile of user with matching id."""
+@mod.route('/member/<int:id>/')
+def member(id):
+    """Show member of user with matching id."""
     user = User.query.get_or_404(id)
     tags = user.active_tags
 
-    return render_template('intranet/profile.html',
+    return render_template('intranet/member.html',
                            user=user,
                            tags=tags)
 
 
-@mod.route('/profile/edit/', methods=['GET', 'POST'])
+@mod.route('/member/edit/', methods=['GET', 'POST'])
 def edit_user():
-    """Edit (own) profile.
+    """Edit (own) member.
 
     Redirects to admin-edit if user is webmaster, redirects to viewing
-    profile if not own profile. Allows editing of email, phone number,
+    member if not own member. Allows editing of email, phone number,
     and password. Edit of email has to be confirmed by clicking a link
     sent to the new email address.
     """
@@ -64,7 +58,7 @@ def edit_user():
 
         db.session.commit()
 
-        return redirect(url_for('.profile', id=current_user.id))
+        return redirect(url_for('.member', id=current_user.id))
     else:
         forms.flash_errors(form)
 
@@ -103,7 +97,7 @@ def full_edit_user(id):
 
         db.session.commit()
 
-        return redirect(url_for('.profile', id=id))
+        return redirect(url_for('.member', id=id))
     else:
         forms.flash_errors(form)
 
@@ -112,7 +106,7 @@ def full_edit_user(id):
                            form=form)
 
 
-@mod.route('/profile/edit/password/', methods=['GET', 'POST'])
+@mod.route('/member/edit/password/', methods=['GET', 'POST'])
 def change_password():
     """Change current users password."""
     form = forms.ChangePasswordForm(current_user)
@@ -120,7 +114,7 @@ def change_password():
         current_user.password = form.new_password.data
         db.session.commit()
         flash('Your password has been changed!', 'success')
-        return redirect(url_for('.my_profile'))
+        return redirect(url_for('.member', id=current_user.id))
     else:
         forms.flash_errors(form)
 

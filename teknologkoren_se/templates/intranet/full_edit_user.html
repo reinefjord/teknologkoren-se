@@ -3,7 +3,7 @@
 {% from "macros.html" import text_field, tag_form %}
 
 {% if current_user.id == user.id %}
-{% set active_page = "profile" %}
+{% set active_page = "member" %}
 {% else %}
 {% set active_page = "members" %}
 {% endif %}
@@ -30,7 +30,7 @@
       <input type=submit value="Submit">
     </div>
 
-    <a href="{{ url_for('.profile', id=user.id) }}">Cancel</a>
+    <a href="{{ url_for('.member', id=user.id) }}">Cancel</a>
   </form>
 </div>
 

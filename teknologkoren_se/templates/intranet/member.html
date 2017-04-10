@@ -1,7 +1,7 @@
 {% extends "intranet/layout.html" %}
 
 {% if current_user.id == user.id %}
-{% set active_page = "profile" %}
+{% set active_page = "member" %}
 {% else %}
 {% set active_page = "members" %}
 {% endif %}
