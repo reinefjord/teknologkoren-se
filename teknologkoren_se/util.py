@@ -1,5 +1,6 @@
 import ssl
 import smtplib
+import threading
 from email.message import EmailMessage
 from functools import wraps
 from urllib.parse import urlparse, urljoin
@@ -57,16 +58,20 @@ def send_email(toaddr, subject, body):
     msg['From'] = app.config['SMTP_SENDADDR']
     msg['To'] = toaddr
 
-    if app.debug:
-        print(msg)
-        return
+    def thread_func():
+        if app.debug:
+            print(msg)
+            return
 
-    with smtplib.SMTP(app.config['SMTP_MAILSERVER'],
-                      port=app.config['SMTP_STARTTLS_PORT']) as smtp:
-        context = ssl.create_default_context()
-        smtp.starttls(context=context)
-        smtp.login(app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
-        smtp.send_message(msg)
+        with smtplib.SMTP(app.config['SMTP_MAILSERVER'],
+                          port=app.config['SMTP_STARTTLS_PORT']) as smtp:
+            context = ssl.create_default_context()
+            smtp.starttls(context=context)
+            smtp.login(app.config['SMTP_USERNAME'], app.config['SMTP_PASSWORD'])
+            smtp.send_message(msg)
+
+    thread = threading.Thread(target=thread_func)
+    thread.start()
 
 
 def url_for_other_page(page):
