@@ -24,7 +24,7 @@
 
     {{ text_field(form.phone) }}
 
-    {{ tag_form(form) }}
+    {{ tag_form(form.tags, "tag-filter") }}
 
     <div class="field">
       <input type=submit value="Submit">
@@ -35,4 +35,7 @@
 </div>
 
 <script src="{{ url_for('static', filename='js/tag_filter.js') }}"></script>
+<script>
+tagFilter("tag-filter");
+</script>
 {% endblock %}

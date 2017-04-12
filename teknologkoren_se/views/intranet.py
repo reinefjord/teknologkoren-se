@@ -2,6 +2,7 @@ import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import current_user, login_required
 from werkzeug.datastructures import CombinedMultiDict
+from wtforms.fields import FormField
 from flask_wtf import FlaskForm
 from teknologkoren_se import app, db, images, forms
 from teknologkoren_se.views.auth import verify_email
@@ -203,9 +204,26 @@ def filter_members():
     class F(FlaskForm):
         pass
 
-    TagForm = form.TagForm.extend_form(F, Tag.query.all())
+    TagColForm = forms.TagForm.tag_form(Tag.query.all())
+    TagRowForm = forms.TagForm.tag_form(Tag.query.all())
 
-    return
+    F.col_form = FormField(TagColForm)
+    F.row_form = FormField(TagRowForm)
+
+    form = F()
+
+    if form.validate_on_submit():
+        if form.row_form.checked_tags():
+            return redirect(url_for('.member_matrix',
+                                    columns=form.col_form.checked_tags(),
+                                    rows=form.row_form.checked_tags()))
+        else:
+            return redirect(url_for('.members_by_tags',
+                                    tag_list=form.col_form.checked_tags()))
+
+    return render_template('intranet/filter_members.html',
+                           form=form)
+
 
 @mod.route('/members/')
 def voices():

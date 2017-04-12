@@ -24,7 +24,7 @@ class ListConverter(BaseConverter):
         return value.split('+')
 
     def to_url(self, values):
-        return '+'.join(BaseConverter.to_url(value) for value in values)
+        return '+'.join(BaseConverter.to_url(self, value) for value in values)
 
 
 def paginate(content, page, page_size):

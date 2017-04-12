@@ -87,16 +87,16 @@
 </div>
 {% endmacro %}
 
-{% macro tag_form(form) %}
-<fieldset class="tag-set">
-  {{ form.tags.csrf_token }}
+{% macro tag_form(form, id) %}
+<fieldset id="{{ id }}" class="tag-set">
+  {{ form.csrf_token }}
 
   <legend>Tags</legend>
 
-  <input type="text" id="tag-filter" placeholder="Filter">
+  <input type="text" class="tag-filter" placeholder="Filter">
 
   <div class="tags">
-    {% for field in form.tags if field.name != "tags-csrf_token" %}
+    {% for field in form if "csrf_token" not in field.name %}
     <div class="field">
       {{ field }}
       {{ field.label }}

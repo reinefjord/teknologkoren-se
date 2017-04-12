@@ -25,19 +25,18 @@
           {% endfor %}
         </ul>
       </nav>
-      </div>
     </header>
-      {% for type in ['success', 'info', 'error'] %}
-      {% with messages = get_flashed_messages(category_filter=[type]) %}
-      {% if messages %}
-      <ul class="flashes boxed constrain-width">
-        {% for message in messages %}
-        <li class="flash {{ type }}">{{ message }}</li>
-        {% endfor %}
-      </ul>
-      {% endif %}
-      {% endwith %}
+    {% for type in ['success', 'info', 'error'] %}
+    {% with messages = get_flashed_messages(category_filter=[type]) %}
+    {% if messages %}
+    <ul class="flashes boxed constrain-width">
+      {% for message in messages %}
+      <li class="flash {{ type }}">{{ message }}</li>
       {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% endfor %}
     {% if cover_image %}
     <img src="{{ cover_image }}" class="cover-image" alt="">
     {% endif %}

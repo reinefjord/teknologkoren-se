@@ -47,6 +47,18 @@ class TagForm:
         class ExtendedBase(base):
             pass
 
+        Tags = cls.tag_form(tags, user)
+        ExtendedBase.tags = fields.FormField(Tags)
+
+        if user:
+            ExtendedBase.user = user
+            # Add TagForm.set_user_tags to Tags together with arguments.
+            ExtendedBase.set_user_tags = partialmethod(cls.set_user_tags, user)
+
+        return ExtendedBase
+
+    @classmethod
+    def tag_form(cls, tags, user=None):
         class Tags(FlaskForm):
             pass
 
@@ -61,14 +73,21 @@ class TagForm:
             setattr(Tags, tag.name, field)
 
         Tags.tags = tags
-        ExtendedBase.tags = fields.FormField(Tags)
+        Tags.checked_tags = partialmethod(cls.checked_tags)
 
-        if user:
-            ExtendedBase.user = user
-            # Add TagForm.set_user_tags to Tags together with arguments.
-            ExtendedBase.set_user_tags = partialmethod(cls.set_user_tags, user)
+        return Tags
 
-        return ExtendedBase
+    def checked_tags(self):
+        """Get list of checked tags."""
+        tags = self.tags
+        checked = []
+        for tag in tags:
+            tag_field = getattr(self, tag.name)
+
+            if tag_field.data:
+                checked.append(tag.name)
+
+        return checked
 
     @staticmethod
     def set_user_tags(form, user):
