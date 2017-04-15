@@ -213,13 +213,17 @@ def filter_members():
     form = F()
 
     if form.validate_on_submit():
-        if form.row_form.checked_tags():
-            return redirect(url_for('.member_matrix',
-                                    columns=form.col_form.checked_tags(),
-                                    rows=form.row_form.checked_tags()))
-        else:
+        if form.col_form.checked_tags():
+
+            if form.row_form.checked_tags():
+                return redirect(url_for('.member_matrix',
+                                        columns=form.col_form.checked_tags(),
+                                        rows=form.row_form.checked_tags()))
+
             return redirect(url_for('.members_by_tags',
                                     tag_list=form.col_form.checked_tags()))
+        else:
+            flash("Please enter which tags to display (in columns)", 'error')
 
     return render_template('intranet/filter_members.html',
                            form=form)
