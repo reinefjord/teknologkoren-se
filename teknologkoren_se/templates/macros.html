@@ -51,7 +51,7 @@
       </time>
     </dd>
     <dt>Plats:</dt>
-    <dd>{{ event.location }}</dd>
+    <dd><a target="_blank" href="https://www.google.se/maps/search/{{ event.location|urlencode }}/">{{ event.location }}</a></dd>
   </dl>
 </article>
 {% endmacro %}
