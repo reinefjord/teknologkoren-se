@@ -418,4 +418,4 @@ def remove_event(event_id, slug=None):
     event = Event.query.get_or_404(event_id)
     db.session.delete(event)
     db.session.commit()
-    return redirect(url_for('.view-events'))
+    return redirect(url_for('.view_events'))

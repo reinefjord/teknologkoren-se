@@ -12,7 +12,7 @@
 {% endblock %}
 {% block body %}
 <section class="boxed constrain-width">
-  <h2>Edit post</h2>
+  <h2>Edit event</h2>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
 
@@ -46,6 +46,11 @@
       <input type=submit value="Submit">
     </div>
   </form>
+  {% if event %}
+  <p>
+  <a id="remove" href="{{ url_for('.remove_event', event_id=event.id, slug=event.slug) }}">Remove</a>
+  </p>
+  {% endif %}
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
@@ -62,4 +67,13 @@ var simplemde = new SimpleMDE({
   spellChecker: false,
 });
 </script>
+{% if event %}
+<script>
+document.getElementById("remove").addEventListener("click", function (event) {
+  if (!confirm('This will delete event "{{ event.title }}"\nAre you sure you want to do that?')) {
+    event.preventDefault();
+  }
+}, false)
+</script>
+{% endif %}
 {% endblock %}
