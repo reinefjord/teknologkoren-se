@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from slugify import slugify
 from markdown import markdown
+from sqlalchemy import event
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from teknologkoren_se import db, bcrypt
 
@@ -179,12 +180,6 @@ class Post(db.Model):
         'polymorphic_on': type
     }
 
-    def __init__(self, *args, **kwargs):
-        """Initialize object and generate slug if not set."""
-        if 'slug' not in kwargs:
-            kwargs['slug'] = slugify(kwargs.get('title', ''))
-        super().__init__(*args, **kwargs)
-
     @property
     def url(self):
         """Return the path to the post."""
@@ -197,6 +192,15 @@ class Post(db.Model):
     def __str__(self):
         """String representation of the post."""
         return "<{} {}/{}>".format(self.__class__.__name__, self.id, self.slug)
+
+
+@event.listens_for(Post.title, 'set', propagate=True)
+def create_slug(target, value, oldvalue, initiator):
+    """Create slug when new title is set.
+
+    Listens for Post and subclasses of Post.
+    """
+    target.slug = slugify(value)
 
 
 class Event(Post):
