@@ -17,6 +17,7 @@ body {
 
 img {
     max-width: 100%;
+    vertical-align: middle;
 }
 
 footer {
@@ -95,8 +96,15 @@ article > header, article > h1 {
 .event-image {
     float: right;
     width: 25%;
-    margin-left: 15px;
+    margin: 0 0 0.8em 1em;
     min-width: 5em;
+}
+
+.event-detail {
+    padding: 0.5em 1em;
+    border: solid 1px #ddd;
+    border-radius: 7px;
+    clear: both;
 }
 
 .truncate {
