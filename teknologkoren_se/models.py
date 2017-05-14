@@ -4,6 +4,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from slugify import slugify
 from markdown import markdown
+from markdown_newtab import NewTabExtension
 from sqlalchemy import event
 from sqlalchemy.ext.hybrid import hybrid_method, hybrid_property
 from teknologkoren_se import db, bcrypt
@@ -187,7 +188,7 @@ class Post(db.Model):
 
     def content_to_html(self):
         """Return content formatted for html."""
-        return markdown(self.content)
+        return markdown(self.content, extensions=[NewTabExtension()])
 
     def __str__(self):
         """String representation of the post."""

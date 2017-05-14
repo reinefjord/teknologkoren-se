@@ -8,5 +8,6 @@ Flask-SQLAlchemy==2.2
 Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
 Markdown==2.6.8
+markdown-newtab==0.2.0
 python-slugify==1.2.1
 WTForms==2.1
