@@ -322,7 +322,7 @@ def edit_post(post_id, slug=None):
         post.content = form.content.data
         post.published = form.published.data
         db.session.commit()
-        return redirect(url_for('blog.view_post', post_id=post.id, slug=post.slug))
+
     else:
         forms.flash_errors(form)
 
@@ -401,9 +401,7 @@ def edit_event(event_id, slug=None):
         if form.upload.data:
             event.image = images.save(form.upload.data)
         db.session.commit()
-        return redirect(url_for('events.view_event',
-                                event_id=event.id,
-                                slug=event.slug))
+
     else:
         forms.flash_errors(form)
 

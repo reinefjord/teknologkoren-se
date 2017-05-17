@@ -1,6 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% from "macros.html" import img, text_field %}
+{% from "macros.html" import img, text_field, event_article %}
 
 {% set title = "Edit event" %}
 
@@ -12,6 +12,9 @@
 {% endblock %}
 {% block body %}
 <section class="boxed constrain-width">
+  <h2>Preview</h2>
+  {{ event_article(event, overview=True) }}
+
   <h2>Edit event</h2>
   <form method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
@@ -26,14 +29,9 @@
 
     {{ text_field(form.location) }}
 
-    {% if event and event.image %}
-    Current image:
-    <div>
-      {{ img(event.image, 400) }}
-    </div>
-    {% endif %}
 
     <div class="field">
+      <p>Upload new image:</p>
       {{ form.upload }}
     </div>
 

@@ -1,6 +1,6 @@
 {% extends "intranet/layout.html" %}
 
-{% from "macros.html" import img, text_field %}
+{% from "macros.html" import img, text_field, post_article %}
 
 {% set title = "Edit post" %}
 
@@ -11,6 +11,9 @@
 {% endblock %}
 {% block body %}
 <section class="boxed constrain-width">
+  <h2>Preview</h2>
+  {{ post_article(post, overview=True) }}
+
   <h2>Edit post</h2>
   <form class="edit-post" method="POST" enctype="multipart/form-data">
     {{ form.csrf_token }}
@@ -21,14 +24,8 @@
       {{ form.content }}
     </div>
 
-    {% if post and post.image %}
-    Current image:
-    <div>
-      {{ img(post.image, 400) }}
-    </div>
-    {% endif %}
-
     <div class="field">
+      <p>Upload new image:</p>
       {{ form.upload }}
     </div>
 

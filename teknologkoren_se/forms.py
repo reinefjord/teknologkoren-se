@@ -306,7 +306,7 @@ class FullEditUserForm(EditUserForm):
 
 
 class UploadForm(FlaskForm):
-    upload = fields.FileField('image', validators=[
+    upload = fields.FileField('Image', validators=[
         FileAllowed(images, 'Images only!')
         ])
 
