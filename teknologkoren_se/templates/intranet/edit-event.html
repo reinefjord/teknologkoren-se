@@ -6,10 +6,10 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.min.css">
+<link href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.1/flatpickr.min.css" rel="stylesheet">
 {% endblock %}
+
 {% block body %}
 <section class="boxed constrain-width">
   {% if event %}
@@ -53,20 +53,26 @@
   {% endif %}
 </section>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.4/build/jquery.datetimepicker.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.1/flatpickr.min.js"></script>
 
 <script>
-jQuery('#start_time').datetimepicker({
-  format:'Y-m-d H:i'
+flatpickr("#start_time", {
+  enableTime: true,
+  time_24hr: true,
+  locale: {
+    firstDayOfWeek: 1
+  }
 });
 </script>
+
 <script>
 var simplemde = new SimpleMDE({
   element: document.getElementById("content"),
   spellChecker: false,
 });
 </script>
+
 {% if event %}
 <script>
 document.getElementById("remove").addEventListener("click", function (event) {
@@ -76,4 +82,5 @@ document.getElementById("remove").addEventListener("click", function (event) {
 }, false)
 </script>
 {% endif %}
+
 {% endblock %}

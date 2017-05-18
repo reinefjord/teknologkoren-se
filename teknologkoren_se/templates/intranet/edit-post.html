@@ -6,9 +6,9 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<link href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" rel="stylesheet">
 {% endblock %}
+
 {% block body %}
 <section class="boxed constrain-width">
   {% if post %}
@@ -47,12 +47,15 @@
   {% endif %}
 </section>
 
+<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+
 <script>
 var simplemde = new SimpleMDE({
   element: document.getElementById("content"),
   spellChecker: false,
 });
 </script>
+
 {% if post %}
 <script>
 document.getElementById("remove").addEventListener("click", function (event) {
@@ -62,4 +65,5 @@ document.getElementById("remove").addEventListener("click", function (event) {
 }, false)
 </script>
 {% endif %}
+
 {% endblock %}
