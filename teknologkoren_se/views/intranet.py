@@ -290,16 +290,16 @@ def new_post():
             author=current_user,
             image=image
             )
+
         db.session.add(post)
         db.session.commit()
 
-        return redirect(url_for('blog.view_post',
-                                post_id=post.id,
-                                slug=post.slug))
+        return render_template('intranet/edit-post.html', form=form, post=post)
+
     else:
         forms.flash_errors(form)
 
-    return render_template('intranet/edit-post.html', form=form, post=None)
+    return render_template('intranet/edit-post.html', form=form)
 
 
 @mod.route('/edit-post/<int:post_id>/', methods=['GET', 'POST'])
@@ -347,6 +347,7 @@ def new_event():
     form = forms.EditEventForm(
         CombinedMultiDict((request.form, request.files))
         )
+
     if form.validate_on_submit():
         if form.upload.data:
             image = images.save(form.upload.data)
@@ -363,12 +364,12 @@ def new_event():
             author=current_user,
             image=image
             )
+
         db.session.add(event)
         db.session.commit()
 
-        return redirect(url_for('events.view_event',
-                                event_id=event.id,
-                                slug=event.slug))
+        return render_template('intranet/edit-event.html', form=form, event=event)
+
     else:
         forms.flash_errors(form)
 
