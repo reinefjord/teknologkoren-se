@@ -241,6 +241,7 @@ address {
     border-collapse: collapse;
 }
 
+.table th,
 .table td {
     white-space: nowrap;
     height: 2em;
