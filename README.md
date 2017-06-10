@@ -22,15 +22,16 @@ FLASK_APP=teknologkoren_se/__init__.py FLASK_DEBUG=1 flask run
 ```
 
 Image paths have the optional /img(400|800|1600)/ which nginx understands but
-Flask does not. Images with the resize path argument will return 404. For now,
-use gunicorn and nginx instead.
+Flask's developement server does not. Images with the resize path argument will
+return 404. Setting `DEBUG = True` in the config will however enable redirection
+of those paths to the original image, making it possible to use Flask's server.
 
 ### gunicorn/nginx
 Install the nginx configs, changing `server_name` in `teknologkoren-se.conf`
 to anything you like, for example `local.dev`. Add whatever you chose to your
 hosts-file (`/etc/hosts`):
 ```
-127.0.0.1 local.dev localhost
+127.0.0.1 www.local.dev localhost
 127.0.0.1 intranet.local.dev localhost
 ```
 and add it as server name in config.py. `localhost` does not support subdomains

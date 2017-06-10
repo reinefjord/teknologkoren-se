@@ -1,5 +1,5 @@
 import locale
-from flask import Flask, abort
+from flask import Flask, abort, request, redirect
 from flask_login import LoginManager, current_user
 from flask_bcrypt import Bcrypt
 from flask_admin import Admin, AdminIndexView
@@ -85,3 +85,37 @@ app.register_blueprint(blog.mod, subdomain='www')
 app.register_blueprint(events.mod, subdomain='www')
 app.register_blueprint(general.mod, subdomain='www')
 app.register_blueprint(intranet.mod, subdomain='intranet')
+
+
+def catch_image_resize(image_size, image):
+    """Redirect requests to resized images.
+
+    Flask's built-in server does not understand the image resize
+    path argument that nginx uses. This redirects those urls to the
+    original images.
+    """
+    if request.endpoint == 'image_resize':
+        non_resized_url = '/static/images/{}'
+    elif request.endpoint == 'upload_resize':
+        non_resized_url = '/static/uploads/images/{}'
+    else:
+        # Why are we in this functions?
+        abort(500)
+
+    non_resized_url = non_resized_url.format(image)
+
+    return redirect(non_resized_url)
+
+
+if app.debug:
+    # If in debug mode, add rule for resized image paths to go through
+    # the redirection function.
+    app.add_url_rule('/static/images/<image_size>/<image>',
+                     endpoint='image_resize',
+                     subdomain='www',
+                     view_func=catch_image_resize)
+
+    app.add_url_rule('/static/uploads/images/<image_size>/<image>',
+                     endpoint='upload_resize',
+                     subdomain='www',
+                     view_func=catch_image_resize)
