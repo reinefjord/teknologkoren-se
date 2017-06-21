@@ -4,10 +4,17 @@
 body {
     line-height: 1.6;
     overflow-y: scroll;
+    font-family: "EB Garamond", serif;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: "EB Garamond", serif;
+}
+
+.wrap {
+    flex: 1;
+    padding-top: 5em;
+    display: flex;
+    flex-direction: column;
 }
 
 h1, h2, h3 {
@@ -15,14 +22,14 @@ h1, h2, h3 {
 }
 
 #main-content {
-    flex: 1;
     display: flex;
     justify-content: center;
 }
 
 img {
+    max-height: 100%;
     max-width: 100%;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 footer {
@@ -117,35 +124,52 @@ article > header, article > h1 {
     object-fit: cover;
 }
 
+.top-bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 4em;
+    background-color: #316bb1;
+    display: flex;
+    justify-content: center;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+}
+
 .pageheader {
-    align-self: center;
-    margin-top: 15px;
-    margin-bottom: 1.5em;
-    max-width: 36em;
-    font-size: 1.1em;
+    max-width: 70em;
+    width: 100%;
+    height: 100%;
+    padding: 0 1em 0 1em;
+    display: flex;
+    justify-content: space-between;
 }
 
 .logo {
-    text-align: center;
+    margin-right: 2em;
+    display: flex;
+    align-items: center;
 }
 
 .logo img {
-    max-height: 100px;
-    margin-right: 20px;
+    margin-right: 1em;
+    max-height: 85%;
 }
 
-.logo img,
+.pageheader a,
 .logo-text {
-    display: inline-block;
-    vertical-align: middle;
+    color: #fff;
+}
+
+.logo-text {
+    font-size: 0.90em;
 }
 
 .logo-text h1 {
     margin: 0;
     font-family: "EB Garamond", serif;
-    font-size: 2.3em;
     font-weight: normal;
     text-align: left;
+    line-height: 1em;
 }
 
 .logo .tagline {
@@ -154,7 +178,7 @@ article > header, article > h1 {
 }
 
 .nav {
-    margin-top: 30px;
+    align-self: center;
 }
 
 .nav ul {
@@ -162,20 +186,29 @@ article > header, article > h1 {
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 .nav li {
-    margin: 0;
+    margin: 0 1em 0 1em;
+}
+.nav li:first-child {
+    margin-left: 0;
+}
+.nav li:last-child {
+    margin-right: 0;
 }
 .nav .active,
 .sub-nav .active {
     cursor: pointer;
     text-decoration: underline;
-    color: #316bb1;
     font-size: 1em;
     margin: 0;
     font-weight: normal;
 }
+.sub-nav .active {
+    color: #316bb1;
+}
+
 
 .sub-nav {
     margin: 1em 2em 1em 1em;
@@ -287,13 +320,56 @@ address {
     color: #6C1600;
 }
 
-@media screen and (min-width: 85em) {
+@media screen and (min-width: 71em) {
     .cover-image {
-        width: 83em;
+        width: 70em;
         display: block;
         margin-left: auto;
         margin-right: auto;
         border-radius: 10px;
+    }
+}
+
+@media screen and (max-width: 55em) {
+    .wrap {
+        padding-top: 1em;
+    }
+
+    .top-bar {
+        position: static;
+        height: auto;
+    }
+
+    .pageheader {
+        padding: 0;
+        margin: 0.5em;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .logo {
+        margin-right: 0;
+        margin-bottom: 1em;
+        justify-content: center;
+    }
+
+    .logo img {
+        max-height: 4em;
+    }
+
+    .logo-text {
+        display: block;
+    }
+
+    .nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav li,
+    .nav li:first-child,
+    .nav li:last-child {
+        margin: .2em .7em;
     }
 }
 
@@ -329,36 +405,23 @@ address {
     }
 }
 
-@media screen and (max-width: 38em) {
-    .pageheader {
-        margin-bottom: 1em;
+
+@media screen and (max-width: 28em) {
+    .logo {
+        flex-direction: column;
+    }
+
+    .logo-text h1,
+    .logo-text .tagline {
+        text-align: center;
+        line-height: 1.5em;
     }
 
     .logo img {
-        margin: 0;
+        margin-right: 0;
+        margin-bottom: .5em;
     }
 
-    .logo-text {
-        display: block;
-        margin: 20px auto;
-    }
-
-    .logo h1,
-    .logo .tagline {
-        text-align: center;
-    }
-
-    .nav ul {
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .nav li {
-        margin: 0 1em;
-    }
-}
-
-@media screen and (max-width: 28em) {
     .text-field {
         flex-direction: column-reverse;
     }

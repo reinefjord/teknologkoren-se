@@ -6,54 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ title }} | Kongl. Teknologkören</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link href="{{ url_for('static', filename='css/normalize.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=EB+Garamond|Lato:900" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock %}
   </head>
   <body>
     {% set active_page = active_page %}
-    <header class="pageheader boxed">
-      <div class="logo">
+    <div class="top-bar">
+      <header class="pageheader">
         {% block logo %}{% endblock %}
-      </div>
-      <nav class="nav">
-        <ul>
-          {% for href, id, caption in navigation_bar %}
-          <li class="nowrap">
-            <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
-    </header>
-    {% for type in ['success', 'info', 'error'] %}
-    {% with messages = get_flashed_messages(category_filter=[type]) %}
-    {% if messages %}
-    <ul class="flashes boxed constrain-width">
-      {% for message in messages %}
-      <li class="flash {{ type }}">{{ message }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% endfor %}
-    {% if cover_image %}
-    <img src="{{ cover_image }}" class="cover-image" alt="">
-    {% endif %}
-    <div id="main-content">
-      {% if subnav %}
-      <nav class="sub-nav">
-        <ul>
-          {% for href, id, caption in subnav %}
-          <li class="nowrap">
-            <a href="{{ href|e }}" class="{% if id == active_sub %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
+        <nav class="nav">
+          <ul>
+            {% for href, id, caption in navigation_bar %}
+            <li class="nowrap">
+              <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}{% endif %}">{{ caption|e }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </header>
+    </div>
+    <div class="wrap">
+      {% for type in ['success', 'info', 'error'] %}
+      {% with messages = get_flashed_messages(category_filter=[type]) %}
+      {% if messages %}
+      <ul class="flashes boxed constrain-width">
+        {% for message in messages %}
+        <li class="flash {{ type }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
       {% endif %}
-      {% block body %}{% endblock %}
+      {% endwith %}
+      {% endfor %}
+      {% if cover_image %}
+      <img src="{{ cover_image }}" class="cover-image" alt="">
+      {% endif %}
+      <div id="main-content">
+        {% if subnav %}
+        <nav class="sub-nav">
+          <ul>
+            {% for href, id, caption in subnav %}
+            <li class="nowrap">
+              <a href="{{ href|e }}" class="{% if id == active_sub %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+        {% endif %}
+        {% block body %}{% endblock %}
+      </div>
     </div>
     {% block footer %}{% endblock %}
   </body>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% set navigation_bar = [
-(url_for('.index'), 'intranet', 'Intranät'),
+(url_for('intranet.index'), 'intranet', 'Intranät'),
 (url_for('.voices'), 'members', 'Medlemmar'),
 (url_for('.member', id=current_user.id), 'member', 'Profil'),
 ] %}
@@ -16,8 +16,8 @@
 {% endblock %}
 
 {% block logo %}
-<a href="{{ url_for('.index') }}" class="inverted-link">
-  <img src="{{ url_for('static', filename='images/logo.svg') }}">
+<a class="logo" href="{{ url_for('intranet.index') }}">
+  <img src="{{ url_for('static', filename='images/logo_white.svg') }}">
   <div class="logo-text">
     <h1>
       Kongl. Intranätet
