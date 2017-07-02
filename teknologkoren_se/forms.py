@@ -238,7 +238,7 @@ class AddUserForm(FlaskForm):
         validators.InputRequired()
         ])
 
-    last_name = fields.StringField('First Name', validators=[
+    last_name = fields.StringField('Last Name', validators=[
         validators.InputRequired()
         ])
 
