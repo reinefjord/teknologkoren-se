@@ -3,7 +3,10 @@
 {% set active_page = "index" %}
 
 {% set title = "I takt med tiden" %}
+
+{% if page == 1 %}
 {% set cover_image = "/static/images/ktk.jpg" %}
+{% endif %}
 
 {% block body %}
 <section class="overview">
