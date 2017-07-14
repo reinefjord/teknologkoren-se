@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
-from teknologkoren_se.models import User, Tag, Post
+from teknologkoren_se.models import User, Tag, Post, Event
 
 
 mod = Blueprint('general', __name__)
@@ -78,8 +78,17 @@ def atom_feed():
              .limit(15))
 
     for post in posts:
-        feed.add(post.title, post.content_to_html(), content_type='html',
-                 author=post.author, url=urljoin(request.url_root, post.url),
-                 updated=post.timestamp)
+        if isinstance(post, Event):
+            path_base = "konserter/"
+        else:
+            path_base = "blog/"
+
+        feed.add(post.title,
+                 post.content_to_html(),
+                 content_type='html',
+                 author=post.author,
+                 url=urljoin(request.url_root, path_base+post.url),
+                 updated=post.timestamp
+                 )
 
     return feed.get_response()
