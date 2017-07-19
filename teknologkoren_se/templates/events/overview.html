@@ -10,7 +10,7 @@
 ] %}
 
 {% block body %}
-<section class="overview">
+<section class="overview boxed constrain-width">
   {% block overview %}{% endblock %}
   {% if pagination.has_next or page > 1 %}
   {{ pager(pagination.has_next, page) }}

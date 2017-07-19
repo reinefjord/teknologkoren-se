@@ -9,7 +9,7 @@
 {% endif %}
 
 {% block body %}
-<section class="overview">
+<section class="overview boxed constrain-width">
   {% for post in pagination.items %}
   {% if post is event %}
   {{ event_article(post, True) }}
