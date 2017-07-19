@@ -58,7 +58,7 @@ article h1 {
 }
 
 article > header, article > h1 {
-    margin-bottom: 15px;
+    margin-bottom: .5em;
 }
 
 .boxed {
@@ -72,9 +72,11 @@ article > header, article > h1 {
 }
 
 .secondary {
-    border-left: 1px solid #ddd;
-    padding-left: 30px;
-    margin-left: 30px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+    padding: 0 1em;
+    margin: 1em 0 0 2.5em;
+    align-self: flex-start;
 }
 
 .secondary ul {
@@ -84,6 +86,7 @@ article > header, article > h1 {
 
 .secondary h1 {
     font-size: 1.7em;
+    margin-top: 0.3em;
 }
 
 .cover-image {
@@ -119,7 +122,7 @@ article > header, article > h1 {
 
 .pageheader {
     align-self: center;
-    margin-top: 15px;
+    margin-top: .5em;
     margin-bottom: 1.5em;
     max-width: 36em;
     font-size: 1.1em;
@@ -195,8 +198,8 @@ article > header, article > h1 {
 }
 
 .overview article {
-    padding-top: 15px;
-    padding-bottom: 15px;
+    padding-top: .5em;
+    padding-bottom: .5em;
 }
 
 .overview article~article {
@@ -308,12 +311,13 @@ address {
     }
 
     .secondary {
-        border-left: none;
-        margin: 0 1em;
-        padding: 0;
+        margin: 2em 1em 0 1em;
+        padding: 1em 0 0 0;
+        border-radius: 0;
+        border: 0;
         border-top: 1px solid #ddd;
-        margin-top: 30px;
         text-align: center;
+        align-self: stretch;
     }
 
     .sub-nav {
