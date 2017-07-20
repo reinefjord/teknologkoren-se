@@ -57,7 +57,7 @@
 {% endmacro %}
 
 {% macro pager(has_next, page) %}
-<nav class="pager constrain-width boxed">
+<nav class="pager constrain-width">
   {% if has_next %}
   <a class="older inverted-link" href="{{ url_for_other_page(page + 1) }}">
     &larr; Äldre</a>
