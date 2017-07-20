@@ -1,5 +1,5 @@
-{% macro post_article(post, overview) %}
-<article class="constrain-width">
+{% macro post_article(post, overview, classes) %}
+<article class="constrain-width {{ classes }}">
   <header>
     <h1>
       {% if overview %}
@@ -28,8 +28,8 @@
 </article>
 {% endmacro %}
 
-{% macro event_article(event, overview) %}
-<article class="constrain-width">
+{% macro event_article(event, overview, classes) %}
+<article class="constrain-width {{ classes }}">
   <h1>
     {% if overview %}
     <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
