@@ -4,12 +4,14 @@
 @font-face {
     font-family: "EB Garamond";
     src: url('/static/fonts/ebgaramond/EBGaramond12-Regular.woff');
+    font-weight: 400;
 }
 
 @font-face {
     font-family: "Lato";
     src: url('/static/fonts/lato/LatoLatin-Black.woff2') format('woff2'),
          url('/static/fonts/lato/LatoLatin-Black.woff') format('woff');
+    font-weight: 900;
 }
 
 body {
