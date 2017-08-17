@@ -7,6 +7,7 @@ from flask_admin.contrib.sqla import ModelView
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
@@ -21,6 +22,8 @@ app.add_url_rule('/static/<path:filename>',
 
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.trim_blocks = True
+
+CORS(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
