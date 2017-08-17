@@ -1,6 +1,17 @@
 /* palette: http://paletton.com/palette.php?uid=73C2b0kpczF5YXuhyJVv-q5G7dw */
 /* style.min.css: https://autoprefixer.github.io/ > http://mattbasta.com/crass/ */
 
+@font-face {
+    font-family: "EB Garamond";
+    src: url('/static/fonts/ebgaramond/EBGaramond12-Regular.woff');
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url('/static/fonts/lato/LatoLatin-Black.woff2') format('woff2'),
+         url('/static/fonts/lato/LatoLatin-Black.woff') format('woff');
+}
+
 body {
     line-height: 1.6;
     overflow-y: scroll;
