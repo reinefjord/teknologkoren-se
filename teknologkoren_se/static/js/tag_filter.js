@@ -1,5 +1,4 @@
-function tagFilter(id) {
-  var form = document.getElementById(id);
+function tagFilter(form) {
   filter = form.getElementsByClassName("tag-filter")[0];
 
   filter.addEventListener("input", function () {
@@ -17,4 +16,10 @@ function tagFilter(id) {
       }
     }
   })
+}
+
+var forms = document.getElementsByClassName("tag-set");
+for (var f = 0; f < forms.length; f++) {
+  var form = forms[f];
+  tagFilter(form);
 }

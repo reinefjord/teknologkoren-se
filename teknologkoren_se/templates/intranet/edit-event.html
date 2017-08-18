@@ -55,34 +55,12 @@
 </section>
 
 <script src="{{ url_for('static', filename='js/simplemde.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/init_simplemde.js') }}"></script>
 <script src="{{ url_for('static', filename='js/flatpickr.min.js') }}"></script>
-
-<script>
-flatpickr("#start_time", {
-  enableTime: true,
-  time_24hr: true,
-  locale: {
-    firstDayOfWeek: 1
-  }
-});
-</script>
-
-<script>
-var simplemde = new SimpleMDE({
-  autoDownloadFontAwesome: false,
-  element: document.getElementById("content"),
-  spellChecker: false,
-});
-</script>
+<script src="{{ url_for('static', filename='js/init_flatpickr.js') }}"></script>
 
 {% if event %}
-<script>
-document.getElementById("remove").addEventListener("click", function (event) {
-  if (!confirm('This will delete event "{{ event.title }}"\nAre you sure you want to do that?')) {
-    event.preventDefault();
-  }
-}, false)
-</script>
+<script src="{{ url_for('static', filename='js/confirm_remove_post.js') }}"></script>
 {% endif %}
 
 {% endblock %}
