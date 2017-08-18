@@ -294,7 +294,7 @@ def new_post():
         db.session.add(post)
         db.session.commit()
 
-        return render_template('intranet/edit-post.html', form=form, post=post)
+        return redirect(url_for('.edit_post', post_id=post.id, slug=post.slug))
 
     else:
         forms.flash_errors(form)
@@ -368,7 +368,9 @@ def new_event():
         db.session.add(event)
         db.session.commit()
 
-        return render_template('intranet/edit-event.html', form=form, event=event)
+        return redirect(url_for('.edit_event',
+                                event_id=event.id,
+                                slug=event.slug))
 
     else:
         forms.flash_errors(form)
