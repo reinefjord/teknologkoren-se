@@ -6,7 +6,8 @@
 
 {% block head %}
 {{ super() }}
-<link href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/simplemde.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='fonts/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -47,10 +48,11 @@
   {% endif %}
 </section>
 
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+<script src="{{ url_for('static', filename='js/simplemde.min.js') }}"></script>
 
 <script>
 var simplemde = new SimpleMDE({
+  autoDownloadFontAwesome: false,
   element: document.getElementById("content"),
   spellChecker: false,
 });

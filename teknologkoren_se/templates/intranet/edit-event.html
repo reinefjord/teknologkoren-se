@@ -6,8 +6,9 @@
 
 {% block head %}
 {{ super() }}
-<link href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.1/flatpickr.min.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/simplemde.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='fonts/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/flatpickr.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -53,8 +54,8 @@
   {% endif %}
 </section>
 
-<script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/2.6.1/flatpickr.min.js"></script>
+<script src="{{ url_for('static', filename='js/simplemde.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flatpickr.min.js') }}"></script>
 
 <script>
 flatpickr("#start_time", {
@@ -68,6 +69,7 @@ flatpickr("#start_time", {
 
 <script>
 var simplemde = new SimpleMDE({
+  autoDownloadFontAwesome: false,
   element: document.getElementById("content"),
   spellChecker: false,
 });
