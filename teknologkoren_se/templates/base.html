@@ -31,7 +31,7 @@
     {% if messages %}
     <ul class="flashes boxed constrain-width">
       {% for message in messages %}
-      <li class="flash {{ type }}">{{ message }}</li>
+      <li class="flash {{ type }}">{{ message|safe }}</li>
       {% endfor %}
     </ul>
     {% endif %}
