@@ -41,6 +41,12 @@ def index(page):
 
     pagination = posts.paginate(page, 5)
 
+    from flask import flash
+    flash(("Teknologkören söker korister! "
+           "<a href='{}'>Klicka här</a> för mer info."
+           ).format(url_for('.view_post', post_id=13)),
+          "success")
+
     return render_template('blog/overview.html',
                            pagination=pagination,
                            page=page)
