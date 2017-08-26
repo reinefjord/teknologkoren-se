@@ -1,5 +1,5 @@
 {% macro post_article(post, overview, classes) %}
-<article class="constrain-width {{ classes }}">
+<article class="{{ classes }}">
   <header>
     <h1>
       {% if overview %}
@@ -29,7 +29,7 @@
 {% endmacro %}
 
 {% macro event_article(event, overview, classes) %}
-<article class="constrain-width {{ classes }}">
+<article class="{{ classes }}">
   <h1>
     {% if overview %}
     <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
@@ -57,7 +57,7 @@
 {% endmacro %}
 
 {% macro pager(has_next, page) %}
-<nav class="pager constrain-width">
+<nav class="pager">
   {% if has_next %}
   <a class="older inverted-link" href="{{ url_for_other_page(page + 1) }}">
     &larr; Äldre</a>

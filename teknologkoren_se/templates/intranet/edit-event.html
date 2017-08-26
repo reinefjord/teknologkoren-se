@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block body %}
-<section class="boxed constrain-width">
+<main class="content">
   {% if event %}
   <h2>Preview</h2>
   {{ event_article(event, overview=True) }}
@@ -52,7 +52,7 @@
   <a id="remove" href="{{ url_for('.remove_event', event_id=event.id, slug=event.slug) }}">Remove</a>
   </p>
   {% endif %}
-</section>
+</main>
 
 <script src="{{ url_for('static', filename='js/simplemde.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/init_simplemde.js') }}"></script>

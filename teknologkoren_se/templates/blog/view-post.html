@@ -4,5 +4,7 @@
 {% set title = post.title %}
 
 {% block body %}
-{{ post_article(post, False, "boxed") }}
+<main class="content">
+  {{ post_article(post, False) }}
+</main>
 {% endblock %}

@@ -7,40 +7,38 @@
     <title>{{ title }} | Kongl. Teknologkören</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/normalize.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     {% endblock %}
   </head>
   <body>
     {% set active_page = active_page %}
-    <header class="pageheader boxed">
-      <div class="logo">
-        {% block logo %}{% endblock %}
-      </div>
-      <nav class="nav">
-        <ul>
-          {% for href, id, caption in navigation_bar %}
-          <li class="nowrap">
-            <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
-          </li>
-          {% endfor %}
-        </ul>
-      </nav>
-    </header>
-    {% for type in ['success', 'info', 'error'] %}
-    {% with messages = get_flashed_messages(category_filter=[type]) %}
-    {% if messages %}
-    <ul class="flashes boxed constrain-width">
-      {% for message in messages %}
-      <li class="flash {{ type }}">{{ message|safe }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
-    {% endwith %}
-    {% endfor %}
-    {% if cover_image %}
-    <img src="{{ cover_image }}" class="cover-image" alt="">
-    {% endif %}
-    <div id="main-content">
+    <div id="container">
+      <header class="pageheader">
+        <div class="logo">
+          {% block logo %}{% endblock %}
+        </div>
+        <nav class="nav">
+          <ul>
+            {% for href, id, caption in navigation_bar %}
+            <li class="nowrap">
+              <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
+            </li>
+            {% endfor %}
+          </ul>
+        </nav>
+      </header>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+      <ul class="flashes">
+        {% for category, message in messages %}
+        <li class="flash {{ category }}">{{ message|safe }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      {% endwith %}
+      {% if cover_image %}
+      <img src="{{ cover_image }}" class="cover-image" alt="">
+      {% endif %}
       {% if subnav %}
       <nav class="sub-nav">
         <ul>

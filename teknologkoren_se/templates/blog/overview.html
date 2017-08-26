@@ -9,7 +9,7 @@
 {% endif %}
 
 {% block body %}
-<section class="overview boxed constrain-width">
+<main class="overview">
   {% for post in pagination.items %}
   {% if post is event %}
   {{ event_article(post, True) }}
@@ -21,9 +21,9 @@
   {% if pagination.has_next or page > 1 %}
   {{ pager(pagination.has_next, page) }}
   {% endif %}
-</section>
+</main>
 
-<section class="secondary">
+<aside class="secondary">
   <h1>Länkar</h1>
   <ul>
     <li><a href="https://www.facebook.com/teknologkoren">KTK på Facebook</a></li>
@@ -33,5 +33,5 @@
     <li><a href="https://github.com/teknologkoren">KTK på GitHub</a></li>
     <li><a href="/feed">RSS-flöde</a></li>
   </ul>
-</section>
+</aside>
 {% endblock %}

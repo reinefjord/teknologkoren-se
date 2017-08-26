@@ -9,7 +9,7 @@
 {% set title = "Intranät" %}
 
 {% block body %}
-<div class="boxed constrain-width">
+<main class="content">
   <h2>{{ user.first_name }} {{ user.last_name }}</h2>
   <p>Email: <a href="mailto:{{ user.email }}">{{ user.email }}</a></p>
   <p>Number: <a href="tel:{{ user.phone }}">{{ user.phone }}</a></p>
@@ -19,5 +19,5 @@
   {% elif user.id == current_user.id %}
   <p><a href="{{ url_for('.edit_user') }}">Edit</a></p>
   {% endif %}
-</div>
+</main>
 {% endblock %}

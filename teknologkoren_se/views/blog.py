@@ -1,4 +1,4 @@
-from flask import abort, Blueprint, redirect, render_template, url_for
+from flask import abort, Blueprint, redirect, render_template, url_for, flash
 from flask_login import current_user
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Post, Event
@@ -41,11 +41,11 @@ def index(page):
 
     pagination = posts.paginate(page, 5)
 
-    from flask import flash
-    flash(("Teknologkören söker korister! "
-           "<a href='{}'>Klicka här</a> för mer info."
-           ).format(url_for('.view_post', post_id=13)),
-          "success")
+    if page == 1:
+        flash(("Teknologkören söker korister! "
+               "<a href='{}'>Klicka här</a> för mer info."
+               ).format(url_for('.view_post', post_id=13)),
+              "success")
 
     return render_template('blog/overview.html',
                            pagination=pagination,
