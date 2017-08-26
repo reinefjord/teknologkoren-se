@@ -343,6 +343,7 @@ address {
         grid-column: 1;
         justify-self: right;
         margin-right: 1em;
+        margin-left: 1em;
         text-align: left;
         align-self: start;
     }

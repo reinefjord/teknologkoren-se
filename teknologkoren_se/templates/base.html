@@ -43,7 +43,7 @@
       <nav class="sub-nav">
         <ul>
           {% for href, id, caption in subnav %}
-          <li class="nowrap">
+          <li>
             <a href="{{ href|e }}" class="{% if id == active_sub %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
           </li>
           {% endfor %}
