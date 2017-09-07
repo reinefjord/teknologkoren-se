@@ -1,11 +1,14 @@
 # teknologkoren-se
 
-## Installation
-Clone the repo, then run
+## Installation in a virtualenv
+Clone and change directory to the repo, then run
 ```
-python3 -m pip install -r requirements.txt
+python3 -m venv venv                # Create virtualenv "venv"
+. venv/bin/activate                 # Source the virtualenv
+pip install -r requirements.txt     # Install python requirements to venv
+nodeenv -p -r npm-requirements.txt  # Install node.js requirements
 ```
-to install the dependencies.
+You can deactivate the virtualenv by running `deactivate`.
 
 ## Create database
 Use `manage.py` to create the database. `python3 manage.py full_setup` will

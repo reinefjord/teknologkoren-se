@@ -1,5 +1,6 @@
 Flask==0.12
 Flask-Admin==1.4.2
+Flask-Assets==0.12
 Flask-Bcrypt==0.7.1
 Flask-Cors==3.0.3
 Flask-Login==0.4.0
@@ -10,5 +11,7 @@ Flask-Uploads==0.2.1
 Flask-WTF==0.14.2
 Markdown==2.6.8
 markdown-newtab==0.2.0
+nodeenv==1.2.0
 python-slugify==1.2.1
 WTForms==2.1
+-e git+https://github.com/miracle2k/webassets.git#egg=webassets

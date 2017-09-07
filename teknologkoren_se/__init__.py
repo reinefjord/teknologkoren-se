@@ -100,6 +100,30 @@ def catch_image_resize(image_size, image):
     return redirect(non_resized_url)
 
 
+def setup_flask_assets(app):
+    """Setup Flask-Assets, auto generation of prefixed and minified files."""
+    from flask_assets import Bundle, Environment
+
+    bundles = {
+            'common_css': Bundle(
+                'css/lib/normalize.css',
+                'css/style.css',
+                output='gen/common.css',
+                filters=['autoprefixer6', 'cleancss'],
+                ),
+
+            'intranet_css': Bundle(
+                'css/intranet.css',
+                output='gen/intranet.css',
+                filters=['autoprefixer6', 'cleancss'],
+                ),
+            }
+
+    assets = Environment(app)
+    assets.register(bundles)
+    return assets
+
+
 app = Flask(__name__, static_folder=None)
 app.config.from_object('config')
 
@@ -125,6 +149,8 @@ configure_uploads(app, (images,))
 
 login_manager = setup_login_manager(app)
 admin = setup_flask_admin(app)
+assets = setup_flask_assets(app)
+
 setup_converters(app)
 
 init_views(app) # last, views might import stuff from this file

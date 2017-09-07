@@ -7,3 +7,5 @@ venv/
 config.py
 
 teknologkoren_se/static/uploads/*
+teknologkoren_se/static/gen/*
+teknologkoren_se/static/.webassets-cache*

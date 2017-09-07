@@ -6,7 +6,7 @@
 
 {% block head %}
 {{ super() }}
-<link href="{{ url_for('static', filename='css/simplemde.min.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/lib/simplemde.min.css') }}" rel="stylesheet">
 <link href="{{ url_for('static', filename='fonts/fontawesome/css/font-awesome.min.css') }}" rel="stylesheet">
 {% endblock %}
 
@@ -48,7 +48,7 @@
   {% endif %}
 </main>
 
-<script src="{{ url_for('static', filename='js/simplemde.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/lib/simplemde.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/init_simplemde.js') }}"></script>
 
 {% if post %}

@@ -12,7 +12,9 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/intranet.css') }}">
+{% assets 'intranet_css' %}
+<link rel="stylesheet" href="{{ ASSET_URL }}">
+{% endassets %}
 {% endblock %}
 
 {% block logo %}
