@@ -1,6 +1,12 @@
 {% extends "events/overview.html" %}
 {% from "macros.html" import event_article %}
 
+{% if page > 1 %}
+{% set title = "Kommande konserter - Sida {}".format(page) %}
+{% else %}
+{% set title = "Kommande konserter" %}
+{% endif %}
+
 {% set active_sub = "kommande" %}
 
 {% block overview %}

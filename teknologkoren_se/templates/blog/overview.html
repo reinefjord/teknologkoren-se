@@ -2,10 +2,11 @@
 {% from 'macros.html' import post_article, event_article, pager, img %}
 {% set active_page = "index" %}
 
-{% set title = "I takt med tiden" %}
-
 {% if page == 1 %}
+{% set title = "I takt med tiden" %}
 {% set cover_image = "/static/images/ktk.jpg" %}
+{% else %}
+{% set title = "I takt med tiden - Sida {}".format(page) %}
 {% endif %}
 
 {% block body %}
