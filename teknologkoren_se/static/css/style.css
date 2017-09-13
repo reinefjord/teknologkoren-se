@@ -98,6 +98,10 @@ article > header, article > h1 {
     margin: 1rem 0;
 }
 
+.first-main-header {
+    margin-top: 0;
+}
+
 .content {
     grid-column: 2;
     margin: 1rem 1rem;
