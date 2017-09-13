@@ -178,6 +178,7 @@ article > header, article > h1 {
 
 .logo {
     text-align: center;
+    margin: 0 .5rem;
 }
 
 .logo img {
@@ -208,7 +209,7 @@ article > header, article > h1 {
     justify-content: center;
 }
 .nav li {
-    margin: 0 1rem;
+    margin: .2rem 1rem;
 }
 .nav .active,
 .sub-nav .active {
