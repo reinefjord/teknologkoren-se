@@ -190,6 +190,17 @@ class Post(db.Model):
         """Return content formatted for html."""
         return markdown(self.content, extensions=[NewTabExtension()])
 
+    def to_dict(self):
+        d = {}
+        d['id'] = self.id
+        d['title'] = self.title
+        d['slug'] = self.slug
+        d['content'] = self.content
+        d['published'] = self.published
+        d['timestamp'] = self.timestamp
+        d['image'] = self.image
+        return d
+
     def __str__(self):
         """String representation of the post."""
         return "<{} {}/{}>".format(self.__class__.__name__, self.id, self.slug)
@@ -219,3 +230,9 @@ class Event(Post):
     __mapper_args__ = {
         'polymorphic_identity': 'event'
     }
+
+    def to_dict(self):
+        d = super().to_dict()
+        d['start_time'] = self.start_time
+        d['location'] = self.location
+        return d

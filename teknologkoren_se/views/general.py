@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
-from teknologkoren_se.models import User, Tag, Post, Event
+from teknologkoren_se.models import User, Post, Event
 
 
 mod = Blueprint('general', __name__)

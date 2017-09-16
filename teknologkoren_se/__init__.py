@@ -11,6 +11,7 @@ locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 
 def init_views(app):
     from teknologkoren_se.views import (
+            api,
             auth,
             blog,
             events,
@@ -19,6 +20,7 @@ def init_views(app):
             intranet
             )
 
+    app.register_blueprint(api.mod, subdomain='www')
     app.register_blueprint(auth.mod, subdomain='www')
     app.register_blueprint(blog.mod, subdomain='www')
     app.register_blueprint(events.mod, subdomain='www')
@@ -153,7 +155,7 @@ assets = setup_flask_assets(app)
 
 setup_converters(app)
 
-init_views(app) # last, views might import stuff from this file
+init_views(app)  # last, views might import stuff from this file
 
 
 if app.debug:
