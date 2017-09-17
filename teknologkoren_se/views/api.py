@@ -1,5 +1,6 @@
+import datetime
 from flask import abort, Blueprint, jsonify, request, url_for
-from teknologkoren_se import db
+from teknologkoren_se import db, images
 from teknologkoren_se.models import Post, Event
 
 
@@ -16,6 +17,33 @@ def make_post_dict(post):
 
     post_dict['uri'] = uri
     return post_dict
+
+
+# ----- POSTS ----- #
+
+def get_new_post_data():
+    data = request.get_json()
+    fields = {
+            'title': str,
+            'content': str,
+            'published': bool,
+            'image': (str, type(None)),
+            }
+
+    if not all(key in data for key in fields):
+        abort(400)
+
+    try:
+        if not all(isinstance(data[key], fields[key]) for key in data):
+            abort(400)
+    except KeyError:
+        # Found key not in template
+        abort(400)
+
+    if not all(data[key] for key in fields if isinstance(data[key], str)):
+        abort(400)
+
+    return data
 
 
 @mod.route('/posts', methods=['GET'])
@@ -36,6 +64,36 @@ def get_post(post_id):
     abort(404)
 
 
+@mod.route('/posts', methods=['POST'])
+def new_post():
+    data = get_new_post_data()
+    post = Post(**data)
+    post.timestamp = datetime.datetime.now()
+    db.session.add(post)
+    db.session.commit()
+
+    response = make_post_dict(post)
+    return jsonify(response)
+
+
+@mod.route('/posts/<int:post_id>', methods=['PUT'])
+def update_post(post_id):
+    post = Post.query.get_or_404(post_id)
+    data = get_new_post_data()
+    post.title = data['title']
+    post.content = data['content']
+    post.published = data['published']
+    post.image = data['image']
+    db.session.commit()
+
+    response = make_post_dict(post)
+    return jsonify(response)
+
+# ----- END POSTS ----- #
+
+# ----- EVENTS ----- #
+
+
 @mod.route('/events', methods=['GET'])
 def get_events():
     events = Event.query.all()
@@ -48,3 +106,74 @@ def get_event(event_id):
     event = Event.query.get_or_404(event_id)
     response = make_post_dict(event)
     return jsonify(response)
+
+
+def get_new_event_data():
+    data = request.get_json()
+    fields = {
+            'title': str,
+            'content': str,
+            'published': bool,
+            'image': (str, type(None)),
+            'start_time': str,
+            'location': str,
+            }
+
+    if not all(key in data for key in fields):
+        abort(400)
+
+    try:
+        if not all(isinstance(data[key], fields[key]) for key in data):
+            abort(400)
+    except KeyError:
+        # Found key not in template
+        abort(400)
+
+    if not all(data[key] for key in fields if isinstance(data[key], str)):
+        abort(400)
+
+    try:
+        data['start_time'] = datetime.datetime.strptime(data['start_time'],
+                                                        '%Y-%m-%dT%H:%M')
+    except ValueError:
+        abort(400)
+
+    return data
+
+
+@mod.route('/events', methods=['POST'])
+def new_event():
+    data = get_new_event_data()
+    event = Event(**data)
+    event.timestamp = datetime.datetime.now()
+    db.session.add(event)
+    db.session.commit()
+
+    response = make_post_dict(event)
+    return jsonify(response)
+
+
+@mod.route('/events/<int:event_id>', methods=['PUT'])
+def update_event(event_id):
+    event = Event.query.get_or_404(event_id)
+    data = get_new_event_data()
+    event.title = data['title']
+    event.content = data['content']
+    event.published = data['published']
+    event.image = data['image']
+    db.session.commit()
+
+    response = make_post_dict(event)
+    return jsonify(response)
+
+# ----- END EVENTS ----- #
+
+
+@mod.route('/images', methods=['POST'])
+def upload_image():
+    if 'image' in request.files:
+        filename = images.save(request.files['image'])
+        response = {"filename": filename, "path": images.url(filename)}
+        return jsonify(response)
+
+    abort(400)

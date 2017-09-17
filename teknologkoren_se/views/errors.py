@@ -6,6 +6,7 @@ from teknologkoren_se import app
 @app.errorhandler(400)
 @app.errorhandler(403)
 @app.errorhandler(404)
+@app.errorhandler(405)
 @app.errorhandler(409)
 def handle_error(e):
     if request.path.startswith('/api'):
@@ -14,6 +15,7 @@ def handle_error(e):
                 400: {'error': 'Bad Request'},
                 403: {'error': 'Forbidden'},
                 404: {'error': 'Not Found'},
+                405: {'error': 'Method Not Allowed'},
                 409: {'error': 'Conflict'},
                 }
         response = api_response[e.code]
