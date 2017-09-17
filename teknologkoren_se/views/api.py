@@ -8,6 +8,7 @@ mod = Blueprint('api', __name__, url_prefix='/api')
 
 
 def make_post_dict(post):
+    """Convert post or event to jsonable dict"""
     post_dict = post.to_dict()
 
     if isinstance(post, Event):
@@ -22,6 +23,7 @@ def make_post_dict(post):
 # ----- POSTS ----- #
 
 def get_new_post_data():
+    """Validate and return POSTed post-data."""
     data = request.get_json()
     fields = {
             'title': str,
@@ -48,6 +50,10 @@ def get_new_post_data():
 
 @mod.route('/posts', methods=['GET'])
 def get_posts():
+    """Get all posts.
+
+    Returns all posts in a list in a json.
+    """
     posts = Post.query.filter_by(type='post')
     response = {'posts': [make_post_dict(post) for post in posts]}
     return jsonify(response)
@@ -55,6 +61,10 @@ def get_posts():
 
 @mod.route('/posts/<int:post_id>', methods=['GET'])
 def get_post(post_id):
+    """Get specific post
+
+    Returns a jsonified post.
+    """
     # None if no post (not event) with that id (return 404), raises
     # exception if multiple found.
     post = Post.query.filter_by(type='post', id=post_id).one_or_none()
@@ -66,6 +76,10 @@ def get_post(post_id):
 
 @mod.route('/posts', methods=['POST'])
 def new_post():
+    """Create a new post.
+
+    Creates a new post and returns the post jsonified.
+    """
     data = get_new_post_data()
     post = Post(**data)
     post.timestamp = datetime.datetime.now()
@@ -78,6 +92,11 @@ def new_post():
 
 @mod.route('/posts/<int:post_id>', methods=['PUT'])
 def update_post(post_id):
+    """Overwrite existing post.
+
+    All fields are required, partial updates should use "PATCH" as
+    method.
+    """
     post = Post.query.get_or_404(post_id)
     data = get_new_post_data()
     post.title = data['title']
@@ -96,6 +115,10 @@ def update_post(post_id):
 
 @mod.route('/events', methods=['GET'])
 def get_events():
+    """Get all events.
+
+    Returns a jsonified list of all events.
+    """
     events = Event.query.all()
     response = {'events': [make_post_dict(event) for event in events]}
     return jsonify(response)
@@ -103,12 +126,21 @@ def get_events():
 
 @mod.route('/events/<int:event_id>', methods=['GET'])
 def get_event(event_id):
+    """Get specific event.
+
+    Returns a jsonified event.
+    """
     event = Event.query.get_or_404(event_id)
     response = make_post_dict(event)
     return jsonify(response)
 
 
 def get_new_event_data():
+    """Validate and return POSTed event-data.
+
+    All fields that does not make sense to create server side are
+    required, otherwise abort with 400.
+    """
     data = request.get_json()
     fields = {
             'title': str,
@@ -143,6 +175,10 @@ def get_new_event_data():
 
 @mod.route('/events', methods=['POST'])
 def new_event():
+    """Create a new event.
+
+    Field requirements are defined with get_new_event_data().
+    """
     data = get_new_event_data()
     event = Event(**data)
     event.timestamp = datetime.datetime.now()
@@ -155,6 +191,11 @@ def new_event():
 
 @mod.route('/events/<int:event_id>', methods=['PUT'])
 def update_event(event_id):
+    """Overwrite existing event.
+
+    All fields are required, partials updates should use "PATCH" as
+    method.
+    """
     event = Event.query.get_or_404(event_id)
     data = get_new_event_data()
     event.title = data['title']
@@ -171,6 +212,10 @@ def update_event(event_id):
 
 @mod.route('/images', methods=['POST'])
 def upload_image():
+    """Upload a image.
+
+    Returns image info jsonified.
+    """
     if 'image' in request.files:
         filename = images.save(request.files['image'])
         response = {"filename": filename, "path": images.url(filename)}
