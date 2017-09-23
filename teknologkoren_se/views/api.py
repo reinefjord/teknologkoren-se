@@ -108,6 +108,15 @@ def update_post(post_id):
     response = make_post_dict(post)
     return jsonify(response)
 
+
+@mod.route('/posts/<int:post_id>', methods=['DELETE'])
+def delete_post(post_id):
+    """Delete a post."""
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return '', 204
+
 # ----- END POSTS ----- #
 
 # ----- EVENTS ----- #
@@ -206,6 +215,15 @@ def update_event(event_id):
 
     response = make_post_dict(event)
     return jsonify(response)
+
+
+@mod.route('/events/<int:post_id>', methods=['DELETE'])
+def delete_event(event_id):
+    """Delete a post."""
+    event = Event.query.get_or_404(event_id)
+    db.session.delete(event)
+    db.session.commit()
+    return '', 204
 
 # ----- END EVENTS ----- #
 
