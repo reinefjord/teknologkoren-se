@@ -55,7 +55,7 @@ def get_posts():
     Returns all posts in a list in a json.
     """
     posts = Post.query.filter_by(type='post')
-    response = {'posts': [make_post_dict(post) for post in posts]}
+    response = [make_post_dict(post) for post in posts]
     return jsonify(response)
 
 
@@ -87,7 +87,7 @@ def new_post():
     db.session.commit()
 
     response = make_post_dict(post)
-    return jsonify(response)
+    return jsonify(response), 201
 
 
 @mod.route('/posts/<int:post_id>', methods=['PUT'])
@@ -120,7 +120,7 @@ def get_events():
     Returns a jsonified list of all events.
     """
     events = Event.query.all()
-    response = {'events': [make_post_dict(event) for event in events]}
+    response = [make_post_dict(event) for event in events]
     return jsonify(response)
 
 
