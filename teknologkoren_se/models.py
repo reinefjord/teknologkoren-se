@@ -233,6 +233,6 @@ class Event(Post):
 
     def to_dict(self):
         d = super().to_dict()
-        d['start_time'] = self.start_time
+        d['start_time'] = datetime.strftime(self.start_time, '%Y-%m-%dT%H:%M')
         d['location'] = self.location
         return d

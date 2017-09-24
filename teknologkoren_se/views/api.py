@@ -102,7 +102,8 @@ def update_post(post_id):
     post.title = data['title']
     post.content = data['content']
     post.published = data['published']
-    post.image = data['image']
+    if data['image']:
+        post.image = data['image']
     db.session.commit()
 
     response = make_post_dict(post)
@@ -210,6 +211,8 @@ def update_event(event_id):
     event.title = data['title']
     event.content = data['content']
     event.published = data['published']
+    event.start_time = data['start_time']
+    event.location = data['location']
     event.image = data['image']
     db.session.commit()
 
@@ -217,7 +220,7 @@ def update_event(event_id):
     return jsonify(response)
 
 
-@mod.route('/events/<int:post_id>', methods=['DELETE'])
+@mod.route('/events/<int:event_id>', methods=['DELETE'])
 def delete_event(event_id):
     """Delete a post."""
     event = Event.query.get_or_404(event_id)
