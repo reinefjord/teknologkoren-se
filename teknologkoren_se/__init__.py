@@ -1,6 +1,6 @@
 import locale
 from flask import Flask, abort, request, redirect
-from flask_httpauth import HTTPTokenAuth
+from flask_httpauth import HTTPBasicAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -69,9 +69,7 @@ app.config.from_object('config')
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.trim_blocks = True
 
-# (Token) To authorize, client sends 'Authorization: Token <token>' in http
-# headers.
-token_auth = HTTPTokenAuth(scheme='Token')
+token_auth = HTTPBasicAuth()
 
 CORS(app)
 

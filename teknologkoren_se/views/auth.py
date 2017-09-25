@@ -1,12 +1,12 @@
 from flask import jsonify, request
+from werkzeug.security import check_password_hash
 from teknologkoren_se import app, token_auth
 
 
-@token_auth.verify_token
-def verify_token(token):
-    if token in app.config['TOKENS']:
-        return True
-    return False
+@token_auth.verify_password
+def verify_password(username, password):
+    if username in app.config['USERS']:
+        return check_password_hash(app.config['USERS'].get(username), password)
 
 
 @token_auth.error_handler
