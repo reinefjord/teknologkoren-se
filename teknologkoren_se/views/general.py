@@ -1,7 +1,7 @@
 from urllib.parse import urljoin
 from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
-from teknologkoren_se.models import User, Post, Event
+from teknologkoren_se.models import Post, Event, Contact
 
 
 mod = Blueprint('general', __name__)
@@ -33,37 +33,12 @@ def kontakt():
     The template iterates over the list of tags and gets the user from
     the generated dict to display them in the same order every time.
     """
-    board = {}
-    board_tags = [('Ordförande', 'ordf@teknologkoren.se'),
-                  ('Vice ordförande', 'vice@teknologkoren.se'),
-                  ('Kassör', 'pengar@teknologkoren.se'),
-                  ('Sekreterare', 'sekr@teknologkoren.se'),
-                  ('PRoletär', 'pr@teknologkoren.se'),
-                  ('Notfisqual', 'noter@teknologkoren.se'),
-                  ('Qlubbmästare', 'qm@teknologkoren.se')]
+    contacts = Contact.query.order_by(Contact.weight.asc()).all()
+    ordf = Contact.query.filter_by(title='Ordförande').first()
 
-    # We cannot iterate over the same list we are remove items from
-    tags_copy = list(board_tags)
-
-    # Create a dictionary of the board, eg:
-    # {'Ordförande': <user object>, 'Vice ordförande': <user object>}
-    for tag_tuple in tags_copy:
-        tag, email = tag_tuple
-
-        board_member = User.query.filter(User.has_tag(tag)).first()
-
-        if board_member:
-            board[tag] = board_member
-
-        else:
-            # There was no user with that tag, remove it from the list
-            # the template iterates over.
-            board_tags.remove(tag_tuple)
-
-    return render_template(
-        'general/kontakt.html',
-        board=board,
-        tags=board_tags)
+    return render_template('general/kontakt.html',
+                           contacts=contacts,
+                           ordf=ordf)
 
 
 @mod.route('/feed/')

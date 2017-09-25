@@ -72,36 +72,3 @@
 {% macro img(image, size, class) %}
 <img {% if class %}class="{{ class }}"{% endif %} src="{{ image_dest() }}img{{ size }}/{{ image }}" alt="">
 {% endmacro %}
-
-{% macro text_field(field, description=True) %}
-<div class="field">
-  {{ field.label }}
-  <div class="text-field">
-    <span>{{ field(*varargs, **kwargs) }}</span>
-    {% if description and field.description %}
-    <span class="field-description">
-      {{ field.description }}
-    </span>
-    {% endif %}
-  </div>
-</div>
-{% endmacro %}
-
-{% macro tag_form(form, id) %}
-<fieldset id="{{ id }}" class="tag-set">
-  {{ form.csrf_token }}
-
-  <legend>Tags</legend>
-
-  <input type="text" class="tag-filter" placeholder="Filter">
-
-  <div class="tags">
-    {% for field in form if "csrf_token" not in field.name %}
-    <div class="field">
-      {{ field }}
-      {{ field.label }}
-    </div>
-    {% endfor %}
-  </div>
-</fieldset>
-{% endmacro %}

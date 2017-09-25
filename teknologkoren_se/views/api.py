@@ -1,7 +1,7 @@
 import datetime
 from flask import abort, Blueprint, jsonify, request, url_for
 from teknologkoren_se import db, images
-from teknologkoren_se.models import Post, Event
+from teknologkoren_se.models import Post, Event, Contact
 
 
 mod = Blueprint('api', __name__, url_prefix='/api')
@@ -20,18 +20,20 @@ def make_post_dict(post):
     return post_dict
 
 
-# ----- POSTS ----- #
+def get_new_data(fields):
+    """Validate and return POSTed data.
 
-def get_new_post_data():
-    """Validate and return POSTed post-data."""
-    data = request.get_json()
+    `fields` should be a dict mapping model fields to the type of the
+    fields, or None if nullable field, e.g.:
+    ```
     fields = {
-            'title': str,
-            'content': str,
-            'published': bool,
-            'image': (str, type(None)),
-            }
-
+        'title': str,
+        'published': bool,
+        'image': (str, type(None))
+    }
+    ```
+    """
+    data = request.get_json()
     if not all(key in data for key in fields):
         abort(400)
 
@@ -46,6 +48,16 @@ def get_new_post_data():
         abort(400)
 
     return data
+
+
+# ----- POSTS ----- #
+
+POST_FIELDS = {
+    'title': str,
+    'content': str,
+    'published': bool,
+    'image': (str, type(None)),
+}
 
 
 @mod.route('/posts', methods=['GET'])
@@ -80,7 +92,7 @@ def new_post():
 
     Creates a new post and returns the post jsonified.
     """
-    data = get_new_post_data()
+    data = get_new_data(POST_FIELDS)
     post = Post(**data)
     post.timestamp = datetime.datetime.now()
     db.session.add(post)
@@ -98,7 +110,7 @@ def update_post(post_id):
     method.
     """
     post = Post.query.get_or_404(post_id)
-    data = get_new_post_data()
+    data = get_new_data(POST_FIELDS)
     post.title = data['title']
     post.content = data['content']
     post.published = data['published']
@@ -123,6 +135,16 @@ def delete_post(post_id):
 # ----- EVENTS ----- #
 
 
+EVENT_FIELDS = {
+    'title': str,
+    'content': str,
+    'published': bool,
+    'image': (str, type(None)),
+    'start_time': str,
+    'location': str,
+}
+
+
 @mod.route('/events', methods=['GET'])
 def get_events():
     """Get all events.
@@ -145,51 +167,15 @@ def get_event(event_id):
     return jsonify(response)
 
 
-def get_new_event_data():
-    """Validate and return POSTed event-data.
-
-    All fields that does not make sense to create server side are
-    required, otherwise abort with 400.
-    """
-    data = request.get_json()
-    fields = {
-            'title': str,
-            'content': str,
-            'published': bool,
-            'image': (str, type(None)),
-            'start_time': str,
-            'location': str,
-            }
-
-    if not all(key in data for key in fields):
-        abort(400)
-
-    try:
-        if not all(isinstance(data[key], fields[key]) for key in data):
-            abort(400)
-    except KeyError:
-        # Found key not in template
-        abort(400)
-
-    if not all(data[key] for key in fields if isinstance(data[key], str)):
-        abort(400)
-
-    try:
-        data['start_time'] = datetime.datetime.strptime(data['start_time'],
-                                                        '%Y-%m-%dT%H:%M')
-    except ValueError:
-        abort(400)
-
-    return data
-
-
 @mod.route('/events', methods=['POST'])
 def new_event():
     """Create a new event.
 
-    Field requirements are defined with get_new_event_data().
+    Field requirements are defined with get_new_data().
     """
-    data = get_new_event_data()
+    data = get_new_data(EVENT_FIELDS)
+    data['start_time'] = datetime.datetime.strptime(data['start_time'],
+                                                    '%Y-%m-%dT%H:%M')
     event = Event(**data)
     event.timestamp = datetime.datetime.now()
     db.session.add(event)
@@ -207,7 +193,7 @@ def update_event(event_id):
     method.
     """
     event = Event.query.get_or_404(event_id)
-    data = get_new_event_data()
+    data = get_new_data(EVENT_FIELDS)
     event.title = data['title']
     event.content = data['content']
     event.published = data['published']
@@ -243,3 +229,34 @@ def upload_image():
         return jsonify(response)
 
     abort(400)
+
+
+@mod.route('/contact', methods=['GET'])
+def get_contacts():
+    contacts = [c.to_dict() for c in Contact.query.all()]
+    return jsonify(contacts)
+
+
+@mod.route('/contact', methods=['POST'])
+def new_contact():
+    fields = {
+        'title': str,
+        'first_name': str,
+        'last_name': str,
+        'email': str,
+        'phone': (str, type(None)),
+        'weight': int
+    }
+    data = get_new_data(fields)
+    contact = Contact(**data)
+    db.session.add(contact)
+    db.session.commit()
+    return jsonify(contact.to_dict())
+
+
+@mod.route('/contact/<int:contact_id>', methods=['DELETE'])
+def delete_contact(contact_id):
+    contact = Contact.query.get_or_404(contact_id)
+    db.session.delete(contact)
+    db.session.commit()
+    return '', 204
