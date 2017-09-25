@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+
+Flask = "*"
+"Flask-Admin" = "*"
+"Flask-Assets" = "*"
+"Flask-Cors" = "*"
+"Flask-HTTPAuth" = "*"
+"Flask-Migrate" = "*"
+"Flask-Script" = "*"
+"Flask-SQLAlchemy" = "*"
+"Flask-Uploads" = "*"
+Markdown = "*"
+"markdown-newtab" = "*"
+nodeenv = "*"
+"python-slugify" = "*"
+WTForms = "*"
+webassets = {git = "https://github.com/miracle2k/webassets.git", editable = true}
+
+
+[dev-packages]

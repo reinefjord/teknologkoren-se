@@ -1,18 +1,18 @@
 # teknologkoren-se
 
-## Installation in a virtualenv
-Clone and change directory to the repo, then run
+## Installation with Pipenv
+Make sure [Pipenv is installed](https://pipenv.readthedocs.io/en/latest/basics.html#installing-pipenv).
+Clone the change directory to the repo, then run
 ```
-python3 -m venv venv                # Create virtualenv "venv"
-. venv/bin/activate                 # Source the virtualenv
-pip install -r requirements.txt     # Install python requirements to venv
+pipenv install                      # Create virtualenv and install deps
+pipenv shell                        # Spawn a shell with our environment
 nodeenv -p -r npm-requirements.txt  # Install node.js requirements
 ```
-You can deactivate the virtualenv by running `deactivate`.
+You can exit out of the shell with `exit` or `^D`
 
 ## Create database
-Use `manage.py` to create the database. `python3 manage.py full_setup` will
-create the database, some useful tags and a user with the Webmaster tag.
+Use `manage.py` to setup everything. `python3 manage.py full_setup` will
+create the database, which is pretty much all you need.
 
 ## Running
 ### Flask development server
@@ -28,16 +28,3 @@ Image paths have the optional /img(400|800|1600)/ which nginx understands but
 Flask's developement server does not. Images with the resize path argument will
 return 404. Setting `DEBUG = True` in the config will however enable redirection
 of those paths to the original image, making it possible to use Flask's server.
-
-### gunicorn/nginx
-Install the nginx configs, changing `server_name` in `teknologkoren-se.conf`
-to anything you like, for example `local.dev`. Add whatever you chose to your
-hosts-file (`/etc/hosts`):
-```
-127.0.0.1 www.local.dev localhost
-127.0.0.1 intranet.local.dev localhost
-```
-and add it as server name in config.py. `localhost` does not support subdomains
-and will not work.
-
-Run nginx (`systemctl start nginx`) and `run.sh` (`FLASK_DEBUG=1 ./run.sh`).

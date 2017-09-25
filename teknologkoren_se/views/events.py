@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from flask import abort, Blueprint, redirect, render_template, url_for
-from flask_login import current_user
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Event
 from teknologkoren_se.util import url_for_other_page
@@ -60,7 +59,7 @@ def view_event(event_id, slug=None):
     """View a single event."""
     event = Event.query.get_or_404(event_id)
 
-    if not event.published and not current_user.is_authenticated:
+    if not event.published:
         return abort(404)
 
     # Redirect to url with correct slug if missing or incorrect

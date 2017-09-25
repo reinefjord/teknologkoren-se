@@ -1,6 +1,6 @@
 import datetime
 from flask import abort, Blueprint, jsonify, request, url_for
-from teknologkoren_se import app, token_auth, db, images
+from teknologkoren_se import token_auth, db, images
 from teknologkoren_se.models import Post, Event, Contact
 
 

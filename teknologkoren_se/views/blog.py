@@ -1,5 +1,4 @@
-from flask import abort, Blueprint, redirect, render_template, url_for, flash
-from flask_login import current_user
+from flask import abort, Blueprint, redirect, render_template, url_for
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Post, Event
 from teknologkoren_se.util import url_for_other_page
@@ -52,7 +51,7 @@ def view_post(post_id, slug=None):
     """View a single blogpost."""
     post = Post.query.get_or_404(post_id)
 
-    if not post.published and not current_user.is_authenticated:
+    if not post.published:
         return abort(404)
 
     # Redirect to url with correct slug if missing or incorrect
