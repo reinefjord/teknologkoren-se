@@ -204,7 +204,10 @@ def update_event(event_id):
     method.
     """
     event = Event.query.get_or_404(event_id)
+
     data = get_new_data(EVENT_FIELDS)
+    data['start_time'] = datetime.datetime.strptime(data['start_time'],
+                                                    '%Y-%m-%dT%H:%M')
     event.title = data['title']
     event.content = data['content']
     event.published = data['published']
