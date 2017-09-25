@@ -1,5 +1,6 @@
 import locale
 from flask import Flask, abort, request, redirect
+from flask_httpauth import HTTPTokenAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -11,6 +12,7 @@ locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
 def init_views(app):
     from teknologkoren_se.views import (
             api,
+            auth,
             blog,
             events,
             errors,
@@ -21,40 +23,6 @@ def init_views(app):
     app.register_blueprint(blog.mod)
     app.register_blueprint(events.mod)
     app.register_blueprint(general.mod)
-
-
-def setup_flask_admin(app):
-    """Setup Flask-Admin and restrict access to it."""
-    from flask_admin import Admin, AdminIndexView
-    from flask_admin.contrib.sqla import ModelView
-    from flask_login import current_user
-
-    class AdminLoginMixin:
-        def is_accessible(self):
-            if current_user.is_authenticated:
-                return current_user.has_tag('Webmaster')
-            return False
-
-        def inaccessible_callback(self, name, **kwargs):
-            return abort(403)
-
-    class LoginIndexView(AdminLoginMixin, AdminIndexView):
-        pass
-
-    class LoginModelView(AdminLoginMixin, ModelView):
-        pass
-
-    from teknologkoren_se.models import Post, Event
-
-    admin = Admin(app,
-                  name='teknologkoren.se',
-                  static_url_path='/flask-admin/',
-                  index_view=LoginIndexView(url='/flask-admin'))
-
-    admin.add_view(LoginModelView(Post, db.session, name='Post'))
-    admin.add_view(LoginModelView(Event, db.session, name='Event'))
-
-    return admin
 
 
 def catch_image_resize(image_size, image):
@@ -101,6 +69,10 @@ app.config.from_object('config')
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.trim_blocks = True
 
+# (Token) To authorize, client sends 'Authorization: Token <token>' in http
+# headers.
+token_auth = HTTPTokenAuth(scheme='Token')
+
 CORS(app)
 
 db = SQLAlchemy(app)
@@ -109,7 +81,6 @@ migrate = Migrate(app, db)
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
-admin = setup_flask_admin(app)
 assets = setup_flask_assets(app)
 
 init_views(app)  # last, views might import stuff from this file
