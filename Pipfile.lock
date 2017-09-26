@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "45a79dae10a9f5b1b0241667cf338a9c34b28cebe02c751127ec15076d50bc00"
+            "sha256": "d8665b330d2c0f09d7533b3cc37da208cb8d7b64b50dce0d4b62b8bef70088e4"
         },
         "host-environment-markers": {
             "implementation_name": "cpython",
@@ -98,6 +98,13 @@
             ],
             "version": "==0.2.1"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:75af03c99389535f218cc596c7de74df4763803f7b63eb09d77e92b3956b36c6",
+                "sha256:eee1169f0ca667be05db3351a0960765620dad53f53434262ff8901b68a1b622"
+            ],
+            "version": "==19.7.1"
+        },
         "itsdangerous": {
             "hashes": [
                 "sha256:cbb3fcf8d3e33df861709ecaf89d9e6629cff0a217bc2848f1b41cd30d360519"
@@ -184,7 +191,8 @@
         },
         "webassets": {
             "editable": true,
-            "git": "https://github.com/miracle2k/webassets.git"
+            "git": "https://github.com/miracle2k/webassets.git",
+            "ref": "0b9b477d0d5bc7ef0ce33bcad3bd0ea279aefa2e"
         },
         "werkzeug": {
             "hashes": [
