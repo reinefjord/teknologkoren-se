@@ -25,7 +25,7 @@ def handle_error(e):
 
     else:
         try:
-            response = render_template(f'errors/{e.code}.html')
+            response = render_template('errors/{}.html'.format(error.code)
         except TemplateNotFound:
             response = e
         return response, e.code
