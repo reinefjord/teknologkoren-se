@@ -3,7 +3,7 @@ from slugify import slugify
 from markdown import markdown
 from markdown_newtab import NewTabExtension
 from sqlalchemy import event
-from teknologkoren_se import db
+from teknologkoren_se import db, images
 
 
 class Contact(db.Model):
@@ -83,6 +83,7 @@ class Post(db.Model):
         d['published'] = self.published
         d['timestamp'] = self.timestamp
         d['image'] = self.image
+        d['image_path'] = images.url(self.image)
         return d
 
     def __str__(self):
