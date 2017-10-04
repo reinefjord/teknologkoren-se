@@ -240,9 +240,6 @@ article > header, article > h1 {
 .pager {
     display: flex;
 }
-.pager a {
-    text-decoration: none;
-}
 .pager .newer {
     margin-left: auto;
 }
