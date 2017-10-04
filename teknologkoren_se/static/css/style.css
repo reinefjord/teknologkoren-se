@@ -16,6 +16,10 @@
     font-display: swap;
 }
 
+html {
+    font-size: 1.05em;
+}
+
 * {
     box-sizing: border-box;
     overflow-wrap: break-word;
@@ -370,9 +374,9 @@ address {
     }
 }
 
-@media screen and (min-width: 77rem) {
+@media screen and (min-width: 75rem) {
     .cover-image {
-        width: 75rem;
+        width: 73rem;
         justify-self: center;
         border-radius: 10px;
     }
