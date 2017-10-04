@@ -80,7 +80,6 @@ footer #intranet {
 
 a {
     color: #316bb1;
-    text-decoration:  none;
 }
 a:hover {
     color: #000;
@@ -95,6 +94,10 @@ a:hover {
 
 article h1 {
     margin: 0;
+}
+
+h1 a {
+    text-decoration: none;
 }
 
 article > header, article > h1 {
@@ -176,6 +179,11 @@ article > header, article > h1 {
 .logo {
     text-align: center;
     margin: 0 .5rem;
+    text-decoration: none;
+}
+
+.logo a {
+    text-decoration: none;
 }
 
 .logo img {
@@ -210,7 +218,7 @@ article > header, article > h1 {
 }
 .nav .active,
 .sub-nav .active {
-    text-decoration: underline;
+    text-decoration: none;
     color: #316bb1;
 }
 
