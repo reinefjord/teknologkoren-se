@@ -374,7 +374,7 @@ address {
     }
 }
 
-@media screen and (min-width: 75rem) {
+@media screen and (min-width: 75em) {
     .cover-image {
         width: 73rem;
         justify-self: center;
@@ -382,7 +382,7 @@ address {
     }
 }
 
-@media screen and (max-width: 28rem) {
+@media screen and (max-width: 28em) {
     /* FIXME */
     .text-field {
         flex-direction: column-reverse;
