@@ -8,9 +8,14 @@
       {% if not post.published %}[Not published] {% endif %}{{ post.title }}
       {% endif %}
     </h1>
+    Publicerat
     <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
       {{ post.timestamp.strftime("%d %B %Y") }}
     </time>
+    {% if not overview %}
+    &mdash;
+    <a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}">Permalänk</a>
+    {% endif %}
   </header>
   {% if post.image %}
 
@@ -30,13 +35,23 @@
 
 {% macro event_article(event, overview, classes) %}
 <article class="{{ classes }}">
-  <h1>
-    {% if overview %}
-    <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
-    {% else %}
-    {% if not event.published %}[Not published] {% endif %}{{ event.title }}
+  <header>
+    <h1>
+      {% if overview %}
+      <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}" class="inverted-link">{{ event.title }}</a>
+      {% else %}
+      {% if not event.published %}[Not published] {% endif %}{{ event.title }}
+      {% endif %}
+    </h1>
+    Publicerat
+    <time class="pubdate" datetime="{{ event.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
+      {{ event.timestamp.strftime("%d %B %Y") }}
+    </time>
+    {% if not overview %}
+    &mdash;
+    <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}">Permalänk</a>
     {% endif %}
-  </h1>
+  </header>
   {% if event.image %}
   <a class="event-image" href="{{ image_url(event.image) }}">
     {{ img(event.image, 400) }}
