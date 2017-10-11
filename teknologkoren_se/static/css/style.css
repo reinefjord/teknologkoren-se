@@ -16,10 +16,6 @@
     font-display: swap;
 }
 
-html {
-    font-size: 1.05em;
-}
-
 * {
     box-sizing: border-box;
     overflow-wrap: break-word;
