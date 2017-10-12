@@ -9,7 +9,7 @@
 ] %}
 
 {% block body %}
-<main class="overview">
+<main class="content">
   {% block overview %}{% endblock %}
   {% if pagination.has_next or page > 1 %}
   {{ pager(pagination.has_next, page) }}

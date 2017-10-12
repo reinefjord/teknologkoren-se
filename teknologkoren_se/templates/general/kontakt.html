@@ -5,36 +5,38 @@
 
 {% block body %}
 
-<main class="content">
-<h1 class="first-main-header">Kontakt</h1>
-<p>E-postadresser till alla våra styrelsemedlemmar finnes nedan:</p>
-<address>
-  <div class="table contacts">
-    <table>
-      {% for person in contacts %}
-      <tr>
-        <td>{{ person.title }}</td>
-        <td>{{ person.first_name }} {{ person.last_name }}</td>
-        <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
+<div class="overflowing-content">
+  <main class="content">
+  <h1 class="first-main-header">Kontakt</h1>
+  <p>E-postadresser till alla våra styrelsemedlemmar finnes nedan:</p>
+  <address>
+    <div class="table contacts">
+      <table>
+        {% for person in contacts %}
+        <tr>
+          <td>{{ person.title }}</td>
+          <td>{{ person.first_name }} {{ person.last_name }}</td>
+          <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
 
-  {% if ordf is defined %}
-  <p>Kontakta gärna vår ordförande
-  {{ ordf.first_name }} {{ ordf.last_name }},
-  telefon: <a href="tel:{{ ordf.phone }}">{{ ordf.phone }}</a>,
-  om du undrar över något!</p>
-  {% endif %}
+    {% if ordf is defined %}
+    <p>Kontakta gärna vår ordförande
+    {{ ordf.first_name }} {{ ordf.last_name }},
+    telefon: <a href="tel:{{ ordf.phone }}">{{ ordf.phone }}</a>,
+    om du undrar över något!</p>
+    {% endif %}
 
-  <p>Vi nås även per snigelpost:</p>
-  <p translate="no" class="postal-address">
-  Kongl. Teknologkören<br>
-  Fack vid THS<br>
-  100 44 Stockholm
-  </p>
-</address>
-</main>
+    <p>Vi nås även per snigelpost:</p>
+    <p translate="no" class="postal-address">
+    Kongl. Teknologkören<br>
+    Fack vid THS<br>
+    100 44 Stockholm
+    </p>
+  </address>
+  </main>
+</div>
 
 {% endblock %}

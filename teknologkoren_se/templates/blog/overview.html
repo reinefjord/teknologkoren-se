@@ -10,7 +10,7 @@
 {% endif %}
 
 {% block body %}
-<main class="overview">
+<main class="content">
   {% for post in pagination.items %}
   {% if post is event %}
   {{ event_article(post, True) }}

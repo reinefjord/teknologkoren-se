@@ -18,16 +18,18 @@
         <div class="logo">
           {% block logo %}{% endblock %}
         </div>
-        <nav class="nav">
-          <ul>
-            {% for href, id, caption in navigation_bar %}
-            <li class="nowrap">
-              <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
-            </li>
-            {% endfor %}
-          </ul>
-        </nav>
       </header>
+      <nav class="nav">
+        {% for row in navigation_bar %}
+        <ul>
+          {% for href, id, caption in row %}
+          <li class="nowrap">
+            <a href="{{ href|e }}" class="{% if id == active_page %}active{% else %}inverted-link{% endif %}">{{ caption|e }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        {% endfor %}
+      </nav>
       {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
       <ul class="flashes">

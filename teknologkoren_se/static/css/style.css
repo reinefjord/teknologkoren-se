@@ -39,9 +39,15 @@ h1, h2, h3 {
 #container {
     flex: 1;
     display: grid;
+    grid-gap: 1.2rem 2.2rem;
     align-content: start;
     justify-items: center;
-    grid-template-columns: 1fr minmax(0, 35rem) 1fr;
+}
+
+#container > * {
+    /* This should fix overflowing words in grid, but doesn't in Firefox.
+     * Leaving it here as a reminder. */
+    min-width: 0;
 }
 
 img {
@@ -50,12 +56,10 @@ img {
 }
 
 .pageheader {
-    grid-column: 1/-1;
     padding-top: 1rem;
     max-width: 36rem;
     font-size: 1.1rem;
     justify-self: center;
-    margin-bottom: .5rem;
     width: 100%;
 }
 
@@ -63,8 +67,8 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 2rem 1rem 1rem 1rem;
     padding-top: 1rem;
+    margin: 2rem 1rem 1rem 1rem;
     border-top: 1px solid #ddd;
 }
 
@@ -109,29 +113,30 @@ article > header, article > h1 {
 }
 
 .content {
-    grid-column: 2;
-    margin: 1rem 1rem;
-    justify-self: stretch;
+    max-width: 35em;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    justify-self: center;
 }
 
-.overview {
-    display: flex;
-    flex-direction: column;
-    grid-column: 2;
-    margin: 1rem 1rem;
-    justify-self: stretch;
+.overflowing-content {
+    /* If .content has an overflowing child, the child of grid must set
+     * min-width: 0; and max-width: 100%;. Wrap .content with a
+     * div.overflowing-content.
+     */
+    min-width: 0;
+    max-width: 100%;
 }
 
-.overview article~article {
+article~article {
     border-top: 1px solid #ddd;
 }
 
 .secondary {
-    grid-column: 1/-1;
-    margin: 1rem;
     border-top: 1px solid #ddd;
     text-align: center;
     justify-self: stretch;
+    margin: 0 1rem;
 }
 
 .secondary ul {
@@ -142,12 +147,6 @@ article > header, article > h1 {
 .secondary h1 {
     font-size: 1.7em;
     margin-top: 0.3rem;
-}
-
-.cover-image {
-    width: 100%;
-    margin-top: 1.5rem;
-    grid-column: 1/-1;
 }
 
 .post-image {
@@ -202,7 +201,7 @@ article > header, article > h1 {
 }
 
 .nav {
-    margin-top: 1rem;
+    width: 100%;
 }
 
 .nav ul {
@@ -214,7 +213,8 @@ article > header, article > h1 {
     justify-content: center;
 }
 .nav li {
-    margin: .2rem 1rem;
+    margin: 0.3rem auto;
+    padding: 0 0.3rem;
 }
 .nav .active,
 .sub-nav .active {
@@ -223,8 +223,6 @@ article > header, article > h1 {
 }
 
 .sub-nav {
-    grid-column: 2;
-    margin-top: 1.5rem;
     text-align: center;
     justify-self: center;
 }
@@ -294,7 +292,6 @@ address {
 }
 
 .flashes {
-    grid-column: 2;
     text-align: center;
     list-style: none;
     margin: .5rem 1rem;
@@ -334,18 +331,46 @@ address {
     }
 }
 
-@media screen and (min-width: 34rem) {
+@media screen and (min-width: 28rem) {
+    .nav {
+        max-width: 37rem;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
     .nav ul {
-        justify-content: space-between;
+        width: 100%;
+    }
+
+    .nav li {
+        margin: 0 auto;
     }
 }
 
 @media screen and (min-width: 62rem) {
+    #container {
+        grid-template-columns: 1fr 35em 1fr;
+    }
+
+    .pageheader,
+    .nav,
+    .cover-image {
+        grid-column: -1 / 1;
+    }
+
+    .content {
+        grid-column: 2;
+        margin: 0;
+    }
+
+    .overflowing-content {
+        grid-column: 2;
+    }
+
     .sub-nav {
         grid-column: 1;
         justify-self: right;
-        margin-right: 1rem;
-        margin-left: 1rem;
         text-align: left;
         align-self: start;
     }
@@ -354,7 +379,6 @@ address {
         grid-column: 3;
         text-align: left;
         padding: 1rem;
-        margin: 2rem 0 0 2rem;
         border: 1px solid #ddd;
         border-radius: 7px;
         justify-self: left;
@@ -372,7 +396,7 @@ address {
 
 @media screen and (min-width: 75em) {
     .cover-image {
-        width: 73rem;
+        width: 73em;
         justify-self: center;
         border-radius: 10px;
     }
@@ -403,16 +427,26 @@ address {
         align-items: center;
     }
 
+    .nav {
+        margin: 1rem 0;
+    }
+
     .sub-nav {
         align-self: center;
     }
 
     .secondary {
-        align-self: center;
+        align-self: stretch;
+        margin-top: 2rem;
     }
 
-    .content,
-    .overview {
-        max-width: 35rem;
+    @media screen and (min-width: 62em) {
+        .secondary {
+            align-self: center;
+        }
+    }
+
+    .first-main-header {
+        margin-top: 1rem;
     }
 }
