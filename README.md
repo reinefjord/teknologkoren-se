@@ -2,7 +2,7 @@
 
 ## Installation with Pipenv
 Make sure [Pipenv is installed](https://pipenv.readthedocs.io/en/latest/basics.html#installing-pipenv).
-Clone the change directory to the repo, then run
+Clone and change directory to the repo, then run
 ```
 pipenv install                      # Create virtualenv and install deps
 pipenv shell                        # Spawn a shell with our environment
