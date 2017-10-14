@@ -45,9 +45,21 @@ h1, h2, h3 {
 }
 
 #container > * {
-    /* This should fix overflowing words in grid, but doesn't in Firefox.
-     * Leaving it here as a reminder. */
+    /* Fixes overflowing content (anything other than "overflow: visible")
+     * in grid. Won't overflow without this. */
     min-width: 0;
+    max-width: 100%;
+}
+
+.content {
+    justify-self: center;
+    padding: 0 1rem;
+}
+
+.content > * {
+    /* Because of the above overflow rule, we have to set max-width on children
+     * instead of .content itself... */
+    max-width: 35rem;
 }
 
 img {
@@ -110,22 +122,6 @@ article > header, article > h1 {
 
 .first-main-header {
     margin-top: 0;
-}
-
-.content {
-    max-width: 35em;
-    margin-left: 1rem;
-    margin-right: 1rem;
-    justify-self: center;
-}
-
-.overflowing-content {
-    /* If .content has an overflowing child, the child of grid must set
-     * min-width: 0; and max-width: 100%;. Wrap .content with a
-     * div.overflowing-content.
-     */
-    min-width: 0;
-    max-width: 100%;
 }
 
 article~article {
@@ -261,6 +257,7 @@ address {
     overflow-x: auto;
     border-radius: 7px;
     background-color: #f3f3f3;
+    border: 1px solid #ddd;
 }
 
 .table table {
@@ -342,7 +339,7 @@ address {
 
     .content {
         grid-column: 2;
-        margin: 0;
+        padding: 0;
     }
 
     .overflowing-content {
