@@ -41,6 +41,14 @@ def kontakt():
                            ordf=ordf)
 
 
+@mod.route('/lucia/')
+def lucia():
+    ordf = Contact.query.filter_by(title='Ordförande').first()
+
+    return render_template('general/lucia.html',
+                           ordf=ordf)
+
+
 @mod.route('/feed/')
 def atom_feed():
     """Generate and return rss-feed."""

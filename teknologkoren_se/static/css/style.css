@@ -208,7 +208,7 @@ article~article {
 }
 .nav li {
     display: inline-block;
-    margin: 0.3rem 1.5rem;
+    margin: 0.3rem 1.2rem;
 }
 .nav .active,
 .sub-nav .active {

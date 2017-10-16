@@ -1,0 +1,30 @@
+{% extends "main.html" %}
+
+{% set title = "Boka luciatåg" %}
+{% set active_page = "lucia" %}
+{% set cover_image = "/static/images/img1600/lucia.jpg" %}
+
+{% block body %}
+
+<main class="content">
+  <h1 class="first-main-header">Boka luciatåg!</h1>
+  <p>
+  Lys upp decembermörkret med ett luciatåg med Teknologkören! Varje år kring
+  lucia gör vi ett 20-tal uppskattade luciatåg hos företag och organisationer
+  runt om i Stockholm. De senaste åren har vi bland annat anlitats vid de
+  traditionella luciakonserterna i Seglora kyrka på Skansen.
+  </p>
+  <h2>Vad får ni?</h2>
+  <p>
+  Ett framträdande är vanligtvis 15-20 minuter långt med ca 14 sångare klädda i
+  lucialinnen, alla med levande ljus. Vi kan även erbjuda att komma med fler
+  sångare eller göra längre framträdanden, t.ex. på olika avdelningar.
+  </p>
+  <p>
+  För bokningar och mer information, kontakta vår ordförande
+  {{ ordf.first_name }} {{ ordf.last_name }} på
+  <a href="mailto:{{ ordf.email }}">{{ ordf.email }}</a> eller
+  <a href="tel:{{ ordf.phone }}">{{ ordf.phone }}</a>
+</main>
+
+{% endblock %}
