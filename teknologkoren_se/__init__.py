@@ -1,10 +1,10 @@
-import locale
-from flask import Flask, abort, request, redirect, session
+from flask import Flask, abort, g, request, redirect, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
+
 
 def init_views(app):
     from teknologkoren_se.views import (
@@ -67,16 +67,34 @@ def setup_babel(app):
 
     @babel.localeselector
     def get_locale():
-        locale = session.get('locale', None)
+        lang_code = getattr(g, 'lang_code', None)
+        if lang_code is not None:
+            return lang_code
 
-        if locale is not None:
-            return locale
+        g.lang_code = request.accept_languages.best_match(['sv', 'en'])
 
-        return request.accept_languages.best_match(['sv', 'en'])
+        return g.lang_code
 
     app.jinja_env.globals['locale'] = flask_babel.get_locale
     app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
     app.jinja_env.globals['format_date'] = flask_babel.format_date
+
+    @app.route('/')
+    def redirect_to_lang():
+        return redirect(url_for('blog.index',
+                                lang_code=flask_babel.get_locale()))
+
+    @app.url_defaults
+    def add_language_code(endpoint, values):
+        if 'lang_code' in values or not g.lang_code:
+            return
+        if app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
+            values['lang_code'] = g.lang_code
+
+    @app.url_value_preprocessor
+    def pull_lang_code(endpoint, values):
+        if values is not None:
+            g.lang_code = values.pop('lang_code', None)
 
     return babel
 

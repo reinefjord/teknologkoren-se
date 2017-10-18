@@ -4,7 +4,7 @@ from teknologkoren_se.models import Post, Event
 from teknologkoren_se.util import url_for_other_page
 
 
-mod = Blueprint('blog', __name__)
+mod = Blueprint('blog', __name__, url_prefix='/<lang_code>')
 
 
 def is_event(post):

@@ -5,7 +5,7 @@ from werkzeug.contrib.atom import AtomFeed
 from teknologkoren_se.models import Post, Event, Contact
 
 
-mod = Blueprint('general', __name__)
+mod = Blueprint('general', __name__, url_prefix='/<lang_code>')
 
 
 @mod.route('/om-oss/')
@@ -75,21 +75,3 @@ def atom_feed():
                  )
 
     return feed.get_response()
-
-
-@mod.route('/sv/')
-def set_swedish():
-    # We make sure to look at if the user has a preferred version of
-    # the lang, so that date and time formats (and languages if we
-    # happen to have different versions of the same lang) stay the same
-    # on first visit and later if the user switches between languages.
-    session['locale'] = \
-            request.accept_languages.best_match(['sv'], default='sv')
-    return redirect(url_for('blog.index'))
-
-
-@mod.route('/en/')
-def set_english():
-    session['locale'] = \
-            request.accept_languages.best_match(['en'], default='en')
-    return redirect(url_for('blog.index'))

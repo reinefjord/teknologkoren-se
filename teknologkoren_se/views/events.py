@@ -5,7 +5,7 @@ from teknologkoren_se.models import Event
 from teknologkoren_se.util import url_for_other_page
 
 
-mod = Blueprint('events', __name__, url_prefix='/konserter')
+mod = Blueprint('events', __name__, url_prefix='/<lang_code>/konserter')
 
 
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page

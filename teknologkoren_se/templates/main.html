@@ -17,7 +17,7 @@
 ] %}
 
 {% block logo %}
-<a href="/" class="inverted-link">
+<a href="{{ url_for('blog.index') }}" class="inverted-link">
   <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="">
   <div class="logo-text">
     <h1>
