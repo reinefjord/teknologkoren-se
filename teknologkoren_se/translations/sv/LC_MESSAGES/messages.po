@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-18 14:17+0200\n"
+"POT-Creation-Date: 2017-10-18 15:00+0200\n"
 "PO-Revision-Date: 2017-10-18 14:14+0200\n"
 "Last-Translator: \n"
 "Language: sv\n"
@@ -63,6 +63,17 @@ msgstr "Lucia"
 #: teknologkoren_se/templates/main.html:11
 msgid "Booking"
 msgstr "Boka"
+
+#: teknologkoren_se/templates/general/sing.html:3
+#: teknologkoren_se/templates/main.html:14
+msgid "Sing with us"
+msgstr "Sjung med oss"
+
+#: teknologkoren_se/templates/general/contact.html:3
+#: teknologkoren_se/templates/general/contact.html:9
+#: teknologkoren_se/templates/main.html:15
+msgid "Contact"
+msgstr "Kontakt"
 
 #: teknologkoren_se/templates/main.html:35
 msgid "Intranet"
@@ -379,11 +390,6 @@ msgstr ""
 " favoritsång ni vill att vi ska framföra? Tveka inte att höra av er till "
 "oss med era förslag!"
 
-#: teknologkoren_se/templates/general/contact.html:3
-#: teknologkoren_se/templates/general/contact.html:9
-msgid "Contact"
-msgstr "Kontakt"
-
 #: teknologkoren_se/templates/general/contact.html:10
 msgid "You can find email adresses for all of our board members below:"
 msgstr "Du kan hitta e-postadresser till våra styrelsemedlemmar nedan:"
@@ -447,10 +453,6 @@ msgid ""
 msgstr ""
 "För bokningar och mer information, kontakt vår ordförande, %(name)s, på "
 "%(email)s eller %(phone)s."
-
-#: teknologkoren_se/templates/general/sing.html:3
-msgid "Sing with us"
-msgstr "Sjung med oss"
 
 #: teknologkoren_se/templates/general/sing.html:9
 msgid "Sing with Teknologkören!"
