@@ -24,3 +24,4 @@ UPLOADS_DEFAULT_DEST = 'app/static/uploads/'
 UPLOADS_DEFAULT_URL = '/static/uploads/'
 
 BABEL_DEFAULT_LOCALE = 'sv'
+BABEL_DEFAULT_TIMEZONE = 'CET'
