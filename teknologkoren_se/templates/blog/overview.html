@@ -6,7 +6,7 @@
 {% set title = "I takt med tiden" %}
 {% set cover_image = "/static/images/ktk.jpg" %}
 {% else %}
-{% set title = "I takt med tiden - Sida {}".format(page) %}
+{% set title = "I takt med tiden - " + _('Page') + " {}".format(page) %}
 {% endif %}
 
 {% block body %}
@@ -25,14 +25,14 @@
 </main>
 
 <aside class="secondary">
-  <h1>Länkar</h1>
+  <h1>{{ _('Links') }}</h1>
   <ul>
-    <li><a href="https://www.facebook.com/teknologkoren">KTK på Facebook</a></li>
-    <li><a href="https://open.spotify.com/artist/1nTbx8aaAqaK513pOGLjZ4">KTK på Spotify</a></li>
-    <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">KTK på YouTube</a></li>
-    <li><a href="https://soundcloud.com/kongl-teknologk-ren">KTK på SoundCloud</a></li>
-    <li><a href="https://github.com/teknologkoren">KTK på GitHub</a></li>
-    <li><a href="/feed">RSS-flöde</a></li>
+    <li><a href="https://www.facebook.com/teknologkoren">{{ _('KTK on Facebook') }}</a></li>
+    <li><a href="https://open.spotify.com/artist/1nTbx8aaAqaK513pOGLjZ4">{{ _('KTK on Spotify') }}</a></li>
+    <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">{{ _('KTK on YouTube') }}</a></li>
+    <li><a href="https://soundcloud.com/kongl-teknologk-ren">{{ _('KTK on SoundCloud') }}</a></li>
+    <li><a href="https://github.com/teknologkoren">{{ _('KTK on GitHub') }}</a></li>
+    <li><a href="/feed">{{ _('RSS-feed') }}</a></li>
   </ul>
 </aside>
 {% endblock %}

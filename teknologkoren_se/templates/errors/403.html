@@ -1,11 +1,10 @@
 {% extends "main.html" %}
 
-{% set title = "403 - Ingen åtkomst" %}
+{% set title = _('403 - Forbidden') %}
 
 {% block body %}
 <main class="content">
-  <h1>403 - Ingen åtkomst</h1>
-  <p>Denna sida har begränsad åtkomst.
-  Om du sjunger rätt melodi kanske den släpper in dig?</p>
+<h1>{{ _('403 - Forbidden') }}</h1>
+<p>{{ _('This page has limited access. Sing the right tune and it might let you in?') }}</p>
 </main>
 {% endblock %}

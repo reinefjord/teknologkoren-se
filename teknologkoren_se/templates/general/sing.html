@@ -1,0 +1,54 @@
+{% extends "main.html" %}
+
+{% set title = _('Sing with us') %}
+{% set active_page = "sing" %}
+
+{% block body %}
+
+<main class="content">
+<h1 class="first-main-header">{{ _('Sing with Teknologkören!') }}</h1>
+<p>{{ _('Would you like to sing with us? Excellent!') }}</p>
+
+<p>
+{{ _('To be able to sing in Teknologkören you are expected to have some prior choral experience and be able to read and sing by sheet music. You will also have to have the time to attend and be committed at rehearsals, concerts, and other performances. If you fit these requirements, you are welcome to sign up for an audition!') }}
+</p>
+
+<p>
+{{ _('Here will follow some information on how an audition works and what you can do to prepare.') }}
+</p>
+
+<p>
+{{ _('You will sing for our conductor and one or two people from the choir.  The audition will take about 10 minutes.') }}
+
+<p> {{ _('At the audition, you will:') }} </p>
+
+<ul>
+  <li>
+    {{ _('Sing some voice exercises according to instructions from our conductor.') }}
+  </li>
+  <li>
+    {{ _('You will sing a piece of your choice, a capella or with accompaniment. If you want our conductor to accompany you on piano, bring sheet music.') }}
+  </li>
+  <li>
+    {{ _('You will do a sight-reading test, singing a song a vista from sheet music that you cannot prepare for, accompanied by piano.') }}
+  </li>
+  <li>
+    {{ _('Sing in a quartet &mdash; We will send you a score that you will perform in a quartet together with three current chorists. Practice the voice you want to audition for at home. You can have the score with you, it is not required to know it by heart.') }}
+  </li>
+</ul>
+
+<p>
+{{ _('We rehearse Wednesdays on KTH campus Valhallavägen, between 18:30 and 21:30.') }}
+</p>
+
+<p>
+{{ _('If you want to sign up for an audition, fill in <a target="_blank" href="{}">this form</a>. Auditions normally take place in the beginning of the semester, meaning September or January/February.').format("https://goo.gl/forms/HVTgIyrzK8msUkvQ2") }}
+</p>
+
+<p>
+{{ _('If you have any questions about the auditions, please <a href="{}">contact our chairman</a>.').format(url_for('general.contact')) }}
+</p>
+
+</main>
+
+{% endblock %}

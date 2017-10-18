@@ -1,13 +1,13 @@
 {% extends "events/overview.html" %}
 {% from "macros.html" import event_article %}
 
+{% set title = _('Upcoming concerts') %}
 {% if page > 1 %}
-{% set title = "Kommande konserter - Sida {}".format(page) %}
+{% set title = title + " - " + _('Page') + " {}".format(page) %}
 {% else %}
-{% set title = "Kommande konserter" %}
 {% endif %}
 
-{% set active_sub = "kommande" %}
+{% set active_sub = "coming" %}
 
 {% block overview %}
 {% if pagination.items %}
@@ -16,8 +16,7 @@
 {% endfor %}
 {% else %}
 <p>
-Vi har inga konserter planerade eller annonserade i denna stund!<br/>
-Du kan hitta våra tidigare konserter i <a href="/konserter/arkiv/">konsertarkivet</a>.
+{{ _('We do not have any concerts announced at the moment! <br/> You can find our previous concerts in the <a href="{}">concert archive</a>.').format(url_for('events.archive')) }}
 </p>
 {% endif %}
 {% endblock %}

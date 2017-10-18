@@ -14,6 +14,10 @@ You can exit out of the shell with `exit` or `^D`
 Use `manage.py` to setup everything. `python3 manage.py full_setup` will
 create the database, which is pretty much all you need.
 
+## Compile the translations
+Run `pybabel compile -d teknologkoren_se/translations` to compile the
+translations.
+
 ## Running
 ### Flask development server
 Set environment variable `FLASK_APP` to `teknologkoren_se/__init__.py`, then run

@@ -1,13 +1,10 @@
 import locale
-from flask import Flask, abort, request, redirect
+from flask import Flask, abort, request, redirect, session
 from flask_httpauth import HTTPBasicAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-
-locale.setlocale(locale.LC_TIME, "sv_SE.utf8")
-
 
 def init_views(app):
     from teknologkoren_se.views import (
@@ -63,6 +60,27 @@ def setup_flask_assets(app):
     return assets
 
 
+def setup_babel(app):
+    import flask_babel
+
+    babel = flask_babel.Babel(app)
+
+    @babel.localeselector
+    def get_locale():
+        locale = session.get('locale', None)
+
+        if locale is not None:
+            return locale
+
+        return request.accept_languages.best_match(['sv', 'en'])
+
+    app.jinja_env.globals['locale'] = flask_babel.get_locale
+    app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
+    app.jinja_env.globals['format_date'] = flask_babel.format_date
+
+    return babel
+
+
 app = Flask(__name__)
 app.config.from_object('config')
 
@@ -80,6 +98,8 @@ images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
 
 assets = setup_flask_assets(app)
+
+babel = setup_babel(app)
 
 init_views(app)  # last, views might import stuff from this file
 

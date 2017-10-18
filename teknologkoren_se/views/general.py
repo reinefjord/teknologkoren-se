@@ -1,5 +1,6 @@
 from urllib.parse import urljoin
-from flask import Blueprint, render_template, request
+from flask import Blueprint, redirect, render_template, request, session, \
+        url_for
 from werkzeug.contrib.atom import AtomFeed
 from teknologkoren_se.models import Post, Event, Contact
 
@@ -8,25 +9,25 @@ mod = Blueprint('general', __name__)
 
 
 @mod.route('/om-oss/')
-def om_oss():
+def about():
     """Show about page."""
-    return render_template('general/om-oss.html')
+    return render_template('general/about.html')
 
 
 @mod.route('/boka/')
-def boka():
+def booking():
     """Show booking page."""
-    return render_template('general/boka.html')
+    return render_template('general/booking.html')
 
 
 @mod.route('/sjung/')
-def sjung():
+def sing():
     """Show audition page."""
-    return render_template('general/sjung.html')
+    return render_template('general/sing.html')
 
 
 @mod.route('/kontakt/')
-def kontakt():
+def contact():
     """Show contact page.
 
     Order of board members and their email addresses are hard coded.
@@ -36,7 +37,7 @@ def kontakt():
     contacts = Contact.query.order_by(Contact.weight.asc()).all()
     ordf = Contact.query.filter_by(title='Ordförande').first()
 
-    return render_template('general/kontakt.html',
+    return render_template('general/contact.html',
                            contacts=contacts,
                            ordf=ordf)
 
@@ -74,3 +75,21 @@ def atom_feed():
                  )
 
     return feed.get_response()
+
+
+@mod.route('/sv/')
+def set_swedish():
+    # We make sure to look at if the user has a preferred version of
+    # the lang, so that date and time formats (and languages if we
+    # happen to have different versions of the same lang) stay the same
+    # on first visit and later if the user switches between languages.
+    session['locale'] = \
+            request.accept_languages.best_match(['sv'], default='sv')
+    return redirect(url_for('blog.index'))
+
+
+@mod.route('/en/')
+def set_english():
+    session['locale'] = \
+            request.accept_languages.best_match(['en'], default='en')
+    return redirect(url_for('blog.index'))

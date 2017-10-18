@@ -105,7 +105,7 @@ def new_post():
     """
     data = get_new_data(POST_FIELDS)
     post = Post(**data)
-    post.timestamp = datetime.datetime.now()
+    post.timestamp = datetime.datetime.utcnow()
     db.session.add(post)
     db.session.commit()
 
@@ -188,7 +188,7 @@ def new_event():
     data['start_time'] = datetime.datetime.strptime(data['start_time'],
                                                     '%Y-%m-%dT%H:%M')
     event = Event(**data)
-    event.timestamp = datetime.datetime.now()
+    event.timestamp = datetime.datetime.utcnow()
     db.session.add(event)
     db.session.commit()
 

@@ -51,6 +51,12 @@ h1, h2, h3 {
     max-width: 100%;
 }
 
+#lang {
+    position: absolute;
+    top: .5rem;
+    right: 1rem;
+}
+
 .content {
     justify-self: center;
     padding: 0 1rem;

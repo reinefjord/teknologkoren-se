@@ -1,10 +1,10 @@
 {% extends "main.html" %}
 
-{% set title = "404 - Sidan hittades inte" %}
+{% set title = _('404 - Not Found') %}
 
 {% block body %}
 <main class="content">
-  <h1>404 - Sidan hittades inte</h1>
-  <p>Sidan du ville ha kunde inte hittas. :(</p>
+<h1>{{ _('404 - Not Found') }}</h1>
+<p>{{ _('The page you wanted could not be found :(') }}</p>
 </main>
 {% endblock %}

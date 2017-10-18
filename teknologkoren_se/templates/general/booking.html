@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+
+{% set title = _('Book us') %}
+{% set active_page = "booking" %}
+
+{% block body %}
+
+<main class="content">
+  <h1 class="first-main-header">{{ _('Book Teknologkören!') }}</h1>
+  <p>
+  {{ _('Kongl. Teknologkören is a frequently hired choir that contributes with song and music at many different events. The last few years we have performed at large conferences, smaller parties, dinners, weddings, baptisms and funerals. In December we enrich the Lucia celebrations at our different customers all over Stockholm. These performances are always appreciated by the thousands that get a chance to listen to the song.') }}
+  </p>
+  <p>
+  {{ _('Would you like to book Kongl. Teknologkören? We\'ll sing however you want, wherever you want &mdash; conferences, bachelor &amp; bachelorette parties, birthdays, weddings, baptisms, funerals, farewell parties, and more! Contact our chairman whose contact info can be found <a href="{}">here</a>.'
+  ).format(url_for('general.contact')) }}
+  </p>
+  <p>
+  <h2>{{ _('Price example') }}</h2>
+  <p>
+  {{ _('8000 kr will get you 14 chorists that sings songs from Kongl. Teknologkören\'s standard repertoire for 20 minutes. If you would like fewer singers you can hire a quartet which starts at 4000 kr.') }}
+  </p>
+  <p>
+  {{ _('The suggestions above are examples, we are flexible and are happy to adapt to your needs. Do you want another amount of singers, or want to hear your favorite song? Get in touch and we will work something out!') }}
+  </p>
+</main>
+
+{% endblock %}

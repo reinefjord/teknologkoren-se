@@ -2,17 +2,17 @@
 
 {% set navigation_bar = [
 [
-(url_for('blog.index'), 'index', 'Hem'),
-(url_for('general.om_oss'), 'om-oss', 'Om oss'),
-(url_for('events.index'), 'konserter', 'Konserter'),
+(url_for('blog.index'), 'index', _('Home')),
+(url_for('general.about'), 'about', _('About us')),
+(url_for('events.index'), 'events', _('Concerts')),
 ],
 [
-(url_for('general.lucia'), 'lucia', 'Lucia'),
-(url_for('general.boka'), 'boka', 'Boka'),
+(url_for('general.lucia'), 'lucia', _('Lucia')),
+(url_for('general.booking'), 'booking', _('Booking')),
 ],
 [
-(url_for('general.sjung'), 'sjung', 'Sjung med'),
-(url_for('general.kontakt'), 'kontakt', 'Kontakt'),
+(url_for('general.sing'), 'sing', 'Sing with us'),
+(url_for('general.contact'), 'contact', 'Contact'),
 ]
 ] %}
 
@@ -32,6 +32,6 @@
 {% block footer %}
 <footer>
   <img id="footer-img" src="{{ url_for('static', filename='images/logo_grey.svg') }}" alt="">
-  <a id="intranet" href="https://fernet.teknologkoren.se">Intranet</a>
+  <a id="intranet" href="https://fernet.teknologkoren.se">{{ _('Intranet') }}</a>
 </footer>
 {% endblock %}

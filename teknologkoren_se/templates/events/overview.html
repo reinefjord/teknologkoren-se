@@ -1,11 +1,11 @@
 {% extends "main.html" %}
 {% from "macros.html" import event_article, pager %}
 
-{% set active_page = "konserter" %}
+{% set active_page = "events" %}
 
 {% set subnav = [
-(url_for('events.index'), 'kommande', 'Kommande konserter'),
-(url_for('events.archive'), 'arkiv', 'Konsertarkiv'),
+(url_for('events.index'), 'coming', _('Upcoming concerts')),
+(url_for('events.archive'), 'archive', _('Concert archive')),
 ] %}
 
 {% block body %}

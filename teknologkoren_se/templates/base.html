@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="{{ locale() }}">
   <head>
     {% block head %}
     <meta charset="utf-8">
@@ -14,6 +14,15 @@
   <body>
     {% set active_page = active_page %}
     <div id="container">
+      {% if 'sv' in locale().language %}
+      <a id="lang" href="{{ url_for('general.set_english') }}">
+        English
+      </a>
+      {% else %}
+      <a id="lang" href="{{ url_for('general.set_swedish') }}">
+        Svenska
+      </a>
+      {% endif %}
       <header class="pageheader">
         <div class="logo">
           {% block logo %}{% endblock %}

@@ -1,13 +1,12 @@
 {% extends "events/overview.html" %}
 {% from "macros.html" import event_article %}
 
+{% set title = _('Concert archive') %}
 {% if page > 1 %}
-{% set title = "Konsertarkiv - Sida {}".format(page) %}
-{% else %}
-{% set title = "Konsertarkiv" %}
+{% set title = title + " - " + _('Page') + " {}".format(page) %}
 {% endif %}
 
-{% set active_sub = "arkiv" %}
+{% set active_sub = "archive" %}
 
 {% block overview %}
 {% if pagination.items %}
@@ -15,6 +14,6 @@
 {{ event_article(event, True) }}
 {% endfor %}
 {% else %}
-<p>Ingenting här än så länge!</p>
+<p>{{ _('Nothing here yet!') }}</p>
 {% endif %}
 {% endblock %}

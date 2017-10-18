@@ -1,30 +1,32 @@
 {% extends "main.html" %}
 
-{% set title = "Boka luciatåg" %}
+{% set title = _('Book a Lucia procession') %}
 {% set active_page = "lucia" %}
 {% set cover_image = "/static/images/img1600/lucia.jpg" %}
 
 {% block body %}
 
 <main class="content">
-  <h1 class="first-main-header">Boka luciatåg!</h1>
-  <p>
-  Lys upp decembermörkret med ett luciatåg med Teknologkören! Varje år kring
-  lucia gör vi ett 20-tal uppskattade luciatåg hos företag och organisationer
-  runt om i Stockholm. De senaste åren har vi bland annat anlitats vid de
-  traditionella luciakonserterna i Seglora kyrka på Skansen.
-  </p>
-  <h2>Vad får ni?</h2>
-  <p>
-  Ett framträdande är vanligtvis 15-20 minuter långt med ca 12 sångare klädda i
-  lucialinnen, alla med levande ljus. Vi kan även erbjuda att komma med fler
-  sångare eller göra längre framträdanden, t.ex. på olika avdelningar.
-  </p>
-  <p>
-  För bokningar och mer information, kontakta vår ordförande
-  {{ ordf.first_name }} {{ ordf.last_name }} på
-  <a href="mailto:{{ ordf.email }}">{{ ordf.email }}</a> eller
-  <a href="tel:{{ ordf.phone }}">{{ ordf.phone }}</a>
+<h1 class="first-main-header">{{ _('Book a Lucia procession!') }}</h1>
+<p>
+{{ _('Brighten the darkness of December with a Lucia procession by Teknologkören! Every year around the Saint Lucy celebrations we perform about 20 Lucia processions at companies and organisations all around Stockholm. The last few years we have been hired for the traditional Lucia concerts in Seglora Church at Skansen.') }}
+</p>
+<h2>{{ _('What do you get?') }}</h2>
+<p>
+{{ _('One performance is usually 15&ndash;20 minutes long with 12 singers dressed in the traditional white dresses, all with burning candles. We can also offer more singers or longer performances, for example at different departments.') }}
+</p>
+<p>
+{% autoescape false %}
+{{ _('For bookings and more information, please contact our chairman, %(name)s, on %(email)s or %(phone)s.',
+     name='{first_name} {last_name}',
+     email='<a href="mailto:{email}">{email}</a>',
+     phone='<a href="tel:{phone}">{phone}</a>'
+    ).format(first_name=ordf.first_name,
+             last_name=ordf.last_name,
+             email=ordf.email,
+             phone=ordf.phone)
+}}
+{% endautoescape %}
 </main>
 
 {% endblock %}

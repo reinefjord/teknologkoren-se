@@ -8,13 +8,13 @@
       {% if not post.published %}[Not published] {% endif %}{{ post.title }}
       {% endif %}
     </h1>
-    Publicerat
-    <time class="pubdate" datetime="{{ post.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
-      {{ post.timestamp.strftime("%d %B %Y") }}
+    {{ _('Published') }}
+    <time class="pubdate" datetime="{{ format_datetime(post.timestamp, "yyyy-MM-ddTHH:mmZ") }}">
+      {{ format_date(post.timestamp, "dd MMMM yyyy") }}
     </time>
     {% if not overview %}
     &mdash;
-    <a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}">Permalänk</a>
+    <a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}">{{ _('Permalink') }}</a>
     {% endif %}
   </header>
   {% if post.image %}
@@ -43,9 +43,9 @@
       {% if not event.published %}[Not published] {% endif %}{{ event.title }}
       {% endif %}
     </h1>
-    Publicerat
-    <time class="pubdate" datetime="{{ event.timestamp.strftime("%Y-%m-%dT%H:%M") }}">
-      {{ event.timestamp.strftime("%d %B %Y") }}
+    {{ _('Published') }}
+    <time class="pubdate" datetime="{{ format_datetime(event.timestamp, "yyyy-MM-ddTHH:mmZ") }}">
+      {{ format_date(event.timestamp, "dd MMMM yyyy") }}
     </time>
     {% if not overview %}
     &mdash;
@@ -59,13 +59,13 @@
   {% endif %}
   {{ event.content_to_html()|safe }}
   <dl class="event-detail">
-    <dt>Tid:</dt>
+    <dt>{{ _('Time') }}:</dt>
     <dd>
-      <time datetime="{{ event.start_time.strftime("%Y-%m-%dT%H:%M") }}">
-        {{ event.start_time.strftime("%A %d %B %Y, klockan %H:%M") }}
+      <time datetime="{{ format_datetime(event.start_time, "yyyy-MM-ddTHH:mmZ") }}">
+        {{ format_datetime(event.start_time, "EEEE dd MMMM yyyy, HH:mm") }}
       </time>
     </dd>
-    <dt>Plats:</dt>
+    <dt>{{ _('Place') }}:</dt>
     <dd><a target="_blank" href="https://www.google.se/maps/search/{{ event.location|urlencode }}/">{{ event.location }}</a></dd>
   </dl>
 </article>
@@ -75,11 +75,11 @@
 <nav class="pager">
   {% if has_next %}
   <a class="older inverted-link" href="{{ url_for_other_page(page + 1) }}">
-    &larr; Äldre</a>
+    &larr; {{ _('Older') }}</a>
   {% endif %}
   {% if page > 1 %}
   <a class="newer inverted-link" href="{{ url_for_other_page(page - 1) }}">
-    Nyare &rarr;</a>
+    {{ _('Newer') }} &rarr;</a>
   {% endif %}
 </nav>
 {% endmacro %}

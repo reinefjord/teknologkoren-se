@@ -1,0 +1,48 @@
+{% extends "main.html" %}
+
+{% set title = _('Contact') %}
+{% set active_page = "contact" %}
+
+{% block body %}
+
+<main class="content">
+<h1 class="first-main-header">{{ _('Contact') }}</h1>
+<p>{{ _('You can find email adresses for all of our board members below:') }}</p>
+<address>
+  <div class="table contacts">
+    <table>
+      {% for person in contacts %}
+      <tr>
+        <td>{{ person.title }}</td>
+        <td>{{ person.first_name }} {{ person.last_name }}</td>
+        <td><a href="mailto:{{ person.email }}">{{ person.email }}</a></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  {% if ordf is defined %}
+  <p>
+  {% autoescape false %}
+
+  {{ _('Feel free to contact our chairman, %(name)s, phone %(phone)s, if you have any questions.',
+       name='{first_name} {last_name}',
+       phone='<a href="tel:{phone}">{phone}</a>'
+       ).format(first_name=ordf.first_name,
+                last_name=ordf.last_name,
+                phone=ordf.phone) }}
+
+  {% endautoescape %}
+  </p>
+  {% endif %}
+
+  <p>{{ _('You can also reach us by regular mail:') }}</p>
+  <p translate="no" class="postal-address">
+  Kongl. Teknologkören<br>
+  Fack vid THS<br>
+  100 44 Stockholm
+  </p>
+</address>
+</main>
+
+{% endblock %}

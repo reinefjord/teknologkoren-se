@@ -1,11 +1,10 @@
 {% extends "main.html" %}
 
-{% set title = "500 - Serverfel" %}
+{% set title = _('500 - Internal Server Error') %}
 
 {% block body %}
 <main class="content">
-  <h1>500 - Serverfel</h1>
-  <p>Hoppsan, något gick fel. Vi ska sjunga en serenad för vår server med hopp
-  om att den bestämmer sig för att samarbeta.</p>
+<h1>{{ _('500 - Internal Server Error') }}</h1>
+<p>{{ _('Oops, something went wrong. We\'ll try singing a serenade for our server to pursuade it to cooperate.') }}
 </main>
 {% endblock %}

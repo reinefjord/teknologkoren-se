@@ -1,0 +1,59 @@
+{% extends "main.html" %}
+
+{% set title = _('About us') %}
+{% set active_page = "about" %}
+{% set cover_image = "/static/images/img1600/2016_åland.jpg" %}
+
+{% block body %}
+
+<main class="content">
+<h1 class="first-main-header">{{ _('Who are we?') }}</h1>
+<p>
+{{ _('Kongl. Teknologkören (KTK) is a student choir of the <a href="http://ths.kth.se">Student union, THS</a>, of the Royal Institute of Technology in Stockholm. We are a mixed choir with about 40&ndash;45 members.') }}
+</p>
+<p>
+{{ _('Our repertoire spans all music made for choir; from sacred music to world music and music from student culture. The choir has been part several larger projects, besides own concerts and recordings. The spring of 2016 we did a tour to Turku, Finland, where we performed Giuseppe Verdi\'s Requiem together with KTH\'s orchestra <i>KTH:s Akademiska Kapell</i>, and finnish choirs Florakören and Brahe Djärknar.') }}
+</p>
+<p>
+{{ _('Kongl. Teknologkören is an active choir both musically and socially. In the choir you will find both a joy of singing as well as friends for life! We do lots of fun things during the year, including:') }}
+</p>
+<ul>
+  <li>{{ _('Rehearsal on Wednesdays between 18:30&ndash;21:30.') }}</li>
+  <li>{{ _('Perfom at our fall, christmas, spring, and summer concerts.') }}</li>
+  <li>{{ _('We go to Åland for a yearly rehearsal weekend in October.') }}</li>
+  <li>{{ _('Sing for the new students at KTH\'s welcoming ceremonies in the city hall in August.') }}</li>
+  <li>{{ _('Sing at KTH\'s diploma ceremonies in the city hall in May and December.') }}</li>
+  <li>{{ _('Sing at KTH\'s own christmas concert together with KTH:s Akademiska Kapell.') }}</li>
+  <li>{{ _('Many Lucia processions at companies and organisations all over Stockholm in December.') }}</li>
+  <li>{{ _('Sing and socialise at the choir\'s own parties.') }}</li>
+</ul>
+<p>
+{{ _('Every other summer we go on a longer trip to meet other choirs or compete at international choir competitions. The last trips were:') }}
+<dl>
+  <dt>{{ _('Vienna &amp; Ljubljana, 2017') }}</dt>
+  <dd>
+  {{ _('We were able to stay for a short time in Vienna before continuing to Ljubljana where we performed in the beautiful S:t Nicolas\' Cathedral.') }}
+  </dd>
+  <dt>{{ _('Bulgaria, 2015') }}</dt>
+  <dd>
+  {{ _('We participated in workshops about bulgarian folk music and kept concerts at the university in Sofia and at a biomathematics conference in Blagoevgrad') }}
+  </dd>
+  <dt>{{ _('Portugal, 2013') }}</dt>
+  <dd>
+  {{ _('In Portugal, we sang with several choirs, including our sister choir at the Technical University of Lisbon') }}
+  </dd>
+  <dt>{{ _('Barcelona, 2011') }}</dt>
+  <dd>
+  {{ _('The choir participated in the Barcelona choir festival, and performed in the Barcelona Cathedral.') }}
+  </dd>
+</dl>
+<p>
+{{ _('Kongl. Teknologkören is led by conductor Rikard Karlsson since 2010. Before that, we\'ve been led by David Lundblad (2008&ndash;2010), Fredrik Winberg (2003&ndash;2007) and Helene Stureborg (1994&ndash;2002).') }}
+</p>
+<p>
+{{ _('We often and gladly perform at parties and celebrations at companies, and sometimes on behalf of individuals. See <a href="{booking}">Booking</a> or <a href="{contact}">contact us</a> for more information.').format(booking=url_for('general.booking'),
+                             contact=url_for('general.contact')) }}
+</p>
+</main>
+
+{% endblock %}
