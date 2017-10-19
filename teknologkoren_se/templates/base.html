@@ -2,10 +2,17 @@
 <html lang="{{ locale() }}">
   <head>
     {% block head %}
+    <title>{{ title }} | Kongl. Teknologkören</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ title }} | Kongl. Teknologkören</title>
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
+    {% if 'sv' in locale().language %}
+    <link rel="alternate" hreflang="en" href="{{ url_for_lang(request.endpoint, 'en', request.view_args, _external=True) }}" />
+    {% else %}
+    <link rel="alternate" hreflang="sv" href="{{ url_for_lang(request.endpoint, 'sv', request.view_args, _external=True) }}" />
+    {% endif %}
+
     {% assets 'common_css' %}
     <link rel="stylesheet" href="{{ ASSET_URL }}">
     {% endassets %}
@@ -14,6 +21,7 @@
   <body>
     {% set active_page = active_page %}
     <div id="container">
+
       {% if 'sv' in locale().language %}
       <a id="lang" href="{{ url_for_lang(request.endpoint, 'en', request.view_args) }}">
         English
@@ -23,6 +31,7 @@
         Svenska
       </a>
       {% endif %}
+
       <header class="pageheader">
         <div class="logo">
           {% block logo %}{% endblock %}

@@ -95,12 +95,12 @@ def setup_babel(app):
 
         return redirect(new_path)
 
-    def url_for_lang(endpoint, lang_code, view_args, default='blog.index'):
+    def url_for_lang(endpoint, lang_code, view_args, default='blog.index', **args):
         if endpoint and \
                 app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
-            return url_for(endpoint, lang_code=lang_code, **view_args or {})
+            return url_for(endpoint, lang_code=lang_code, **view_args or {}, **args)
 
-        return url_for(default, lang_code=lang_code, **view_args or {})
+        return url_for(default, lang_code=lang_code, **view_args or {}, **args)
 
     app.jinja_env.globals['locale'] = flask_babel.get_locale
     app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
