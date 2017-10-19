@@ -117,9 +117,17 @@ def setup_babel(app):
         if app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
             values['lang_code'] = g.lang_code
 
+    def url_for_lang(endpoint, lang_code, default='blog.index'):
+        if endpoint and \
+                app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
+            return url_for(endpoint, lang_code=lang_code)
+
+        return url_for(default, lang_code=lang_code)
+
     app.jinja_env.globals['locale'] = flask_babel.get_locale
     app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
     app.jinja_env.globals['format_date'] = flask_babel.format_date
+    app.jinja_env.globals['url_for_lang'] = url_for_lang
 
     return babel
 
