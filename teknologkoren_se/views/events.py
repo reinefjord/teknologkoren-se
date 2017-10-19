@@ -2,10 +2,15 @@ from datetime import datetime, timedelta
 from flask import abort, Blueprint, redirect, render_template, url_for
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Event
-from teknologkoren_se.util import url_for_other_page
+from teknologkoren_se.util import url_for_other_page, \
+        bp_url_processors
 
 
-mod = Blueprint('events', __name__, url_prefix='/<lang_code>/konserter')
+mod = Blueprint('events',
+                __name__,
+                url_prefix='/<any(sv, en):lang_code>/konserter')
+
+bp_url_processors(mod)
 
 
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page

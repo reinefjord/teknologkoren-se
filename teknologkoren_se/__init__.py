@@ -62,6 +62,7 @@ def setup_flask_assets(app):
 
 def setup_babel(app):
     import flask_babel
+    from werkzeug.routing import RequestRedirect, MethodNotAllowed, NotFound
 
     babel = flask_babel.Babel(app)
 
@@ -77,50 +78,22 @@ def setup_babel(app):
 
         return lang_code
 
-    @app.route('/')
-    def redirect_to_lang():
-        """Redirect root to lang-version"""
-        return redirect(url_for('blog.index',
-                                lang_code=flask_babel.get_locale()))
-
     @app.before_request
-    def check_lang_code():
-        if request.view_args is not None:
-            # Remove lang_code from the view args, none of our views
-            # actually want that argument. None if view_args is missing
-            # lang_code.
-            lang_code = request.view_args.pop('lang_code', None)
-        else:
-            # Try getting directly from path...
-            lang_code = request.path[1:3]
-
-        if lang_code in ('sv', 'en'):
-            # Valid lang_code, set the global lang_code and cookie
-            g.lang_code = lang_code
-            session['lang_code'] = g.lang_code
-
-        elif request.endpoint and app.url_map.is_endpoint_expecting(request.endpoint, 'lang_code'):
-            # Invalid lang_code (garbage?), if the endpoint is expecting
-            # a lang_code, prepend whatever locale flask_babel wants to
-            # default to, and redirect to the requested thing.
-            return redirect(request.url_root +
-                            flask_babel.get_locale().language +
-                            request.full_path)
-
-        # else...
-        # Endpoint was probably static or something that does not want
-        # lang_code, return nothing (None). Execution continues as if
-        # nothing happened.
-
-    @app.url_defaults
-    def add_lang_code(endpoint, values):
-        if 'lang_code' in values or \
-                not getattr(g, 'lang_code', None) and \
-                not session.get('lang_code', None):
+    def fix_missing_lang_code():
+        if getattr(g, 'lang_code', None) or request.endpoint == 'static':
             return
-        if app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
-            values['lang_code'] = getattr(g, 'lang_code', None) or \
-                                    session.get('lang_code')
+
+        urls = app.url_map.bind(app.config['SERVER_NAME'])
+        new_path = flask_babel.get_locale().language + request.path
+
+        try:
+            urls.match(new_path)
+        except RequestRedirect as e:
+            return redirect(e.new_url)
+        except (MethodNotAllowed, NotFound):
+            return None
+
+        return redirect(new_path)
 
     def url_for_lang(endpoint, lang_code, view_args, default='blog.index'):
         if endpoint and \

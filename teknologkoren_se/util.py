@@ -1,5 +1,5 @@
 from urllib.parse import urlparse, urljoin
-from flask import url_for, request
+from flask import g, request, session, url_for
 from teknologkoren_se import app
 
 
@@ -47,3 +47,20 @@ def get_redirect_target():
             continue
         if is_safe_url(target):
             return target
+
+
+def bp_url_processors(bp):
+    @bp.url_defaults
+    def add_language_code(endpoint, values):
+        if not values.get('lang_code', None):
+            values['lang_code'] = getattr(g, 'lang_code', None) or \
+                                    session.get('lang_code')
+
+    @bp.url_value_preprocessor
+    def pull_lang_code(endpoint, values):
+        lang_code = values.pop('lang_code')
+
+        if lang_code in ('sv', 'en'):
+            # Valid lang_code, set the global lang_code and cookie
+            g.lang_code = lang_code
+            session['lang_code'] = g.lang_code

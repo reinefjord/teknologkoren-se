@@ -1,10 +1,12 @@
 from flask import abort, Blueprint, redirect, render_template, url_for
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Post, Event
-from teknologkoren_se.util import url_for_other_page
+from teknologkoren_se.util import url_for_other_page, bp_url_processors
 
 
-mod = Blueprint('blog', __name__, url_prefix='/<lang_code>')
+mod = Blueprint('blog', __name__, url_prefix='/<any(sv, en):lang_code>')
+
+bp_url_processors(mod)
 
 
 def is_event(post):

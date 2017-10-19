@@ -1,11 +1,13 @@
 from urllib.parse import urljoin
-from flask import Blueprint, redirect, render_template, request, session, \
-        url_for
+from flask import Blueprint, render_template, request
 from werkzeug.contrib.atom import AtomFeed
 from teknologkoren_se.models import Post, Event, Contact
+from teknologkoren_se.util import bp_url_processors
 
 
-mod = Blueprint('general', __name__, url_prefix='/<lang_code>')
+mod = Blueprint('general', __name__, url_prefix='/<any(sv, en):lang_code>')
+
+bp_url_processors(mod)
 
 
 @mod.route('/om-oss/')
