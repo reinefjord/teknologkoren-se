@@ -1,4 +1,4 @@
-from flask import Flask, abort, g, request, redirect, url_for
+from flask import Flask, abort, g, request, redirect, session, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
@@ -67,9 +67,12 @@ def setup_babel(app):
 
     @babel.localeselector
     def get_locale():
-        lang_code = getattr(g, 'lang_code', None)
+        lang_code = session.get('lang_code', None) or \
+                getattr(g, 'lang_code', None)
+
 
         if lang_code is not None:
+            g.lang_code = lang_code
             return lang_code
 
         g.lang_code = request.accept_languages.best_match(['sv', 'en'])
@@ -94,8 +97,9 @@ def setup_babel(app):
         lang_code = request.view_args.pop('lang_code', None)
 
         if lang_code in ('sv', 'en'):
-            # Valid lang_code, set the global lang_code
+            # Valid lang_code, set the global lang_code and cookie
             g.lang_code = lang_code
+            session['lang_code'] = g.lang_code
 
         elif app.url_map.is_endpoint_expecting(request.endpoint, 'lang_code'):
             # Invalid lang_code (garbage?), if the endpoint is expecting
@@ -117,12 +121,12 @@ def setup_babel(app):
         if app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
             values['lang_code'] = g.lang_code
 
-    def url_for_lang(endpoint, lang_code, default='blog.index'):
+    def url_for_lang(endpoint, lang_code, view_args, default='blog.index'):
         if endpoint and \
                 app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
-            return url_for(endpoint, lang_code=lang_code)
+            return url_for(endpoint, lang_code=lang_code, **view_args or {})
 
-        return url_for(default, lang_code=lang_code)
+        return url_for(default, lang_code=lang_code, **view_args or {})
 
     app.jinja_env.globals['locale'] = flask_babel.get_locale
     app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
