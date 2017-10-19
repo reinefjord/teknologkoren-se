@@ -14,12 +14,17 @@
   <body>
     {% set active_page = active_page %}
     <div id="container">
+      {% if request.status_code == 200 %}
+      {% set lang_endpoint = request.endpoint %}
+      {% else %}
+      {% set lang_endpoint = 'blog.index' %}
+      {% endif %}
       {% if 'sv' in locale().language %}
-      <a id="lang" href="{{ url_for(request.endpoint, lang_code='en') }}">
+      <a id="lang" href="{{ url_for(lang_endpoint, lang_code='en') }}">
         English
       </a>
       {% else %}
-      <a id="lang" href="{{ url_for(request.endpoint, lang_code='sv') }}">
+      <a id="lang" href="{{ url_for(lang_endpoint, lang_code='sv') }}">
         Svenska
       </a>
       {% endif %}

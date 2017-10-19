@@ -68,6 +68,7 @@ def setup_babel(app):
     @babel.localeselector
     def get_locale():
         lang_code = getattr(g, 'lang_code', None)
+
         if lang_code is not None:
             return lang_code
 
@@ -75,26 +76,50 @@ def setup_babel(app):
 
         return g.lang_code
 
-    app.jinja_env.globals['locale'] = flask_babel.get_locale
-    app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
-    app.jinja_env.globals['format_date'] = flask_babel.format_date
-
     @app.route('/')
     def redirect_to_lang():
+        """Redirect root to lang-version"""
         return redirect(url_for('blog.index',
                                 lang_code=flask_babel.get_locale()))
 
+    @app.before_request
+    def check_lang_code():
+        # Some requests do not have any view args, do nothing
+        if request.view_args is None:
+            return
+
+        # Remove lang_code from the view args, none of our views
+        # actually want that argument. None if view_args is missing
+        # lang_code.
+        lang_code = request.view_args.pop('lang_code', None)
+
+        if lang_code in ('sv', 'en'):
+            # Valid lang_code, set the global lang_code
+            g.lang_code = lang_code
+
+        elif app.url_map.is_endpoint_expecting(request.endpoint, 'lang_code'):
+            # Invalid lang_code (garbage?), if the endpoint is expecting
+            # a lang_code, prepend whatever locale flask_babel wants to
+            # default to, and redirect to the requested thing.
+            return redirect(request.url_root +
+                            flask_babel.get_locale().language +
+                            request.full_path)
+
+        # else...
+        # Endpoint was probably static or something that does not want
+        # lang_code, return nothing (None). Execution continues as if
+        # nothing happened.
+
     @app.url_defaults
-    def add_language_code(endpoint, values):
+    def add_lang_code(endpoint, values):
         if 'lang_code' in values or not g.lang_code:
             return
         if app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
             values['lang_code'] = g.lang_code
 
-    @app.url_value_preprocessor
-    def pull_lang_code(endpoint, values):
-        if values is not None:
-            g.lang_code = values.pop('lang_code', None)
+    app.jinja_env.globals['locale'] = flask_babel.get_locale
+    app.jinja_env.globals['format_datetime'] = flask_babel.format_datetime
+    app.jinja_env.globals['format_date'] = flask_babel.format_date
 
     return babel
 
