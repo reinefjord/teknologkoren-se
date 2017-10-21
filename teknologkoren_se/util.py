@@ -50,6 +50,7 @@ def get_redirect_target():
 
 
 def bp_url_processors(bp):
+
     @bp.url_defaults
     def add_language_code(endpoint, values):
         if not values.get('lang_code', None):

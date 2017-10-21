@@ -81,24 +81,46 @@ def setup_babel(app):
     @app.before_request
     def fix_missing_lang_code():
         if getattr(g, 'lang_code', None) or request.endpoint == 'static':
+            # Lang code is not missing.
             return
 
+        # If g.lang_code is not set, the lang code in path (/sv/) is
+        # probably missing (or misspelled/invalid).
+
+        # Get a MapAdapter, the object used for matching urls.
         urls = app.url_map.bind(app.config['SERVER_NAME'])
+
+        # Get whatever lang get_locale() decides (cookie or, if no cookie,
+        # default), and prepend it to the requested path.
         new_path = flask_babel.get_locale().language + request.path
 
         try:
+            # Does this new path match any view?
             urls.match(new_path)
         except RequestRedirect as e:
+            # The new path results in a redirect.
             return redirect(e.new_url)
         except (MethodNotAllowed, NotFound):
+            # The new path does not match anything, we allow the request
+            # to continue with the non-lang path. Probably 404.
             return None
 
+        # The new path matches a view! We redirect there.
         return redirect(new_path)
 
-    def url_for_lang(endpoint, lang_code, view_args, default='blog.index', **args):
-        if endpoint and \
-                app.url_map.is_endpoint_expecting(endpoint, 'lang_code'):
-            return url_for(endpoint, lang_code=lang_code, **view_args or {}, **args)
+    def url_for_lang(endpoint,
+                     lang_code,
+                     view_args,
+                     default='blog.index',
+                     **args):
+
+        if (endpoint and
+                app.url_map.is_endpoint_expecting(endpoint, 'lang_code')):
+
+            return url_for(endpoint,
+                           lang_code=lang_code,
+                           **view_args or {},
+                           **args)
 
         return url_for(default, lang_code=lang_code, **view_args or {}, **args)
 
