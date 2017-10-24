@@ -24,11 +24,11 @@
 
       {% if locale().language == 'sv' %}
       <a id="lang" href="{{ url_for_lang(request.endpoint, 'en', request.view_args) }}">
-        <img src="{{ url_for('static', filename='images/lang_icon.png') }}"><span id="lang-text">English</span>
+        <img src="{{ url_for('static', filename='images/lang_icon.png') }}">English
       </a>
       {% else %}
       <a id="lang" href="{{ url_for_lang(request.endpoint, 'sv', request.view_args) }}">
-        <img src="{{ url_for('static', filename='images/lang_icon.png') }}"><span id="lang-text">Svenska</span>
+        <img src="{{ url_for('static', filename='images/lang_icon.png') }}">Svenska
       </a>
       {% endif %}
 
