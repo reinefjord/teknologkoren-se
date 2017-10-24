@@ -1,7 +1,8 @@
 from datetime import datetime
-from slugify import slugify
+from flask_babel import get_locale, gettext
 from markdown import markdown
 from markdown_newtab import NewTabExtension
+from slugify import slugify
 from sqlalchemy import event
 from teknologkoren_se import db, images
 
@@ -54,7 +55,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100))
     slug = db.Column(db.String(200))
-    content = db.Column(db.Text)
+    content_sv = db.Column(db.Text)
+    content_en = db.Column(db.Text)
     published = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime)
     image = db.Column(db.String(300), nullable=True)
@@ -66,20 +68,36 @@ class Post(db.Model):
     }
 
     @property
+    def content(self):
+        """Return localized content.
+
+        If not available, prepend notice about missing translation.
+        """
+        not_available = gettext('(Translation not available)\n\n')
+        lang = get_locale().language
+
+        if lang == 'sv':
+            return self.content_sv or not_available + self.content_en
+
+        if lang == 'en':
+            return self.content_en or not_available + self.content_sv
+
+    @property
     def url(self):
         """Return the path to the post."""
         return '{}/{}/'.format(self.id, self.slug)
 
-    def content_to_html(self):
+    def content_to_html(self, content):
         """Return content formatted for html."""
-        return markdown(self.content, extensions=[NewTabExtension()])
+        return markdown(content, extensions=[NewTabExtension()])
 
     def to_dict(self):
         d = {}
         d['id'] = self.id
         d['title'] = self.title
         d['slug'] = self.slug
-        d['content'] = self.content
+        d['content_sv'] = self.content_sv
+        d['content_en'] = self.content_en
         d['published'] = self.published
         d['timestamp'] = self.timestamp
         d['image'] = self.image

@@ -65,7 +65,8 @@ def get_new_data(fields):
 
 POST_FIELDS = {
     'title': str,
-    'content': str,
+    'content_sv': str,
+    'content_en': (str, type(None)),
     'published': bool,
     'image': (str, type(None)),
 }
@@ -123,7 +124,8 @@ def update_post(post_id):
     post = Post.query.get_or_404(post_id)
     data = get_new_data(POST_FIELDS)
     post.title = data['title']
-    post.content = data['content']
+    post.content_sv = data['content_sv']
+    post.content_en = data['content_en']
     post.published = data['published']
     if data['image']:
         post.image = data['image']
@@ -148,7 +150,8 @@ def delete_post(post_id):
 
 EVENT_FIELDS = {
     'title': str,
-    'content': str,
+    'content_sv': str,
+    'content_en': (str, type(None)),
     'published': bool,
     'image': (str, type(None)),
     'start_time': str,
@@ -209,7 +212,8 @@ def update_event(event_id):
     data['start_time'] = datetime.datetime.strptime(data['start_time'],
                                                     '%Y-%m-%dT%H:%M')
     event.title = data['title']
-    event.content = data['content']
+    event.content_sv = data['content_sv']
+    event.content_en = data['content_en']
     event.published = data['published']
     event.start_time = data['start_time']
     event.location = data['location']

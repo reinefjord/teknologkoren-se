@@ -29,7 +29,7 @@
 
   {% endif %}
 
-  {{ post.content_to_html()|safe }}
+  {{ post.content_to_html(post.content)|safe }}
 </article>
 {% endmacro %}
 
@@ -57,7 +57,7 @@
     {{ img(event.image, 400) }}
   </a>
   {% endif %}
-  {{ event.content_to_html()|safe }}
+  {{ event.content_to_html(event.content)|safe }}
   <dl class="event-detail">
     <dt>{{ _('Time') }}:</dt>
     <dd>
