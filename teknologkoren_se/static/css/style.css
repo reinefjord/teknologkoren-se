@@ -55,6 +55,16 @@ h1, h2, h3 {
     position: absolute;
     top: .5rem;
     right: 1rem;
+    text-decoration: none;
+}
+
+#lang-text {
+    text-decoration-line: underline;
+}
+
+#lang img{
+    width: 1rem;
+    margin-right: .25rem;
 }
 
 .content {

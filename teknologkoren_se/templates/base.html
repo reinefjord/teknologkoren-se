@@ -22,13 +22,13 @@
     {% set active_page = active_page %}
     <div id="container">
 
-      {% if 'sv' in locale().language %}
+      {% if locale().language == 'sv' %}
       <a id="lang" href="{{ url_for_lang(request.endpoint, 'en', request.view_args) }}">
-        English
+        <img src="{{ url_for('static', filename='images/lang_icon.png') }}"><span id="lang-text">English</span>
       </a>
       {% else %}
       <a id="lang" href="{{ url_for_lang(request.endpoint, 'sv', request.view_args) }}">
-        Svenska
+        <img src="{{ url_for('static', filename='images/lang_icon.png') }}"><span id="lang-text">Svenska</span>
       </a>
       {% endif %}
 
