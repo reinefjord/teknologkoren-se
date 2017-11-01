@@ -101,7 +101,7 @@ class Post(db.Model):
         d['published'] = self.published
         d['timestamp'] = self.timestamp
         d['image'] = self.image
-        d['image_path'] = images.url(self.image)
+        d['image_path'] = images.url(self.image) if self.image else None
         return d
 
     def __str__(self):
