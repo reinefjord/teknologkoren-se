@@ -70,7 +70,7 @@ def atom_feed():
             path_base = "blog/"
 
         feed.add(post.title,
-                 post.content_to_html(),
+                 post.content_to_html(post.content),
                  content_type='html',
                  url=urljoin(request.url_root, path_base+post.url),
                  updated=post.timestamp
