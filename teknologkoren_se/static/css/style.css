@@ -60,6 +60,7 @@ h1, h2, h3 {
 #lang img{
     width: 1rem;
     margin-right: .25rem;
+    vertical-align: text-bottom;
 }
 
 .content {
