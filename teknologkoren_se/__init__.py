@@ -92,7 +92,8 @@ def setup_babel(app):
 
         # Get whatever lang get_locale() decides (cookie or, if no cookie,
         # default), and prepend it to the requested path.
-        new_path = flask_babel.get_locale().language + request.path
+        proposed_lang = flask_babel.get_locale().language
+        new_path = proposed_lang + request.path
 
         try:
             # Does this new path match any view?
@@ -102,7 +103,13 @@ def setup_babel(app):
             return redirect(e.new_url)
         except (MethodNotAllowed, NotFound):
             # The new path does not match anything, we allow the request
-            # to continue with the non-lang path. Probably 404.
+            # to continue with the non-lang path. Probably 404. In case
+            # this request results in something that does want a lang
+            # code (error pages need it as main.html builds urls for the
+            # nav), we set it to whatever was proposed by get_locale().
+            # If we don't set it AND the client does not have lang saved
+            # in a cookie, we'd get a 500.
+            g.lang_code = proposed_lang
             return None
 
         # The new path matches a view! We redirect there.
