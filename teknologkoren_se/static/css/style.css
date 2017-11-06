@@ -284,20 +284,6 @@ address {
     padding: 0 10px 0 10px;
 }
 
-.field {
-    display: block;
-    margin: 20px 0;
-}
-
-.text-field {
-    display: flex;
-}
-
-.field-description {
-    padding-left: 10px;
-    font-size: 0.85em;
-}
-
 .flashes {
     text-align: center;
     list-style: none;
