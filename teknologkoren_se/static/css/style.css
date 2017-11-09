@@ -167,8 +167,9 @@ article~article {
 .event-image {
     float: right;
     width: 25%;
-    margin: 0 0 0.8rem 1rem;
     min-width: 5rem;
+    border: 3px solid #316bb1;
+    margin: 0 0 0.8rem 1rem;
 }
 
 .event-detail {
