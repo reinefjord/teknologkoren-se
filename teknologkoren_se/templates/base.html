@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
 
+    <link rel="alternate" type="application/rss+xml" title="{{ _('News feed') }}" href="{{ url_for('general.atom_feed') }}">
+
     {% if 'sv' in locale().language %}
     <link rel="alternate" hreflang="en" href="{{ url_for_lang(request.endpoint, 'en', request.view_args, _external=True) }}" />
     {% else %}
@@ -23,11 +25,11 @@
     <div id="container">
 
       {% if locale().language == 'sv' %}
-      <a id="lang" href="{{ url_for_lang(request.endpoint, 'en', request.view_args) }}">
+      <a id="lang" class="inline-icon" href="{{ url_for_lang(request.endpoint, 'en', request.view_args) }}">
         <img src="{{ url_for('static', filename='images/lang_icon.png') }}">English
       </a>
       {% else %}
-      <a id="lang" href="{{ url_for_lang(request.endpoint, 'sv', request.view_args) }}">
+      <a id="lang" class="inline-icon" href="{{ url_for_lang(request.endpoint, 'sv', request.view_args) }}">
         <img src="{{ url_for('static', filename='images/lang_icon.png') }}">Svenska
       </a>
       {% endif %}

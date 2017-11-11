@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-24 17:41+0200\n"
-"PO-Revision-Date: 2017-10-24 17:42+0200\n"
+"POT-Creation-Date: 2017-11-11 15:02+0100\n"
+"PO-Revision-Date: 2017-11-11 15:03+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -118,9 +118,9 @@ msgstr "KTK på SoundCloud"
 msgid "KTK on GitHub"
 msgstr "KTK på GitHub"
 
-#: teknologkoren_se/templates/blog/overview.html:35
-msgid "RSS-feed"
-msgstr "RSS-flöde"
+#: teknologkoren_se/templates/blog/overview.html:37
+msgid "News feed"
+msgstr "Nyhetsflöde"
 
 #: teknologkoren_se/templates/errors/403.html:3
 #: teknologkoren_se/templates/errors/403.html:7
@@ -548,3 +548,6 @@ msgid ""
 msgstr ""
 "Om du undrar över något angåenda våra provsjungningar så går det bra att <a "
 "href=\"{}\">kontakta vår ordförande</a>."
+
+#~ msgid "RSS-feed"
+#~ msgstr "RSS-flöde"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-24 17:41+0200\n"
+"POT-Creation-Date: 2017-11-11 15:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -114,8 +114,8 @@ msgstr ""
 msgid "KTK on GitHub"
 msgstr ""
 
-#: teknologkoren_se/templates/blog/overview.html:35
-msgid "RSS-feed"
+#: teknologkoren_se/templates/blog/overview.html:37
+msgid "News feed"
 msgstr ""
 
 #: teknologkoren_se/templates/errors/403.html:3

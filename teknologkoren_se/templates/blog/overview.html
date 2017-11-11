@@ -32,7 +32,11 @@
     <li><a href="https://www.youtube.com/channel/UClRDp_qogWpxfa8pFxtWSnw">{{ _('KTK on YouTube') }}</a></li>
     <li><a href="https://soundcloud.com/kongl-teknologk-ren">{{ _('KTK on SoundCloud') }}</a></li>
     <li><a href="https://github.com/teknologkoren">{{ _('KTK on GitHub') }}</a></li>
-    <li><a href="/feed">{{ _('RSS-feed') }}</a></li>
+    <li>
+      <a class="inline-icon" href="{{ url_for('general.atom_feed') }}">
+        <img src="{{ url_for('static', filename='images/feed_icon.png') }}">{{ _('News feed') }}
+      </a>
+    </li>
   </ul>
 </aside>
 {% endblock %}
