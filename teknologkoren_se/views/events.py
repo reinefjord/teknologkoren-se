@@ -29,7 +29,7 @@ def index(page):
     old = datetime.utcnow() - timedelta(hours=3)
     events = (Event.query
               .filter(Event.start_time > old, Event.published == True)
-              .order_by(Event.start_time.desc()))
+              .order_by(Event.start_time.asc()))
 
     pagination = events.paginate(page, 5)
 

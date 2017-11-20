@@ -16,4 +16,7 @@
 {% else %}
 <p>{{ _('Nothing here yet!') }}</p>
 {% endif %}
+{% if pagination.has_next or page > 1 %}
+{{ pager(pagination.has_next, page) }}
+{% endif %}
 {% endblock %}

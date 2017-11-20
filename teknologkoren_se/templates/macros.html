@@ -71,15 +71,36 @@
 </article>
 {% endmacro %}
 
-{% macro pager(has_next, page) %}
+{% macro pager(has_next, page, ascending=False) %}
 <nav class="pager">
+  {% if not reverse %}
+
   {% if has_next %}
   <a class="older inverted-link" href="{{ url_for_other_page(page + 1) }}">
-    &larr; {{ _('Older') }}</a>
+    &larr; {{ _('Older') }}
+  </a>
   {% endif %}
+
   {% if page > 1 %}
   <a class="newer inverted-link" href="{{ url_for_other_page(page - 1) }}">
-    {{ _('Newer') }} &rarr;</a>
+    {{ _('Newer') }} &rarr;
+  </a>
+  {% endif %}
+
+  {% else %}
+
+  {% if page > 1 %}
+  <a class="older inverted-link" href="{{ url_for_other_page(page - 1) }}">
+    &larr; {{ _('Previous') }}
+  </a>
+  {% endif %}
+
+  {% if has_next %}
+  <a class="newer inverted-link" href="{{ url_for_other_page(page + 1) }}">
+    {{ _('Next') }} &rarr;
+  </a>
+  {% endif %}
+
   {% endif %}
 </nav>
 {% endmacro %}

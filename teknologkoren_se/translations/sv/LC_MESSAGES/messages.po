@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-11 15:02+0100\n"
-"PO-Revision-Date: 2017-11-11 15:03+0100\n"
+"POT-Creation-Date: 2017-11-20 12:52+0100\n"
+"PO-Revision-Date: 2017-11-20 12:52+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -44,13 +44,21 @@ msgstr "Tid"
 msgid "Place"
 msgstr "Plats"
 
-#: teknologkoren_se/templates/macros.html:78
+#: teknologkoren_se/templates/macros.html:80
 msgid "Older"
 msgstr "Äldre"
 
-#: teknologkoren_se/templates/macros.html:82
+#: teknologkoren_se/templates/macros.html:86
 msgid "Newer"
 msgstr "Nyare"
+
+#: teknologkoren_se/templates/macros.html:94
+msgid "Previous"
+msgstr "Föregående"
+
+#: teknologkoren_se/templates/macros.html:100
+msgid "Next"
+msgstr "Nästa"
 
 #: teknologkoren_se/templates/main.html:5
 msgid "Home"

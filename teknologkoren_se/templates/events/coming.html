@@ -19,4 +19,7 @@
 {{ _('We do not have any concerts announced at the moment! <br/> You can find our previous concerts in the <a href="{}">concert archive</a>.').format(url_for('events.archive')) }}
 </p>
 {% endif %}
+{% if pagination.has_next or page > 1 %}
+{{ pager(pagination.has_next, page, ascending=True) }}
+{% endif %}
 {% endblock %}
