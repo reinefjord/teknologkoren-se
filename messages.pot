@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-20 12:52+0100\n"
+"POT-Creation-Date: 2017-11-21 15:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,16 @@ msgstr ""
 msgid ""
 "(Translation not available)\n"
 "\n"
+msgstr ""
+
+#: teknologkoren_se/templates/base.html:10
+#: teknologkoren_se/templates/blog/overview.html:37
+msgid "News feed"
+msgstr ""
+
+#: teknologkoren_se/templates/base.html:29
+#: teknologkoren_se/templates/base.html:33
+msgid "Change language"
 msgstr ""
 
 #: teknologkoren_se/templates/macros.html:11
@@ -123,7 +133,7 @@ msgid "KTK on GitHub"
 msgstr ""
 
 #: teknologkoren_se/templates/blog/overview.html:37
-msgid "News feed"
+msgid "RSS or Atom Syndication"
 msgstr ""
 
 #: teknologkoren_se/templates/errors/403.html:3
