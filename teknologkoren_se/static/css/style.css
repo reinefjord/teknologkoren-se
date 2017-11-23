@@ -33,6 +33,11 @@ body {
     text-decoration-skip: ink;
 }
 
+::selection {
+    background-color: #6797d0;
+    color: #fff;
+}
+
 h1, h2, h3 {
     font-family: "Lato", sans-serif;
 }
