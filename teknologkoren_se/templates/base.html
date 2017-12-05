@@ -60,7 +60,13 @@
       {% endif %}
       {% endwith %}
       {% if cover_image %}
-      <img src="{{ cover_image }}" class="cover-image" alt="">
+      <img srcset="/static/images/img600/{{ cover_image }} 600w,
+                   /static/images/img1200/{{ cover_image }} 1200w,
+                   /static/images/img1600/{{ cover_image }} 1600w"
+           sizes="(min-width: 75em) 73em, 100%"
+           src="/static/images/img1200{{ cover_image }}"
+           class="cover-image"
+           alt="">
       {% endif %}
       {% if subnav %}
       <nav class="sub-nav">
