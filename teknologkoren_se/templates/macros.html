@@ -25,7 +25,12 @@
   {% set img_class = img_class + ' truncate' %}
   {% endif %}
 
-  {{ img(post.image, 800, img_class) }}
+  <img class="{{ img_class }}"
+      srcset="{{ image_dest() }}img600/{{ post.image }},
+              {{ image_dest() }}img800/{{ post.image }} 1.5x,
+              {{ image_dest() }}img1200/{{ post.image }} 2x"
+      src="{{ image_dest() }}img600/{{ post.image }}"
+      alt="">
 
   {% endif %}
 
@@ -53,8 +58,11 @@
     {% endif %}
   </header>
   {% if event.image %}
-  <a class="event-image" href="{{ image_url(event.image) }}">
-    {{ img(event.image, 400) }}
+  <a class="event-image" href="{{ image_dest() }}img1200/{{ event.image }}">
+    <img srcset="{{ image_dest() }}img200/{{ event.image }},
+                 {{ image_dest() }}img400/{{ event.image }} 2x"
+         src="{{ image_dest() }}img200/{{ event.image }}"
+         alt="">
   </a>
   {% endif %}
   {{ event.content_to_html(event.content)|safe }}
