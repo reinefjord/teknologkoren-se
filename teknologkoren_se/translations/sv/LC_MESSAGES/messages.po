@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-11-21 15:55+0100\n"
-"PO-Revision-Date: 2017-11-21 15:55+0100\n"
+"POT-Creation-Date: 2017-12-05 16:57+0100\n"
+"PO-Revision-Date: 2017-12-05 16:58+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Generated-By: Babel 2.5.1\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: teknologkoren_se/models.py:76
+#: teknologkoren_se/models.py:75
 msgid ""
 "(Translation not available)\n"
 "\n"
@@ -37,7 +37,7 @@ msgid "Change language"
 msgstr "Byt språk"
 
 #: teknologkoren_se/templates/macros.html:11
-#: teknologkoren_se/templates/macros.html:46
+#: teknologkoren_se/templates/macros.html:51
 msgid "Published"
 msgstr "Publicerad"
 
@@ -45,27 +45,27 @@ msgstr "Publicerad"
 msgid "Permalink"
 msgstr "Permalänk"
 
-#: teknologkoren_se/templates/macros.html:62
+#: teknologkoren_se/templates/macros.html:70
 msgid "Time"
 msgstr "Tid"
 
-#: teknologkoren_se/templates/macros.html:68
+#: teknologkoren_se/templates/macros.html:76
 msgid "Place"
 msgstr "Plats"
 
-#: teknologkoren_se/templates/macros.html:80
+#: teknologkoren_se/templates/macros.html:88
 msgid "Older"
 msgstr "Äldre"
 
-#: teknologkoren_se/templates/macros.html:86
+#: teknologkoren_se/templates/macros.html:94
 msgid "Newer"
 msgstr "Nyare"
 
-#: teknologkoren_se/templates/macros.html:94
+#: teknologkoren_se/templates/macros.html:102
 msgid "Previous"
 msgstr "Föregående"
 
-#: teknologkoren_se/templates/macros.html:100
+#: teknologkoren_se/templates/macros.html:108
 msgid "Next"
 msgstr "Nästa"
 
@@ -550,13 +550,13 @@ msgstr "Vi repar på onsdagar på KTH campus Valhallavägen mellan 18:30 och 21:
 
 #: teknologkoren_se/templates/general/sing.html:45
 msgid ""
-"If you want to sign up for an audition, fill in <a target=\"_blank\" href="
-"\"{}\">this form</a>. Auditions normally take place in the beginning of the "
-"semester, meaning September or January/February."
+"If you want to sign up for an audition, fill in <a href=\"{}\">this form</a>. "
+"Auditions normally take place in the beginning of the semester, meaning "
+"September or January/February."
 msgstr ""
-"Om du vill anmäla dig för en provsjungning, fyll i <a target=\"_blank\" href="
-"\"{}\">detta formulär</a>. Provsjungningar sker vanligtvis i början av "
-"terminen, det vill säga september eller januari/februari."
+"Om du vill anmäla dig för en provsjungning, fyll i <a href=\"{}\">detta "
+"formulär</a>. Provsjungningar sker vanligtvis i början av terminen, det vill "
+"säga september eller januari/februari."
 
 #: teknologkoren_se/templates/general/sing.html:49
 msgid ""
@@ -568,3 +568,12 @@ msgstr ""
 
 #~ msgid "RSS-feed"
 #~ msgstr "RSS-flöde"
+
+#~ msgid ""
+#~ "If you want to sign up for an audition, fill in <a target=\"_blank\" href="
+#~ "\"{}\">this form</a>. Auditions normally take place in the beginning of the "
+#~ "semester, meaning September or January/February."
+#~ msgstr ""
+#~ "Om du vill anmäla dig för en provsjungning, fyll i <a target=\"_blank\" href="
+#~ "\"{}\">detta formulär</a>. Provsjungningar sker vanligtvis i början av "
+#~ "terminen, det vill säga september eller januari/februari."

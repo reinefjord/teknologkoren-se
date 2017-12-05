@@ -1,7 +1,6 @@
 from datetime import datetime
 from flask_babel import get_locale, gettext
 from markdown import markdown
-from markdown_newtab import NewTabExtension
 from slugify import slugify
 from sqlalchemy import event
 from teknologkoren_se import db, images
@@ -89,7 +88,7 @@ class Post(db.Model):
 
     def content_to_html(self, content):
         """Return content formatted for html."""
-        return markdown(content, extensions=[NewTabExtension()])
+        return markdown(content)
 
     def to_dict(self):
         d = {}

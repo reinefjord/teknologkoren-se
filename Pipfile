@@ -7,23 +7,22 @@ name = "pypi"
 
 [packages]
 
-flask = "*"
-flask-admin = "*"
-flask-assets = "*"
-flask-cors = "*"
-flask-httpauth = "*"
-flask-migrate = "*"
-flask-script = "*"
-flask-sqlalchemy = "*"
-flask-uploads = "*"
-markdown = "*"
-markdown-newtab = "*"
+Flask = "*"
+Flask-Admin = "*"
+Flask-Assets = "*"
+Flask-Cors = "*"
+Flask-HTTPAuth = "*"
+Flask-Migrate = "*"
+Flask-Script = "*"
+Flask-SQLAlchemy = "*"
+Flask-Uploads = "*"
+Markdown = "*"
 nodeenv = "*"
 python-slugify = "*"
-wtforms = "*"
+WTForms = "*"
 webassets = {git = "https://github.com/miracle2k/webassets.git", editable = true}
 gunicorn = "*"
-flask-babel = "*"
+Flask-Babel = "*"
 
 
 [dev-packages]
