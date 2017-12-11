@@ -521,7 +521,7 @@ msgid ""
 "want our conductor to accompany you on piano, bring sheet music."
 msgstr ""
 "Du framför ett valfritt stycke, a cappella eller med ackompanjemang. Ta med "
-"noter om du vill att får dirigent kompar dig på piano."
+"noter om du vill att vår dirigent kompar dig på piano."
 
 #: teknologkoren_se/templates/general/sing.html:33
 msgid ""
