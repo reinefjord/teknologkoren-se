@@ -26,7 +26,7 @@ def index(page):
     after start time, allowing people to see that there is an ongoing
     event.
     """
-    old = datetime.utcnow() - timedelta(hours=3)
+    old = datetime.utcnow() - timedelta(hours=12)
     events = (Event.query
               .filter(Event.start_time > old, Event.published == True)
               .order_by(Event.start_time.asc()))
@@ -46,7 +46,7 @@ def archive(page):
     And event is considered archived if there has been more than
     3 hours since the start time of the event.
     """
-    old = datetime.utcnow() - timedelta(hours=3)
+    old = datetime.utcnow() - timedelta(hours=12)
     events = (Event.query
               .filter(Event.start_time < old, Event.published == True)
               .order_by(Event.start_time.desc()))
