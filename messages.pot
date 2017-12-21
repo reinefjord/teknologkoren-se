@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-05 16:57+0100\n"
+"POT-Creation-Date: 2017-12-21 17:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: teknologkoren_se/models.py:75
 msgid ""
-"(Translation not available)\n"
+"(No translation available)\n"
 "\n"
 msgstr ""
 
@@ -80,25 +80,21 @@ msgid "Concerts"
 msgstr ""
 
 #: teknologkoren_se/templates/main.html:10
-msgid "Lucia"
-msgstr ""
-
-#: teknologkoren_se/templates/main.html:11
 msgid "Booking"
 msgstr ""
 
 #: teknologkoren_se/templates/general/sing.html:3
-#: teknologkoren_se/templates/main.html:14
+#: teknologkoren_se/templates/main.html:11
 msgid "Sing with us"
 msgstr ""
 
 #: teknologkoren_se/templates/general/contact.html:3
 #: teknologkoren_se/templates/general/contact.html:9
-#: teknologkoren_se/templates/main.html:15
+#: teknologkoren_se/templates/main.html:12
 msgid "Contact"
 msgstr ""
 
-#: teknologkoren_se/templates/main.html:35
+#: teknologkoren_se/templates/main.html:32
 msgid "Intranet"
 msgstr ""
 
@@ -274,7 +270,7 @@ msgstr ""
 msgid ""
 "We participated in workshops about bulgarian folk music and kept concerts"
 " at the university in Sofia and at a biomathematics conference in "
-"Blagoevgrad"
+"Blagoevgrad."
 msgstr ""
 
 #: teknologkoren_se/templates/general/about.html:41
@@ -284,7 +280,7 @@ msgstr ""
 #: teknologkoren_se/templates/general/about.html:43
 msgid ""
 "In Portugal, we sang with several choirs, including our sister choir at "
-"the Technical University of Lisbon"
+"the Technical University of Lisbon."
 msgstr ""
 
 #: teknologkoren_se/templates/general/about.html:45
@@ -340,17 +336,27 @@ msgid ""
 msgstr ""
 
 #: teknologkoren_se/templates/general/booking.html:18
-msgid "Price example"
+msgid "Lucia"
+msgstr ""
+
+#: teknologkoren_se/templates/general/booking.html:19
+msgid ""
+"You can find more information about booking us for Lucia <a "
+"href=\"{}\">here</a>."
 msgstr ""
 
 #: teknologkoren_se/templates/general/booking.html:20
+msgid "Price example"
+msgstr ""
+
+#: teknologkoren_se/templates/general/booking.html:22
 msgid ""
 "8000 kr will get you 14 chorists that sings songs from Kongl. "
 "Teknologkören's standard repertoire for 20 minutes. If you would like "
 "fewer singers you can hire a quartet which starts at 4000 kr."
 msgstr ""
 
-#: teknologkoren_se/templates/general/booking.html:23
+#: teknologkoren_se/templates/general/booking.html:25
 msgid ""
 "The suggestions above are examples, we are flexible and are happy to "
 "adapt to your needs. Do you want another amount of singers, or want to "

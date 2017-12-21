@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-12-05 16:57+0100\n"
-"PO-Revision-Date: 2017-12-05 16:58+0100\n"
+"POT-Creation-Date: 2017-12-21 17:02+0100\n"
+"PO-Revision-Date: 2017-12-21 17:03+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -17,11 +17,11 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.1\n"
-"X-Generator: Poedit 2.0.4\n"
+"X-Generator: Poedit 2.0.5\n"
 
 #: teknologkoren_se/models.py:75
 msgid ""
-"(Translation not available)\n"
+"(No translation available)\n"
 "\n"
 msgstr ""
 "(Ingen översättning tillgänglig)\n"
@@ -83,25 +83,21 @@ msgid "Concerts"
 msgstr "Konserter"
 
 #: teknologkoren_se/templates/main.html:10
-msgid "Lucia"
-msgstr "Lucia"
-
-#: teknologkoren_se/templates/main.html:11
 msgid "Booking"
 msgstr "Boka"
 
 #: teknologkoren_se/templates/general/sing.html:3
-#: teknologkoren_se/templates/main.html:14
+#: teknologkoren_se/templates/main.html:11
 msgid "Sing with us"
 msgstr "Sjung med oss"
 
 #: teknologkoren_se/templates/general/contact.html:3
 #: teknologkoren_se/templates/general/contact.html:9
-#: teknologkoren_se/templates/main.html:15
+#: teknologkoren_se/templates/main.html:12
 msgid "Contact"
 msgstr "Kontakt"
 
-#: teknologkoren_se/templates/main.html:35
+#: teknologkoren_se/templates/main.html:32
 msgid "Intranet"
 msgstr "Intranät"
 
@@ -298,7 +294,7 @@ msgstr "Bulgarien, 2015"
 #: teknologkoren_se/templates/general/about.html:39
 msgid ""
 "We participated in workshops about bulgarian folk music and kept concerts at "
-"the university in Sofia and at a biomathematics conference in Blagoevgrad"
+"the university in Sofia and at a biomathematics conference in Blagoevgrad."
 msgstr ""
 "Här deltog vi i workshops om bulgarisk folkmusik och höll konserter på "
 "universitetet i Sofia samt på en biomatematik-konferens i Blagoevgrad."
@@ -310,7 +306,7 @@ msgstr "Portugal, 2013"
 #: teknologkoren_se/templates/general/about.html:43
 msgid ""
 "In Portugal, we sang with several choirs, including our sister choir at the "
-"Technical University of Lisbon"
+"Technical University of Lisbon."
 msgstr ""
 "I Portugal sjöng vi med olika körer, bl.a. vår syskonkör vid Lissabons tekniska "
 "universitet."
@@ -346,7 +342,7 @@ msgstr ""
 "Kören är ofta och gärna engagerad hos olika företag, ibland även "
 "privatpersoner, för att sjunga vid olika festligheter. Se <a href="
 "\"{booking}\">Boka</a> eller <a href=\"{contact}\">kontakta oss</a> för mer "
-"information!"
+"information."
 
 #: teknologkoren_se/templates/general/booking.html:3
 msgid "Book us"
@@ -385,10 +381,22 @@ msgstr ""
 "ordförande, vars kontaktinformation går att hitta <a href=\"{}\">här</a>."
 
 #: teknologkoren_se/templates/general/booking.html:18
+msgid "Lucia"
+msgstr "Lucia"
+
+#: teknologkoren_se/templates/general/booking.html:19
+msgid ""
+"You can find more information about booking us for Lucia <a href=\"{}\">here</"
+"a>."
+msgstr ""
+"Du kan hitta mer information om att boka ett luciatåg av oss <a href="
+"\"{}\">här</a>."
+
+#: teknologkoren_se/templates/general/booking.html:20
 msgid "Price example"
 msgstr "Prisexempel"
 
-#: teknologkoren_se/templates/general/booking.html:20
+#: teknologkoren_se/templates/general/booking.html:22
 msgid ""
 "8000 kr will get you 14 chorists that sings songs from Kongl. Teknologkören's "
 "standard repertoire for 20 minutes. If you would like fewer singers you can "
@@ -398,7 +406,7 @@ msgstr ""
 "standardrepertoar i 20 minuter. Vill ni ha färre sångare kan ni t.ex. anlita en "
 "kvartett vilket kostar från 4000 kr."
 
-#: teknologkoren_se/templates/general/booking.html:23
+#: teknologkoren_se/templates/general/booking.html:25
 msgid ""
 "The suggestions above are examples, we are flexible and are happy to adapt to "
 "your needs. Do you want another amount of singers, or want to hear your "
@@ -566,14 +574,9 @@ msgstr ""
 "Om du undrar över något angåenda våra provsjungningar så går det bra att <a "
 "href=\"{}\">kontakta vår ordförande</a>."
 
-#~ msgid "RSS-feed"
-#~ msgstr "RSS-flöde"
-
 #~ msgid ""
-#~ "If you want to sign up for an audition, fill in <a target=\"_blank\" href="
-#~ "\"{}\">this form</a>. Auditions normally take place in the beginning of the "
-#~ "semester, meaning September or January/February."
+#~ "(Translation not available)\n"
+#~ "\n"
 #~ msgstr ""
-#~ "Om du vill anmäla dig för en provsjungning, fyll i <a target=\"_blank\" href="
-#~ "\"{}\">detta formulär</a>. Provsjungningar sker vanligtvis i början av "
-#~ "terminen, det vill säga september eller januari/februari."
+#~ "(Ingen översättning tillgänglig)\n"
+#~ "\n"

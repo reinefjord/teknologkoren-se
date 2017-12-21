@@ -72,7 +72,7 @@ class Post(db.Model):
 
         If not available, prepend notice about missing translation.
         """
-        not_available = gettext('(Translation not available)\n\n')
+        not_available = gettext('(No translation available)\n\n')
         lang = get_locale().language
 
         if lang == 'sv':
