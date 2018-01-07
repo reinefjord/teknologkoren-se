@@ -9,10 +9,28 @@
 }
 
 @font-face {
+    font-family: "EB Garamond";
+    src: url('/static/fonts/ebgaramond/EBGaramond12-Italic.woff2') format('woff2'),
+         url('/static/fonts/ebgaramond/EBGaramond12-Italic.woff') format('woff');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
     font-family: "Lato";
     src: url('/static/fonts/lato/LatoLatin-Black.woff2') format('woff2'),
          url('/static/fonts/lato/LatoLatin-Black.woff') format('woff');
     font-weight: 900;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Lato";
+    src: url('/static/fonts/lato/LatoLatin-BlackItalic.woff2') format('woff2'),
+         url('/static/fonts/lato/LatoLatin-BlackItalic.woff') format('woff');
+    font-weight: 900;
+    font-style: italic;
     font-display: swap;
 }
 
