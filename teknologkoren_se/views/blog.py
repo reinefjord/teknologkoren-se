@@ -1,4 +1,5 @@
-from flask import abort, Blueprint, redirect, render_template, url_for
+from flask import abort, Blueprint, flash, redirect, render_template, url_for
+from flask_babel import gettext
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Post, Event
 from teknologkoren_se.util import url_for_other_page, bp_url_processors
@@ -41,6 +42,8 @@ def index(page):
              .order_by(Post.timestamp.desc()))
 
     pagination = posts.paginate(page, 5)
+
+    flash(gettext('We are looking for new members! More info in our <a href="https://www.teknologkoren.se/blog/21/teknologkoren-soker-korister/">blog post</a> below!'), 'success')
 
     return render_template('blog/overview.html',
                            pagination=pagination,
