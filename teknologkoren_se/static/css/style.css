@@ -286,9 +286,18 @@ address {
     font-style: normal;
 }
 
+address hr {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .postal-address {
     text-align: center;
     font-style: italic;
+}
+
+.payment-info {
+    text-align: center;
 }
 
 .table {
