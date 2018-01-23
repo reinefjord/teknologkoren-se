@@ -291,6 +291,14 @@ address hr {
     margin-bottom: 2rem;
 }
 
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    width: 75%;
+    max-width: 30rem;
+}
+
 .postal-address {
     text-align: center;
     font-style: italic;
