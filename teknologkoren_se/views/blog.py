@@ -43,8 +43,6 @@ def index(page):
 
     pagination = posts.paginate(page, 5)
 
-    flash(gettext('We are looking for new members! More info in our <a href="https://www.teknologkoren.se/blog/21/teknologkoren-soker-korister/">blog post</a> below!'), 'success')
-
     return render_template('blog/overview.html',
                            pagination=pagination,
                            page=page)
