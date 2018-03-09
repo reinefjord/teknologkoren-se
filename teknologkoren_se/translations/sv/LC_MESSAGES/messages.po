@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-23 13:31+0100\n"
-"PO-Revision-Date: 2018-01-23 13:32+0100\n"
+"POT-Creation-Date: 2018-03-09 17:34+0100\n"
+"PO-Revision-Date: 2018-03-09 17:36+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -37,35 +37,31 @@ msgid "Change language"
 msgstr "Byt språk"
 
 #: teknologkoren_se/templates/macros.html:11
-#: teknologkoren_se/templates/macros.html:51
+#: teknologkoren_se/templates/macros.html:47
 msgid "Published"
 msgstr "Publicerad"
 
-#: teknologkoren_se/templates/macros.html:17
-msgid "Permalink"
-msgstr "Permalänk"
-
-#: teknologkoren_se/templates/macros.html:70
+#: teknologkoren_se/templates/macros.html:62
 msgid "Time"
 msgstr "Tid"
 
-#: teknologkoren_se/templates/macros.html:76
+#: teknologkoren_se/templates/macros.html:68
 msgid "Place"
 msgstr "Plats"
 
-#: teknologkoren_se/templates/macros.html:88
+#: teknologkoren_se/templates/macros.html:80
 msgid "Older"
 msgstr "Äldre"
 
-#: teknologkoren_se/templates/macros.html:94
+#: teknologkoren_se/templates/macros.html:86
 msgid "Newer"
 msgstr "Nyare"
 
-#: teknologkoren_se/templates/macros.html:102
+#: teknologkoren_se/templates/macros.html:94
 msgid "Previous"
 msgstr "Föregående"
 
-#: teknologkoren_se/templates/macros.html:108
+#: teknologkoren_se/templates/macros.html:100
 msgid "Next"
 msgstr "Nästa"
 
@@ -582,17 +578,19 @@ msgstr ""
 "Om du undrar över något angåenda våra provsjungningar så går det bra att <a "
 "href=\"{}\">kontakta vår ordförande</a>."
 
-#: teknologkoren_se/views/blog.py:46
-msgid ""
-"We are looking for new members! More info in our <a href=\"https://www."
-"teknologkoren.se/blog/21/teknologkoren-soker-korister/\">blog post</a> below!"
-msgstr ""
-"Vi söker nya korister! Mer info i vårt <a href=\"https://www.teknologkoren.se/"
-"blog/21/teknologkoren-soker-korister/\">blogg-inlägg</a> nedan!"
-
 #~ msgid ""
 #~ "(Translation not available)\n"
 #~ "\n"
 #~ msgstr ""
 #~ "(Ingen översättning tillgänglig)\n"
 #~ "\n"
+
+#~ msgid "Permalink"
+#~ msgstr "Permalänk"
+
+#~ msgid ""
+#~ "We are looking for new members! More info in our <a href=\"https://www."
+#~ "teknologkoren.se/blog/21/teknologkoren-soker-korister/\">blog post</a> below!"
+#~ msgstr ""
+#~ "Vi söker nya korister! Mer info i vårt <a href=\"https://www.teknologkoren."
+#~ "se/blog/21/teknologkoren-soker-korister/\">blogg-inlägg</a> nedan!"

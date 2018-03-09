@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-01-23 13:31+0100\n"
+"POT-Creation-Date: 2018-03-09 17:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,35 +34,31 @@ msgid "Change language"
 msgstr ""
 
 #: teknologkoren_se/templates/macros.html:11
-#: teknologkoren_se/templates/macros.html:51
+#: teknologkoren_se/templates/macros.html:47
 msgid "Published"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:17
-msgid "Permalink"
-msgstr ""
-
-#: teknologkoren_se/templates/macros.html:70
+#: teknologkoren_se/templates/macros.html:62
 msgid "Time"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:76
+#: teknologkoren_se/templates/macros.html:68
 msgid "Place"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:88
+#: teknologkoren_se/templates/macros.html:80
 msgid "Older"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:94
+#: teknologkoren_se/templates/macros.html:86
 msgid "Newer"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:102
+#: teknologkoren_se/templates/macros.html:94
 msgid "Previous"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:108
+#: teknologkoren_se/templates/macros.html:100
 msgid "Next"
 msgstr ""
 
@@ -496,12 +492,5 @@ msgstr ""
 msgid ""
 "If you have any questions about the auditions, please <a "
 "href=\"{}\">contact our chairman</a>."
-msgstr ""
-
-#: teknologkoren_se/views/blog.py:46
-msgid ""
-"We are looking for new members! More info in our <a "
-"href=\"https://www.teknologkoren.se/blog/21/teknologkoren-soker-"
-"korister/\">blog post</a> below!"
 msgstr ""
 
