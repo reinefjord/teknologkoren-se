@@ -12,10 +12,6 @@
     <time class="pubdate" datetime="{{ format_datetime(post.timestamp, "yyyy-MM-ddTHH:mmZ") }}">
       {{ format_date(post.timestamp, "dd MMMM yyyy") }}
     </time>
-    {% if not overview %}
-    &mdash;
-    <a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}">{{ _('Permalink') }}</a>
-    {% endif %}
   </header>
   {% if post.image %}
 
@@ -52,10 +48,6 @@
     <time class="pubdate" datetime="{{ format_datetime(event.timestamp, "yyyy-MM-ddTHH:mmZ") }}">
       {{ format_date(event.timestamp, "dd MMMM yyyy") }}
     </time>
-    {% if not overview %}
-    &mdash;
-    <a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}">Permalänk</a>
-    {% endif %}
   </header>
   {% if event.image %}
   <a class="event-image" href="{{ image_dest() }}img1200/{{ event.image }}">
