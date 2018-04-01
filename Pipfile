@@ -1,9 +1,12 @@
 [[source]]
+
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
+
 [packages]
+
 Flask = "*"
 Flask-Admin = "*"
 Flask-Assets = "*"
@@ -20,6 +23,6 @@ WTForms = "*"
 webassets = {git = "https://github.com/miracle2k/webassets.git", editable = true}
 gunicorn = "*"
 Flask-Babel = "*"
-pillow = "*"
+
 
 [dev-packages]

@@ -1,11 +1,9 @@
-import os
 from flask import Flask, abort, g, request, redirect, session, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_uploads import configure_uploads, IMAGES, UploadSet
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_cors import CORS
-from PIL import Image
 
 
 def init_views(app):
@@ -156,25 +154,6 @@ migrate = Migrate(app, db)
 
 images = UploadSet('images', IMAGES)
 configure_uploads(app, (images,))
-
-
-def img_dimensions(img, upload=True):
-    if upload:
-        path = images.path(img)
-    else:
-        path = os.path.join('teknologkoren_se/static/images', img)
-
-    abs_path = os.path.join(app.config['BASEDIR'], path)
-
-    try:
-        pimg = Image.open(abs_path)
-    except FileNotFoundError:
-        return ('', '')
-
-    return pimg.size
-
-
-app.jinja_env.globals['img_dimensions'] = img_dimensions
 
 assets = setup_flask_assets(app)
 
