@@ -60,12 +60,14 @@
       {% endif %}
       {% endwith %}
       {% if cover_image %}
+      {% set width, height = img_dimensions(cover_image, upload=False) %}
       <img srcset="/static/images/img600/{{ cover_image }} 600w,
                    /static/images/img1200/{{ cover_image }} 1200w,
                    /static/images/img1600/{{ cover_image }} 1600w"
            sizes="(min-width: 75em) 73em, 100vw"
            src="/static/images/img1200/{{ cover_image }}"
            class="cover-image"
+           style="--aspect-ratio: {{ width }}/{{ height }}"
            alt="">
       {% endif %}
       {% if subnav %}

@@ -21,11 +21,14 @@
   {% set img_class = img_class + ' truncate' %}
   {% endif %}
 
+  {% set width, height = img_dimensions(post.image) %}
+
   <img class="{{ img_class }}"
       srcset="{{ image_dest() }}img600/{{ post.image }},
               {{ image_dest() }}img800/{{ post.image }} 1.5x,
               {{ image_dest() }}img1200/{{ post.image }} 2x"
       src="{{ image_dest() }}img600/{{ post.image }}"
+      style="--aspect-ratio: {{ width }}/{{ height }}"
       alt="">
 
   {% endif %}
@@ -50,10 +53,14 @@
     </time>
   </header>
   {% if event.image %}
+
+  {% set width, height = img_dimensions(event.image) %}
+
   <a class="event-image" href="{{ image_dest() }}img1200/{{ event.image }}">
     <img srcset="{{ image_dest() }}img200/{{ event.image }},
                  {{ image_dest() }}img400/{{ event.image }} 2x"
          src="{{ image_dest() }}img200/{{ event.image }}"
+          style="--aspect-ratio: {{ width }}/{{ height }}"
          alt="">
   </a>
   {% endif %}
@@ -106,5 +113,6 @@
 {% endmacro %}
 
 {% macro img(image, size, class) %}
-<img {% if class %}class="{{ class }}"{% endif %} src="{{ image_dest() }}img{{ size }}/{{ image }}" alt="">
+{% set width, height = img_dimensions(post.img) %}
+<img {% if class %}class="{{ class }}"{% endif %} src="{{ image_dest() }}img{{ size }}/{{ image }}" style="--aspect-ratio: {{ width }}/{{ height }}" alt="">
 {% endmacro %}
