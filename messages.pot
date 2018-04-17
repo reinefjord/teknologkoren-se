@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-03-09 17:38+0100\n"
+"POT-Creation-Date: 2018-04-17 22:13+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,15 +68,17 @@ msgstr ""
 
 #: teknologkoren_se/templates/general/about.html:3
 #: teknologkoren_se/templates/main.html:6
-msgid "About us"
+msgid "About"
 msgstr ""
 
 #: teknologkoren_se/templates/main.html:7
 msgid "Concerts"
 msgstr ""
 
+#: teknologkoren_se/templates/general/hire.html:3
+#: teknologkoren_se/templates/general/hire.html:9
 #: teknologkoren_se/templates/main.html:10
-msgid "Booking"
+msgid "Hire us"
 msgstr ""
 
 #: teknologkoren_se/templates/general/sing.html:3
@@ -299,64 +301,8 @@ msgstr ""
 #: teknologkoren_se/templates/general/about.html:54
 msgid ""
 "We often and gladly perform at parties and celebrations at companies, and"
-" sometimes on behalf of individuals. See <a "
-"href=\"{booking}\">Booking</a> or <a href=\"{contact}\">contact us</a> "
-"for more information."
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:3
-msgid "Book us"
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:9
-msgid "Book Teknologkören!"
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:11
-msgid ""
-"Kongl. Teknologkören is a frequently hired choir that contributes with "
-"song and music at many different events. The last few years we have "
-"performed at large conferences, smaller parties, dinners, weddings, "
-"baptisms and funerals. In December we enrich the Lucia celebrations at "
-"our different customers all over Stockholm. These performances are always"
-" appreciated by the thousands that get a chance to listen to the song."
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:14
-msgid ""
-"Would you like to book Kongl. Teknologkören? We'll sing however you want,"
-" wherever you want &mdash; conferences, bachelor &amp; bachelorette "
-"parties, birthdays, weddings, baptisms, funerals, farewell parties, and "
-"more! Contact our chairman whose contact info can be found <a "
-"href=\"{}\">here</a>."
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:18
-msgid "Lucia"
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:19
-msgid ""
-"You can find more information about booking us for Lucia <a "
-"href=\"{}\">here</a>."
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:20
-msgid "Price example"
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:22
-msgid ""
-"8000 kr will get you 14 chorists that sings songs from Kongl. "
-"Teknologkören's standard repertoire for 20 minutes. If you would like "
-"fewer singers you can hire a quartet which starts at 4000 kr."
-msgstr ""
-
-#: teknologkoren_se/templates/general/booking.html:25
-msgid ""
-"The suggestions above are examples, we are flexible and are happy to "
-"adapt to your needs. Do you want another amount of singers, or want to "
-"hear your favorite song? Get in touch and we will work something out!"
+" sometimes on behalf of individuals. See <a href=\"{hire}\">Hire us</a> "
+"or <a href=\"{contact}\">contact us</a> for more information."
 msgstr ""
 
 #: teknologkoren_se/templates/general/contact.html:10
@@ -382,12 +328,56 @@ msgstr ""
 msgid "PlusGiro:"
 msgstr ""
 
-#: teknologkoren_se/templates/general/lucia.html:3
-msgid "Book a Lucia procession"
+#: teknologkoren_se/templates/general/hire.html:11
+msgid ""
+"Kongl. Teknologkören is a frequently hired choir that contributes with "
+"song and music at many different events. The last few years we have "
+"performed at large conferences, smaller parties, dinners, weddings, "
+"baptisms and funerals. In December we enrich the Lucia celebrations at "
+"our different customers all over Stockholm. These performances are always"
+" appreciated by the thousands that get a chance to listen to the song."
 msgstr ""
 
+#: teknologkoren_se/templates/general/hire.html:14
+msgid ""
+"Would you like to hire Kongl. Teknologkören? We'll sing however you want,"
+" wherever you want &mdash; conferences, bachelor &amp; bachelorette "
+"parties, birthdays, weddings, baptisms, funerals, farewell parties, and "
+"more! Contact our chairman whose contact info can be found <a "
+"href=\"{}\">here</a>."
+msgstr ""
+
+#: teknologkoren_se/templates/general/hire.html:18
+msgid "Lucia"
+msgstr ""
+
+#: teknologkoren_se/templates/general/hire.html:19
+msgid ""
+"You can find more information about booking us for Lucia <a "
+"href=\"{}\">here</a>."
+msgstr ""
+
+#: teknologkoren_se/templates/general/hire.html:20
+msgid "Price example"
+msgstr ""
+
+#: teknologkoren_se/templates/general/hire.html:22
+msgid ""
+"8000 kr will get you 14 chorists that sings songs from Kongl. "
+"Teknologkören's standard repertoire for 20 minutes. If you would like "
+"fewer singers you can hire a quartet which starts at 4000 kr."
+msgstr ""
+
+#: teknologkoren_se/templates/general/hire.html:25
+msgid ""
+"The suggestions above are examples, we are flexible and are happy to "
+"adapt to your needs. Do you want another amount of singers, or want to "
+"hear your favorite song? Get in touch and we will work something out!"
+msgstr ""
+
+#: teknologkoren_se/templates/general/lucia.html:3
 #: teknologkoren_se/templates/general/lucia.html:10
-msgid "Book a Lucia procession!"
+msgid "Book a Lucia procession"
 msgstr ""
 
 #: teknologkoren_se/templates/general/lucia.html:12

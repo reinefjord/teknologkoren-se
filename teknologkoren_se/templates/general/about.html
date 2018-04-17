@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 
-{% set title = _('About us') %}
+{% set title = _('About') %}
 {% set active_page = "about" %}
 {% set cover_image = "2017_åland.jpg" %}
 
@@ -51,8 +51,7 @@
 {{ _('Kongl. Teknologkören is led by conductor Rikard Karlsson since 2010. Before that, we\'ve been led by David Lundblad (2008&ndash;2010), Fredrik Winberg (2003&ndash;2007) and Helene Stureborg (1994&ndash;2002).') }}
 </p>
 <p>
-{{ _('We often and gladly perform at parties and celebrations at companies, and sometimes on behalf of individuals. See <a href="{booking}">Booking</a> or <a href="{contact}">contact us</a> for more information.').format(booking=url_for('general.booking'),
-                             contact=url_for('general.contact')) }}
+{{ _('We often and gladly perform at parties and celebrations at companies, and sometimes on behalf of individuals. See <a href="{hire}">Hire us</a> or <a href="{contact}">contact us</a> for more information.').format(hire=url_for('general.hire'), contact=url_for('general.contact')) }}
 </p>
 </main>
 

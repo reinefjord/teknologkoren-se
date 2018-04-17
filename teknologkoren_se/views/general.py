@@ -17,9 +17,9 @@ def about():
 
 
 @mod.route('/boka/')
-def booking():
-    """Show booking page."""
-    return render_template('general/booking.html')
+def hire():
+    """Show hiring page."""
+    return render_template('general/hire.html')
 
 
 @mod.route('/sjung/')
