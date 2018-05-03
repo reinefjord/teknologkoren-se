@@ -56,6 +56,8 @@ class Post(db.Model):
     slug = db.Column(db.String(200))
     content_sv = db.Column(db.Text)
     content_en = db.Column(db.Text)
+    readmore_sv = db.Column(db.Text)
+    readmore_en = db.Column(db.Text)
     published = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime)
     image = db.Column(db.String(300), nullable=True)
@@ -82,11 +84,31 @@ class Post(db.Model):
             return self.content_en or not_available + self.content_sv
 
     @property
+    def readmore(self):
+        """Return localized readmore.
+
+        If not available at all, return None. If one lang not available,
+        prepend notice about missing translation.
+        """
+        not_available = gettext('(No translation available)\n\n')
+        lang = get_locale().language
+
+        if self.readmore_sv or self.readmore_en:
+            if lang == 'sv':
+                return self.readmore_sv or not_available + self.readmore_en
+
+            if lang == 'en':
+                return self.readmore_en or not_available + self.readmore_sv
+
+        return None
+
+    @property
     def url(self):
         """Return the path to the post."""
         return '{}/{}/'.format(self.id, self.slug)
 
-    def content_to_html(self, content):
+    @staticmethod
+    def content_to_html(content):
         """Return content formatted for html."""
         return markdown(content)
 
@@ -97,6 +119,8 @@ class Post(db.Model):
         d['slug'] = self.slug
         d['content_sv'] = self.content_sv
         d['content_en'] = self.content_en
+        d['readmore_sv'] = self.readmore_sv
+        d['readmore_en'] = self.readmore_en
         d['published'] = self.published
         d['timestamp'] = self.timestamp
         d['image'] = self.image

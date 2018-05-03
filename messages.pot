@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-04-23 18:38+0200\n"
+"POT-Creation-Date: 2018-05-03 12:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.5.1\n"
+"Generated-By: Babel 2.5.3\n"
 
-#: teknologkoren_se/models.py:75
+#: teknologkoren_se/models.py:77 teknologkoren_se/models.py:93
 msgid ""
 "(No translation available)\n"
 "\n"
@@ -34,31 +34,36 @@ msgid "Change language"
 msgstr ""
 
 #: teknologkoren_se/templates/macros.html:11
-#: teknologkoren_se/templates/macros.html:47
+#: teknologkoren_se/templates/macros.html:60
 msgid "Published"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:62
+#: teknologkoren_se/templates/macros.html:40
+#: teknologkoren_se/templates/macros.html:77
+msgid "Read more"
+msgstr ""
+
+#: teknologkoren_se/templates/macros.html:81
 msgid "Time"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:68
+#: teknologkoren_se/templates/macros.html:87
 msgid "Place"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:80
+#: teknologkoren_se/templates/macros.html:104
 msgid "Older"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:86
+#: teknologkoren_se/templates/macros.html:110
 msgid "Newer"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:94
+#: teknologkoren_se/templates/macros.html:118
 msgid "Previous"
 msgstr ""
 
-#: teknologkoren_se/templates/macros.html:100
+#: teknologkoren_se/templates/macros.html:124
 msgid "Next"
 msgstr ""
 

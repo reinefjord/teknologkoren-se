@@ -31,6 +31,19 @@
   {% endif %}
 
   {{ post.content_to_html(post.content)|safe }}
+
+
+  {% set readmore = post.readmore %}
+  {% if readmore %}
+
+  {% if overview %}
+  <p><a href="{{ url_for('blog.view_post', post_id=post.id, slug=post.slug) }}">{{ _('Read more') }}</a></p>
+  {% else %}
+  {{ post.content_to_html(readmore)|safe }}
+  {% endif %}
+
+  {% endif %}
+
 </article>
 {% endmacro %}
 
@@ -58,6 +71,12 @@
   </a>
   {% endif %}
   {{ event.content_to_html(event.content)|safe }}
+
+  {% set readmore = event.readmore %}
+  {% if readmore and overview %}
+  <p><a href="{{ url_for('events.view_event', event_id=event.id, slug=event.slug) }}">{{ _('Read more') }}</a></p>
+  {% endif %}
+
   <dl class="event-detail">
     <dt>{{ _('Time') }}:</dt>
     <dd>
@@ -68,6 +87,11 @@
     <dt>{{ _('Place') }}:</dt>
     <dd><a href="https://www.google.se/maps/search/{{ event.location|urlencode }}/">{{ event.location }}</a></dd>
   </dl>
+
+  {% if readmore and not overview %}
+  {{ event.content_to_html(readmore)|safe }}
+  {% endif %}
+
 </article>
 {% endmacro %}
 

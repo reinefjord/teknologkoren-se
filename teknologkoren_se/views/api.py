@@ -67,6 +67,8 @@ POST_FIELDS = {
     'title': str,
     'content_sv': str,
     'content_en': (str, type(None)),
+    'readmore_sv': (str, type(None)),
+    'readmore_en': (str, type(None)),
     'published': bool,
     'image': (str, type(None)),
 }
@@ -126,6 +128,8 @@ def update_post(post_id):
     post.title = data['title']
     post.content_sv = data['content_sv']
     post.content_en = data['content_en']
+    post.readmore_sv = data['readmore_sv']
+    post.readmore_en = data['readmore_en']
     post.published = data['published']
     if data['image']:
         post.image = data['image']
@@ -152,6 +156,8 @@ EVENT_FIELDS = {
     'title': str,
     'content_sv': str,
     'content_en': (str, type(None)),
+    'readmore_sv': (str, type(None)),
+    'readmore_en': (str, type(None)),
     'published': bool,
     'image': (str, type(None)),
     'start_time': str,
@@ -214,6 +220,8 @@ def update_event(event_id):
     event.title = data['title']
     event.content_sv = data['content_sv']
     event.content_en = data['content_en']
+    event.readmore_sv = data['readmore_sv']
+    event.readmore_en = data['readmore_en']
     event.published = data['published']
     event.start_time = data['start_time']
     event.location = data['location']
