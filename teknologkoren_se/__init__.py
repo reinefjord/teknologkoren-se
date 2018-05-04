@@ -6,6 +6,36 @@ from flask_migrate import Migrate
 from flask_cors import CORS
 
 
+class ReverseProxied:
+    """http://flask.pocoo.org/snippets/35/
+
+    Wrap the application in this middleware and configure the
+    front-end server to add these headers, to let you quietly bind
+    this to a URL other than / and to an HTTP scheme that is
+    different than what is used locally.
+    """
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        script_name = environ.get('HTTP_X_SCRIPT_NAME', '')
+        if script_name:
+            environ['SCRIPT_NAME'] = script_name
+            path_info = environ['PATH_INFO']
+            if path_info.startswith(script_name):
+                environ['PATH_INFO'] = path_info[len(script_name):]
+
+        scheme = environ.get('HTTP_X_SCHEME', '')
+        if scheme:
+            environ['wsgi.url_scheme'] = scheme
+
+        server = environ.get('HTTP_X_FORWARDED_SERVER', '')
+        if server:
+            environ['HTTP_HOST'] = server
+
+        return self.app(environ, start_response)
+
+
 def init_views(app):
     from teknologkoren_se.views import (
             api,
@@ -141,6 +171,8 @@ def setup_babel(app):
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+app.wsgi_app = ReverseProxied(app.wsgi_app)
 
 app.jinja_env.lstrip_blocks = True
 app.jinja_env.trim_blocks = True
