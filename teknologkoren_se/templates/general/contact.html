@@ -30,7 +30,7 @@
        phone='<a href="tel:{phone}">{phone}</a>'
        ).format(first_name=ordf.first_name,
                 last_name=ordf.last_name,
-                phone=ordf.phone) }}
+                phone=ordf.formatted_phone if ordf.formatted_phone else ordf.phone) }}
 
   {% endautoescape %}
   </p>

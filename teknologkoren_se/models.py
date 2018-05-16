@@ -1,3 +1,4 @@
+import phonenumbers
 from datetime import datetime
 from flask_babel import get_locale, gettext
 from markdown import markdown
@@ -21,6 +22,26 @@ class Contact(db.Model):
     email = db.Column(db.String(254))
     phone = db.Column(db.String(20), nullable=True)
     weight = db.Column(db.Integer)
+
+    @property
+    def formatted_phone(self):
+        """Returns formatted number or False if not a valid number."""
+        try:
+            # If no country code, assume Swedish
+            parsed = phonenumbers.parse(self.phone, 'SE')
+        except phonenumbers.phonenumberutil.NumberParseException:
+            return False
+
+        if not (phonenumbers.is_possible_number(parsed) and
+                phonenumbers.is_valid_number(parsed)):
+            return False
+
+        formatted = phonenumbers.format_number(
+            parsed,
+            phonenumbers.PhoneNumberFormat.INTERNATIONAL
+        )
+
+        return formatted
 
     def to_dict(self):
         d = {}
