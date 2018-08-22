@@ -1,5 +1,5 @@
 from flask import abort, Blueprint, flash, redirect, render_template, url_for
-from flask_babel import gettext
+from flask_babel import gettext, get_locale
 from teknologkoren_se import app, images
 from teknologkoren_se.models import Post, Event
 from teknologkoren_se.util import url_for_other_page, bp_url_processors
@@ -42,6 +42,11 @@ def index(page):
              .order_by(Post.timestamp.desc()))
 
     pagination = posts.paginate(page, 5)
+
+    if 'en' in get_locale().language:
+        flash('We are looking for new singers! <a href="https://www.teknologkoren.se/en/blog/27/kongl-teknologkoren-soker-sangare/">More info here!</a>', 'success')
+    else:
+        flash('Vi söker nya sångare! <a href="https://www.teknologkoren.se/sv/blog/27/kongl-teknologkoren-soker-sangare/">Mer info här!</a>', 'success')
 
     return render_template('blog/overview.html',
                            pagination=pagination,
