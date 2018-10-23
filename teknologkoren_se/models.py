@@ -1,10 +1,13 @@
 import phonenumbers
+import flask_sqlalchemy
 from datetime import datetime
 from flask_babel import get_locale, gettext
 from markdown import markdown
 from slugify import slugify
 from sqlalchemy import event
-from teknologkoren_se import db, images
+from teknologkoren_se import images
+
+db = flask_sqlalchemy.SQLAlchemy()
 
 
 class Contact(db.Model):
