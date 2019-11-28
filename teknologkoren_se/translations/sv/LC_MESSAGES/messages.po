@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2018-05-03 12:42+0200\n"
-"PO-Revision-Date: 2018-05-03 12:26+0200\n"
+"POT-Creation-Date: 2019-11-28 18:09+0100\n"
+"PO-Revision-Date: 2019-11-28 18:09+0100\n"
 "Last-Translator: \n"
 "Language: sv\n"
 "Language-Team: sv <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.5.3\n"
 
-#: teknologkoren_se/models.py:77 teknologkoren_se/models.py:93
+#: teknologkoren_se/models.py:101 teknologkoren_se/models.py:117
 msgid ""
 "(No translation available)\n"
 "\n"
@@ -240,8 +240,8 @@ msgstr ""
 "kul varje år, bland annat:"
 
 #: teknologkoren_se/templates/general/about.html:21
-msgid "Rehearsal on Wednesdays between 18:30&ndash;21:30."
-msgstr "Repeterar på onsdagar mellan kl. 18:30&ndash;21:30."
+msgid "Rehearsal on Thursdays between 18:30&ndash;21:30."
+msgstr "Repeterar på torsdagar mellan 18:30&ndash;21:30."
 
 #: teknologkoren_se/templates/general/about.html:22
 msgid "Perfom at our fall, christmas, spring, and summer concerts."
@@ -264,20 +264,24 @@ msgid "Sing at KTH's diploma ceremonies in the city hall in May and December."
 msgstr "Sjunger på KTH:s diplomeringscermonier i Stadshuset i maj och december."
 
 #: teknologkoren_se/templates/general/about.html:26
+msgid "Sing at KTH's fireworks concert September."
+msgstr "Sjunger på KTH:s fyrverkerikonsert i september."
+
+#: teknologkoren_se/templates/general/about.html:27
 msgid "Sing at KTH's own christmas concert together with KTH:s Akademiska Kapell."
 msgstr "Sjunger på KTH:s egen julkonsert tillsammans med KTH:s Akademiska Kapell."
 
-#: teknologkoren_se/templates/general/about.html:27
+#: teknologkoren_se/templates/general/about.html:28
 msgid ""
 "Many Lucia processions at companies and organisations all over Stockholm "
 "in December."
 msgstr "Går många luciatåg hos företag och organisationer runt om i Stockholm."
 
-#: teknologkoren_se/templates/general/about.html:28
+#: teknologkoren_se/templates/general/about.html:29
 msgid "Sing and socialise at the choir's own parties."
 msgstr "Sjunger och umgås på körens egna fester."
 
-#: teknologkoren_se/templates/general/about.html:31
+#: teknologkoren_se/templates/general/about.html:32
 msgid ""
 "Every other summer we go on a longer trip to meet other choirs or compete"
 " at international choir competitions. The last trips were:"
@@ -285,11 +289,25 @@ msgstr ""
 "Varannan sommar gör vi också en längre resa för att träffa andra körer "
 "eller delta i internationella körtävlingar. De senaste resorna gick hit:"
 
-#: teknologkoren_se/templates/general/about.html:33
+#: teknologkoren_se/templates/general/about.html:34
+msgid "Edinburgh, Scotland, 2019"
+msgstr "Edinburgh, Skottland, 2019"
+
+#: teknologkoren_se/templates/general/about.html:35
+msgid ""
+"Amongst the beautiful hills of Scotland, we met up with another choir, "
+"had a concert in St Giles's Cathedral, played the bagpipes, danced "
+"traditional Scottish dances, and saw the Aberdeen Highland Games."
+msgstr ""
+"Mellan Skottlands vackra kullar mötte vi en annan kör, gjorde konsert i "
+"St Giles' Cathedral, spelade säckpipa, dansade traditionella skotska "
+"danser och såg Aberdeen Highland Games."
+
+#: teknologkoren_se/templates/general/about.html:36
 msgid "Vienna &amp; Ljubljana, 2017"
 msgstr "Wien &amp; Ljubljana, 2017"
 
-#: teknologkoren_se/templates/general/about.html:35
+#: teknologkoren_se/templates/general/about.html:38
 msgid ""
 "We were able to stay for a short time in Vienna before continuing to "
 "Ljubljana where we performed in the beautiful S:t Nicolas' Cathedral."
@@ -297,11 +315,11 @@ msgstr ""
 "Vi hann med en kort vistelse med konsert i Wien innan vi åkte vidare till"
 " Ljubljana där vi framträdde i vackra Sankt Nicholas katedral."
 
-#: teknologkoren_se/templates/general/about.html:37
+#: teknologkoren_se/templates/general/about.html:40
 msgid "Bulgaria, 2015"
 msgstr "Bulgarien, 2015"
 
-#: teknologkoren_se/templates/general/about.html:39
+#: teknologkoren_se/templates/general/about.html:42
 msgid ""
 "We participated in workshops about bulgarian folk music and kept concerts"
 " at the university in Sofia and at a biomathematics conference in "
@@ -310,31 +328,7 @@ msgstr ""
 "Här deltog vi i workshops om bulgarisk folkmusik och höll konserter på "
 "universitetet i Sofia samt på en biomatematik-konferens i Blagoevgrad."
 
-#: teknologkoren_se/templates/general/about.html:41
-msgid "Portugal, 2013"
-msgstr "Portugal, 2013"
-
-#: teknologkoren_se/templates/general/about.html:43
-msgid ""
-"In Portugal, we sang with several choirs, including our sister choir at "
-"the Technical University of Lisbon."
-msgstr ""
-"I Portugal sjöng vi med olika körer, bl.a. vår syskonkör vid Lissabons "
-"tekniska universitet."
-
-#: teknologkoren_se/templates/general/about.html:45
-msgid "Barcelona, 2011"
-msgstr "Barcelona, 2011"
-
-#: teknologkoren_se/templates/general/about.html:47
-msgid ""
-"The choir participated in the Barcelona choir festival, and performed in "
-"the Barcelona Cathedral."
-msgstr ""
-"Kören deltog under Barcelonas körfestival och framförde en konsert i "
-"stadens katedral."
-
-#: teknologkoren_se/templates/general/about.html:51
+#: teknologkoren_se/templates/general/about.html:46
 msgid ""
 "Kongl. Teknologkören is led by conductor Rikard Karlsson since 2010. "
 "Before that, we've been led by David Lundblad (2008&ndash;2010), Fredrik "
@@ -344,7 +338,7 @@ msgstr ""
 "av bland andra David Lundblad (2008&ndash;2010), Fredrik Winberg "
 "(2003&ndash;2007) och Helene Stureborg (1994&ndash;2002)."
 
-#: teknologkoren_se/templates/general/about.html:54
+#: teknologkoren_se/templates/general/about.html:49
 msgid ""
 "We often and gladly perform at parties and celebrations at companies, and"
 " sometimes on behalf of individuals. See <a href=\"{hire}\">Hire us</a> "
@@ -566,9 +560,9 @@ msgstr ""
 
 #: teknologkoren_se/templates/general/sing.html:41
 msgid ""
-"We rehearse Wednesdays on KTH campus Valhallavägen, between 18:30 and "
+"We rehearse Thursdays on KTH campus Valhallavägen, between 18:30 and "
 "21:30."
-msgstr "Vi repar på onsdagar på KTH campus Valhallavägen mellan 18:30 och 21:30."
+msgstr "Vi repar torsdagar på KTH campus Valhallavägen mellan 18:30 och 21:30."
 
 #: teknologkoren_se/templates/general/sing.html:45
 msgid ""
@@ -660,4 +654,38 @@ msgstr ""
 
 #~ msgid "Book a Lucia procession!"
 #~ msgstr "Boka luciatåg!"
+
+#~ msgid "Rehearsal on Wednesdays between 18:30&ndash;21:30."
+#~ msgstr "Repeterar på onsdagar mellan kl. 18:30&ndash;21:30."
+
+#~ msgid "Portugal, 2013"
+#~ msgstr "Portugal, 2013"
+
+#~ msgid ""
+#~ "In Portugal, we sang with several "
+#~ "choirs, including our sister choir at"
+#~ " the Technical University of Lisbon."
+#~ msgstr ""
+#~ "I Portugal sjöng vi med olika "
+#~ "körer, bl.a. vår syskonkör vid Lissabons"
+#~ " tekniska universitet."
+
+#~ msgid "Barcelona, 2011"
+#~ msgstr "Barcelona, 2011"
+
+#~ msgid ""
+#~ "The choir participated in the Barcelona"
+#~ " choir festival, and performed in the"
+#~ " Barcelona Cathedral."
+#~ msgstr ""
+#~ "Kören deltog under Barcelonas körfestival "
+#~ "och framförde en konsert i stadens "
+#~ "katedral."
+
+#~ msgid ""
+#~ "We rehearse Wednesdays on KTH campus "
+#~ "Valhallavägen, between 18:30 and 21:30."
+#~ msgstr ""
+#~ "Vi repar på onsdagar på KTH campus"
+#~ " Valhallavägen mellan 18:30 och 21:30."
 
